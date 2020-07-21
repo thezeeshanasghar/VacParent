@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title slot="end">My Child</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+ <p>Child Page</p>
+ <ion-card *ngFor="let child of childs" [ngClass]="child.Gender=='Girl' ? 'girl' : 'boy'">
+  <ion-item>
+    <ion-thumbnail slot="start">
+      <ion-img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'"></ion-img>
+    </ion-thumbnail>
+    <ion-label>{{child.Name}}</ion-label>
+  </ion-item>
+
+  <ion-card-content>
+    <!-- <p>
+      <ion-icon color="primary" name="person"></ion-icon>
+      {{child.FatherName}}
+    </p> -->
+    <p>
+      <ion-icon color="primary" name="calendar"></ion-icon>
+      {{child.DOB}}
+    </p>
+    <p>
+      <ion-icon color="primary" name="call"></ion-icon>
+      {{child.MobileNumber}}
+    </p>
+
+    <ion-button disabled="false" size="small" fill="outline" color="tertiary"
+      routerLink="vaccine/{{child.Id}}">
+      Vaccine
+    </ion-button>
+    <!-- <ion-button size="small" fill="outline" color="tertiary" routerLink="/members/child/followup/{{child.Id}}">
+      Follow Up
+    </ion-button>
+    <ion-button size="small" fill="outline" color="tertiary" routerLink="/members/child/invoice/{{child.Id}}">
+      Invoice
+    </ion-button> -->
+  </ion-card-content>
+
+</ion-card>
+
+</ion-content>

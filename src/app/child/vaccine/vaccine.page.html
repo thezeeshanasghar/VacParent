@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Vaccinations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf ="vaccine" class="ion-padding">
+  
+  <table>
+    <tr>
+      <th>Vaccine</th>
+      <th>Status</th>
+    </tr>
+    <tr *ngFor ="let dose of vaccine">
+      <td>{{dose.Dose.Name}}</td>
+      <td class="done" *ngIf ="dose.IsDone">Given on {{dose.GivenDate}}</td>
+      <td class="due" *ngIf ="!dose.IsDone">Due on {{dose.Date}}</td>
+    </tr>
+   
+  </table>
+  <ion-button (click)="printdata()">print</ion-button>
+ 
+</ion-content>

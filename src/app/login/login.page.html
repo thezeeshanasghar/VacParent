@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card style="background-color: #d3cccc94;">
+    <ion-card-content>
+
+      <form [formGroup]="fg">
+
+        <ion-label color="primary" position="floating" class="ion-margin-top">
+          <ion-icon name="mail" class="ion-item-start"></ion-icon>
+          Mobile Number
+        </ion-label>
+        <ion-input type="email" formControlName="MobileNumber"></ion-input>
+
+
+        <ion-label color="primary" position="floating" class="ion-margin-top" >
+          <ion-icon name="lock" class="ion-item-start" class="ion-margin-top"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password" formControlName="Password" ></ion-input>
+
+
+        <ion-button class="ion-margin-top" expand="full" color="tertiary" (click)="login()">
+          <ion-icon name="log-in"></ion-icon>&nbsp;
+          Login
+        </ion-button>
+      </form>
+
+      <ion-text class="ion-text-right">
+        <a (click)="forgotPasswordAlert()">
+          <h2>Forget password</h2>
+        </a>
+      </ion-text>
+
+      <ion-text class="ion-text-right">
+      </ion-text>
+
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
