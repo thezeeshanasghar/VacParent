@@ -30,7 +30,7 @@ table {
   tr:nth-child(even){background-color: #f2f2f2}
   
   th {
-    background-color: #3880ff;
+    background-color: #4066a8;
     color: white;
   }
   .done{
@@ -39,3 +39,32 @@ color: green;
   .due{
 color: gray;
   }
+
+  .missed{
+    color: rgb(158, 12, 12);
+      }
+
+      .next{
+        color: rgb(158, 148, 12);
+          }
+
+          //
+          .demo-non-form {
+            color: initial;
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            font-family: arial, verdana, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+        }
+        
+        .external-container button.external-button {
+            font-weight: 400;
+            padding: 10px;
+            margin: 6px 0 13px 0;
+            width: 100%;
+        }

@@ -6,14 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ChildPage } from './child.page';
-import { Storage  } from '@ionic/storage';
+//import { Storage  } from '@ionic/storage';
 
 const routes: Routes = [
   {
     path: '',
     component: ChildPage
   },
-  { path: 'vaccine/:id', loadChildren: './vaccine/vaccine.module#VaccinePageModule' },
+ {
+  path: 'vaccine/:id',
+  loadChildren: () => import('./vaccine/vaccine.module').then( m => m.VaccinePageModule)
+}
 ];
 
 @NgModule({

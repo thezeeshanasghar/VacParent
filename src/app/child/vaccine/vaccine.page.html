@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content *ngIf ="vaccine" class="ion-padding">
-  
+  <p *ngIf ="Child">Name: {{Child.Name}}</p>
+  <p *ngIf ="Child">Father's Name: {{Child.FatherName}}</p>
+  <p *ngIf ="Child">DOB: {{Child.DOB}}</p>
   <table>
     <tr>
       <th>Vaccine</th>
@@ -17,10 +19,30 @@
     <tr *ngFor ="let dose of vaccine">
       <td>{{dose.Dose.Name}}</td>
       <td class="done" *ngIf ="dose.IsDone">Given on {{dose.GivenDate}}</td>
-      <td class="due" *ngIf ="!dose.IsDone">Due on {{dose.Date}}</td>
+      <td class="due" *ngIf ="!dose.IsDone && !checkForMissed(dose.Date) && !dose.Next">Due on {{dose.Date}}</td>
+      <td class="missed" *ngIf ="!dose.IsDone && checkForMissed(dose.Date)">Missed on {{dose.Date}}</td>
+      <td class="next" *ngIf ="dose.Next">Due on {{dose.Date}}</td>
+      <ion-icon *ngIf="!dose.IsDone && checkForMissed(dose.Date)" color="primary" name="calendar" (click)="externalDate.instance.show()">
+        <!-- <ion-datetime #picker picker-format="DD-MM-YYYY" value="{{dose.Date}}"
+          (ionChange)="updateDate($event, dose.Id)">
+        </ion-datetime> -->
+        
+      </ion-icon>
     </tr>
    
   </table>
   <ion-button (click)="printdata()">print</ion-button>
- 
+  <ion-button (click)="datepick()">pickDate</ion-button>
+       
+            <div class="mbsc-col-sm-12">
+                <div class="mbsc-row mbsc-align-items-end">
+                    <div class="mbsc-col-9">
+                        <label for="demo-app-date-external">Show on button click only</label>
+                        <ion-input id="demo-app-date-external" (ionChange)="updateDate($event, 5)" [(ngModel)]="external" mbsc-calendar [mbsc-options]="externalSettings" #externalDate="mobiscroll" class="demo-non-form" ></ion-input>
+                    </div>
+                    <div class="mbsc-col-3 external-container">
+                        <button (click)="externalDate.instance.show()" class="external-button">Show</button>
+                    </div>
+                </div>
+            </div>
 </ion-content>
