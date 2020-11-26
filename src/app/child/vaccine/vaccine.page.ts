@@ -11,47 +11,19 @@ import { environment } from 'src/environments/environment';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
-import { mobiscroll, MbscCalendarOptions } from '@mobiscroll/angular';
 
-
-mobiscroll.settings = {
-  theme: 'material',
-  themeVariant: 'light'
-};
 const now = new Date();
 @Component({
   selector: "app-vaccine",
   templateUrl: "./vaccine.page.html",
-  styleUrls: ["./vaccine.page.scss"],
-  // changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ["./vaccine.page.scss"]
 })
 export class VaccinePage {
 
-  //
   cal = now;
   header = now;
   nonForm = now;
   external = now;
-
-  calSettings: MbscCalendarOptions = {
-      display: 'inline'
-  };
-
-  headerSettings: MbscCalendarOptions = {
-      display: 'bubble',
-      headerText: '{value}'
-  };
-
-  nonFormSettings: MbscCalendarOptions = {
-      display: 'bubble'
-  };
-
-  externalSettings: MbscCalendarOptions = {
-      display: 'bubble',
-      showOnTap: false,
-      showOnFocus: false
-  };
-  //
   vaccine: any[] = [];
   childId: any;
   Pneum2Date: any;
@@ -77,11 +49,6 @@ export class VaccinePage {
     this.childId = this.route.snapshot.paramMap.get("id");
     this.getVaccination();
   }
-  // ngAfterContentChecked() {
-
-  //   this.cdref.detectChanges();
-
-  // }
 
   async getVaccination() {
     const loading = await this.loadingController.create({
@@ -89,19 +56,18 @@ export class VaccinePage {
     });
 
     await loading.present();
-    await this.vaccineService
+    this.vaccineService
       .getVaccinationById(this.route.snapshot.paramMap.get("id"))
       .subscribe(
         res => {
           if (res.IsSuccess) {
             // res.ResponseData = res.ResponseData.filter(item=> (!item.IsSkip));
-           // console.log(res.ResponseData);
-
+            // console.log(res.ResponseData);
             //original code
             this.vaccine = res.ResponseData;
             this.Child = (this.vaccine[0].Child);
-             this.vaccine.forEach(doc => {
-              
+            this.vaccine.forEach(doc => {
+
               let date = moment(doc.Date, "DD-MM-YYYY").format("YYYY-MM-DD");
               var date1 = Date.parse(date);
               if (!this.next && this.today < date1) {
@@ -109,12 +75,9 @@ export class VaccinePage {
                 this.next = true;
               }
               else
-              doc.Next = false;
-
+                doc.Next = false;
             });
-           // console.log(this.vaccine);
             loading.dismiss();
-
           } else {
             loading.dismiss();
             this.toastService.create(res.Message, "danger");
@@ -128,12 +91,10 @@ export class VaccinePage {
   }
 
   printdata() {
-    //this.vaccineService.printVaccineSchedule(this.childID);
-   // console.log(this.childId);
     this.download(this.childId);
   }
 
-  download(id) {
+  download(id: any) {
     var request: DownloadRequest = {
       uri: `${this.API_VACCINE}child/${id}/Download-Schedule-PDF`,
       title: 'Child Schedule',
@@ -153,30 +114,26 @@ export class VaccinePage {
 
   }
 
-  checkForMissed(input) {
-    //console.log(this.today);
+  checkForMissed(input: moment.MomentInput) {
     let todaydate = moment(input, "DD-MM-YYYY").format("YYYY-MM-DD");
     var date1 = Date.parse(todaydate);
-    //console.log(date1);
     if (this.today > date1) {
       return true;
     }
     else
       return false;
-
   }
 
-  async updateDate($event, vacId) {
+  async updateDate($event, vacId: any) {
     let newDate = $event.detail.value;
     newDate = moment(newDate, "YYYY-MM-DD").format("DD-MM-YYYY");
     let data = { Date: newDate, Id: vacId };
-    await this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
+    this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
       res => {
         if (res.IsSuccess) {
           this.getVaccination();
           this.toastService.create(res.Message);
         } else {
-          //this.toastService.create(res.Message, "danger");
           this.resheduleAlert(res.Message, data);
         }
       },
@@ -186,8 +143,7 @@ export class VaccinePage {
     );
   }
 
-
-  datepick(){
+  datepick() {
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
@@ -198,17 +154,13 @@ export class VaccinePage {
     );
   }
 
-
-
   async resheduleAlert(message, data) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      // message: message,
       message: message,
       buttons: [
         {
           text: 'Ignore Rule',
-          // role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             if (message.search("it is greater than the Max Age of dose") != -1) {
@@ -218,7 +170,6 @@ export class VaccinePage {
                     this.getVaccination();
                     this.toastService.create(res.Message);
                   } else {
-                    //this.toastService.create(res.Message, "danger");
                     this.resheduleAlert(res.Message, data);
                   }
                 },
@@ -269,7 +220,6 @@ export class VaccinePage {
           }
         }
       ]
-      // buttons: ['OK']
     });
     await alert.present();
   }

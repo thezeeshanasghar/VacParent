@@ -1,5 +1,4 @@
 import { FormsModule } from '@angular/forms';
-import { MbscModule } from '@mobiscroll/angular';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -20,14 +19,11 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [],
   imports: [ 
     FormsModule,  
-    MbscModule, 
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    
-
   ],
   providers: [
     StatusBar,

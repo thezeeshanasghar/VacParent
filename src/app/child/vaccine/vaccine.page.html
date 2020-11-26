@@ -22,7 +22,8 @@
       <td class="due" *ngIf ="!dose.IsDone && !checkForMissed(dose.Date) && !dose.Next">Due on {{dose.Date}}</td>
       <td class="missed" *ngIf ="!dose.IsDone && checkForMissed(dose.Date)">Missed on {{dose.Date}}</td>
       <td class="next" *ngIf ="dose.Next">Due on {{dose.Date}}</td>
-      <ion-icon *ngIf="!dose.IsDone && checkForMissed(dose.Date)" color="primary" name="calendar" (click)="externalDate.instance.show()">
+      <ion-icon *ngIf="!dose.IsDone && checkForMissed(dose.Date)" color="primary" name="calendar" >
+        <!-- (click)="external"  -->
         <!-- <ion-datetime #picker picker-format="DD-MM-YYYY" value="{{dose.Date}}"
           (ionChange)="updateDate($event, dose.Id)">
         </ion-datetime> -->
@@ -38,10 +39,11 @@
                 <div class="mbsc-row mbsc-align-items-end">
                     <div class="mbsc-col-9">
                         <label for="demo-app-date-external">Show on button click only</label>
-                        <ion-input id="demo-app-date-external" (ionChange)="updateDate($event, 5)" [(ngModel)]="external" mbsc-calendar [mbsc-options]="externalSettings" #externalDate="mobiscroll" class="demo-non-form" ></ion-input>
+                        <ion-input id="demo-app-date-external" (ionChange)="updateDate($event, 5)" [(ngModel)]="external" class="demo-non-form" ></ion-input>
                     </div>
                     <div class="mbsc-col-3 external-container">
-                        <button (click)="externalDate.instance.show()" class="external-button">Show</button>
+                        <button  class="external-button">Show</button>
+                        <!-- (click)="externalDate.instance.show()" -->
                     </div>
                 </div>
             </div>

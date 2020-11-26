@@ -9,7 +9,6 @@ import { VaccinePage } from './vaccine.page';
 
 import { Downloader} from '@ionic-native/downloader/ngx';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
-import { MbscModule } from '@mobiscroll/angular';
 
 const routes: Routes = [
   {
@@ -24,13 +23,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    MbscModule,
     RouterModule.forChild(routes),
   ],
   declarations: [VaccinePage],
   providers: [
      Downloader , DatePicker
-
   ],
 })
 export class VaccinePageModule {}
