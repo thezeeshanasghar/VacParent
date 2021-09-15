@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="themeheader">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title slot="end" color="light">Vaccines</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+ <ion-grid>
+   <ion-row *ngFor="let vaccine of vaccinesData; let i = index"  (click)=sethidden(i)>
+     <div id="vacname">{{vaccine.name}} <ion-icon *ngIf="vaccine.ishidden" name="chevron-up-outline"></ion-icon> <ion-icon *ngIf="!vaccine.ishidden" name="chevron-down-outline"></ion-icon></div>
+     <div id="vacdes" [hidden]=vaccine.ishidden> {{vaccine.description}}</div>
+ </ion-row>
+ </ion-grid>
+</ion-content>

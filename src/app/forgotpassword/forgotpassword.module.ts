@@ -5,15 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { VaccinePage } from './vaccine.page';
-
-import { Downloader} from '@ionic-native/downloader/ngx';
-import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { ForgotPasswordPage } from './forgotpassword.page';
+//import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 const routes: Routes = [
   {
     path: '',
-    component: VaccinePage
+    component: ForgotPasswordPage
   }
 ];
 
@@ -23,15 +21,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-  
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  declarations: [VaccinePage],
-  providers: [
-     Downloader , DatePicker
-
-  ],
+  declarations: [ForgotPasswordPage],
+  providers:[]
 })
-export class VaccinePageModule {}
-
-
+export class ForgotPasswordPageModule {}

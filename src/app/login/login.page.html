@@ -1,75 +1,38 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title *ngIf = "!forgot">Login</ion-title>
-    <ion-title *ngIf = "forgot">Send Password</ion-title>
+<!-- <ion-header>
+  <ion-toolbar class="themeheader">
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content *ngIf = "!forgot">
+<ion-content>
 
-  <ion-card style="background-color: #d3cccc94;">
-    <ion-card-content>
+  <div id="signin"> SIGN IN</div>
 
-      <form [formGroup]="fg">
+      <form class="ion-padding" [formGroup]="fg">
+ 
+         
 
-        <ion-label color="primary" position="floating" class="ion-margin-top">
-          <ion-icon name="mail" class="ion-item-start"></ion-icon>
-          Mobile Number
-        </ion-label>
-        <ion-input type="email" formControlName="MobileNumber"></ion-input>
+        <ion-item>
+          <ion-input class="ion-clearInput" type="email" placeholder="Mobile" formControlName="MobileNumber"></ion-input>
+          <ion-icon name="call-outline"></ion-icon>
+        </ion-item>
 
+        <ion-item>
+          <ion-input class="ion-clearInput1" type="email" placeholder="Password" formControlName="Password"></ion-input>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </ion-item>
+        
 
-        <ion-label color="primary" position="floating" class="ion-margin-top" >
-          <ion-icon name="lock" class="ion-item-start" class="ion-margin-top"></ion-icon>
-          Password
-        </ion-label>
-        <ion-input type="password" formControlName="Password" ></ion-input>
-
-
-        <ion-button class="ion-margin-top" expand="full" color="tertiary" (click)="login()">
+        <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
           <ion-icon name="log-in"></ion-icon>&nbsp;
           Login
         </ion-button>
+
       </form>
 
-      <ion-text class="ion-text-right">
-        <a (click)="forgotPasswordAlert(true)">
-          <h2>Forgot Password</h2>
+      <ion-text class="ion-text-center">
+        <a routerLink="/forgotpassword">
+          <p class="ion-margin-right">Forgot Password?</p>
         </a>
       </ion-text>
-
-      <ion-text class="ion-text-right">
-      </ion-text>
-
-
-    </ion-card-content>
-  </ion-card>
-
-</ion-content>
-
-<ion-content *ngIf = "forgot">
-
-  <ion-card style="background-color: #d3cccc94;">
-    <ion-card-content>
-
-        <ion-label color="primary" position="floating" class="ion-margin-top">
-          <ion-icon name="mail" class="ion-item-start"></ion-icon>
-          Mobile Number
-        </ion-label>
-        <ion-input type="text" [(ngModel)] = "MobileNumber"></ion-input>
-
-
-        <ion-button class="ion-margin-top"  color="tertiary" (click)="sendPassword()">
-          <ion-icon name="log-in"></ion-icon>&nbsp;
-          Send
-        </ion-button>
-
-        <ion-button class="ion-margin-top"  color="tertiary" (click)="forgotPasswordAlert(false)">
-          cancel
-        </ion-button>
-
-      
-    </ion-card-content>
-  </ion-card>
 
 </ion-content>

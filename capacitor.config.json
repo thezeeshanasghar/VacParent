@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "vacParent",
+  "appId": "vaccine.pk.patient",
+  "appName": "vaccinepk",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

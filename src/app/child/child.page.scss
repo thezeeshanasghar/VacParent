@@ -1,0 +1,49 @@
+ion-content{
+  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
+}
+
+.childcard{
+  color: var(--ion-color-light);
+  background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));
+  text-align: center;
+  border-radius:15px 50px;
+  padding: 5vh 2vh;
+  margin-top: 2vh;
+  margin-left: 2vh;
+  box-shadow: 0px 2px 2px 2px #2eb7bf;
+  box-sizing: border-box;
+  font-size: 10pt;
+}
+ion-item{
+    --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));;
+}
+
+ion-button {  
+  --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
+     color: var(--ion-color-light);
+     text-transform: none;
+     margin-left: 50%;
+     font-family: -webkit-body;
+}
+
+.card-div{
+  margin-bottom: 9px;
+}
+
+.img-div{
+padding: 20px;
+display: inline-block;
+float: left;
+position: relative;
+background: linear-gradient(135deg, #f08bd4, #ab51cb);
+}
+
+.name-div{
+padding: 20px;
+border-left: 1px solid gray;
+background: honeydew;
+line-height: 20pt;
+color:var(--ion-color-primary-custom);
+font-family: -webkit-body;
+}

@@ -1,49 +1,30 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title slot="end">My Child</ion-title>
+  <ion-toolbar class="themeheader">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-title slot="end" color="light">Patients</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
- <p>Child Page</p>
- <ion-card *ngFor="let child of childs" [ngClass]="child.Gender=='Girl' ? 'girl' : 'boy'">
-  <ion-item>
-    <ion-thumbnail slot="start">
-      <ion-img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'"></ion-img>
-    </ion-thumbnail>
-    <ion-label>{{child.Name}}</ion-label>
-  </ion-item>
-
-  <ion-card-content>
-    <!-- <p>
-      <ion-icon color="primary" name="person"></ion-icon>
-      {{child.FatherName}}
-    </p> -->
-    <p>
-      <ion-icon color="primary" name="calendar"></ion-icon>
-      {{child.DOB}}
-    </p>
-    <p>
-      <ion-icon color="primary" name="call"></ion-icon>
-      {{child.MobileNumber}}
-    </p>
-
-    <ion-button disabled="false" size="small" fill="outline" color="tertiary"
+<ion-row *ngFor="let child of childs" class="card-div">
+  <ion-col size="4" class="img-div">
+    <ion-avatar>
+      <img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'">
+    </ion-avatar>
+  </ion-col>
+    <ion-col size="8" class="name-div">
+    <span>{{child.Name}}</span> <br>
+    <span>{{calculateAge(child.DOB)}}</span> <br><span>{{child.Gender}}</span> <br>
+    <ion-button shape="round" disabled="false" size="small" 
       routerLink="vaccine/{{child.Id}}">
-      Vaccine
+      Schedule
     </ion-button>
-    <!-- <ion-button size="small" fill="outline" color="tertiary" routerLink="/members/child/followup/{{child.Id}}">
-      Follow Up
-    </ion-button>
-    <ion-button size="small" fill="outline" color="tertiary" routerLink="/members/child/invoice/{{child.Id}}">
-      Invoice
-    </ion-button> -->
-  </ion-card-content>
+  </ion-col>
+  </ion-row>
 
-</ion-card>
+ 
 
 </ion-content>

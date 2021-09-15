@@ -24,3 +24,7 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.themeheader{
+    --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom3));  
+}

@@ -1,48 +1,164 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar class="themeheader">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Vaccinations</ion-title>
+    <ion-title *ngIf="!homeBook" slot="end" color="light">Vaccinations</ion-title>
+    <ion-title *ngIf="homeBook" slot="end" color="light">Booking</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf ="vaccine" class="ion-padding">
-  <p *ngIf ="Child">Name: {{Child.Name}}</p>
-  <p *ngIf ="Child">Father's Name: {{Child.FatherName}}</p>
-  <p *ngIf ="Child">DOB: {{Child.DOB}}</p>
-  <table>
-    <tr>
-      <th>Vaccine</th>
-      <th>Status</th>
-    </tr>
-    <tr *ngFor ="let dose of vaccine">
-      <td>{{dose.Dose.Name}}</td>
-      <td class="done" *ngIf ="dose.IsDone">Given on {{dose.GivenDate}}</td>
-      <td class="due" *ngIf ="!dose.IsDone && !checkForMissed(dose.Date) && !dose.Next">Due on {{dose.Date}}</td>
-      <td class="missed" *ngIf ="!dose.IsDone && checkForMissed(dose.Date)">Missed on {{dose.Date}}</td>
-      <td class="next" *ngIf ="dose.Next">Due on {{dose.Date}}</td>
-      <ion-icon *ngIf="!dose.IsDone && checkForMissed(dose.Date)" color="primary" name="calendar" (click)="externalDate.instance.show()">
-        <!-- <ion-datetime #picker picker-format="DD-MM-YYYY" value="{{dose.Date}}"
-          (ionChange)="updateDate($event, dose.Id)">
-        </ion-datetime> -->
-        
-      </ion-icon>
-    </tr>
-   
-  </table>
-  <ion-button (click)="printdata()">print</ion-button>
-  <ion-button (click)="datepick()">pickDate</ion-button>
-       
-            <div class="mbsc-col-sm-12">
-                <div class="mbsc-row mbsc-align-items-end">
-                    <div class="mbsc-col-9">
-                        <label for="demo-app-date-external">Show on button click only</label>
-                        <ion-input id="demo-app-date-external" (ionChange)="updateDate($event, 5)" [(ngModel)]="external" mbsc-calendar [mbsc-options]="externalSettings" #externalDate="mobiscroll" class="demo-non-form" ></ion-input>
-                    </div>
-                    <div class="mbsc-col-3 external-container">
-                        <button (click)="externalDate.instance.show()" class="external-button">Show</button>
-                    </div>
-                </div>
-            </div>
+<ion-content *ngIf="vaccine" class="ion-padding">
+
+
+
+  <div *ngIf="!homeBook">
+
+    <ion-row class="card-div">
+      <ion-col size="4" class="img-div">
+        <ion-avatar *ngIf="Child">
+          <img [src]="Child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'">
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="8" class="name-div">
+        <ion-row>
+          <ion-col style="text-align: left; font-size: 15pt;"><span *ngIf="Child">{{Child.Name}}</span></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="text-align: left;" size="9">
+            <span *ngIf="Child"> {{age}} </span>
+          </ion-col>
+          <ion-col size="3">
+            <span *ngIf="Child">{{Child.Gender}}</span>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col style="color: rgb(27, 168, 14);" size="4">
+            Given
+          </ion-col>
+          <ion-col style="color: rgb(211, 214, 42);" size="4">
+            Due
+          </ion-col>
+          <ion-col style="color: rgb(218, 56, 28);" size="4">
+            Missed
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="line-height: 1pt;">
+          <ion-col style="color: rgb(27, 168, 14);" size="4">
+          {{given}}
+          </ion-col>
+          <ion-col style="color: rgb(211, 214, 42);" size="4">
+            {{due}}
+          </ion-col>
+          <ion-col style="color: rgb(218, 56, 28);" size="4">
+            {{missed}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <!-- <div class="childnamediv">
+  <p class="childname" *ngIf ="Child">Name: {{Child.Name}}</p>
+  <p class="childname" *ngIf ="Child">Father's Name: {{Child.FatherName}}</p>
+  <p class="childname" *ngIf ="Child">DOB: {{Child.DOB}}</p>
+</div> -->
+
+
+    <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue:mySortingFunction; let i=index">
+      <ion-card>
+        <ion-card-header>
+       <div  style="text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 5px;">
+        {{item.key | date}}
+       </div>
+       <div class="cardheader" style="text-align: center;">
+        <ion-button *ngIf="checkVaccineIsDon(item.value)" color="secondary" fill="outline" size="small" shape="round" (click)="picker.open()">
+          Reschedule All
+        </ion-button>
+        <ion-button shape="round" *ngIf="checkVaccineIsDon(item.value)" color="success" fill="outline" size="small" (click)="setHomeBook(true)">Home Booking
+        </ion-button>
+        <ion-icon>
+          <ion-datetime (ionChange)="updateBulkDate($event, item.value[0].Id)" max='2030' min='2000' #picker
+            picker-format="DD-MM-YYYY">
+          </ion-datetime>
+        </ion-icon>
+      </div>
+    </ion-card-header>
+
+           <ion-card-content>
+        <div *ngFor="let v of item.value">
+          <div class="none">
+            <ion-label>Dose: {{v.Dose.Name}} </ion-label>
+            <p *ngIf="v.Due2EPI==true" style="color:rgb(55, 231, 10);">Due to EPI</p>
+            <p *ngIf="v.Due2EPI==true"> Given by EPI</p>
+            <p *ngIf="v.IsDone==true && v.Due2EPI==false && (v.IsDisease==false || v.IsDisease==null)"
+              style="color:#4854e0;">Given on {{v.GivenDate | date}}</p>
+            <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && !checkForMissed(v.Date)"
+              style="color: rgb(138, 138, 41);" src="../../assets/injectionEmpty.png">Due on {{v.Date | date}}</p>
+            <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && checkForMissed(v.Date)"
+              style="color: red;" src="../../assets/injectionMissed.png"> Missed on {{v.Date | date}}</p>
+            <p *ngIf="v.IsDone==true && v.Due2EPI==false && v.IsDisease==true" style="color:rgb(55, 231, 10);">Disease
+              Year: {{v.DiseaseYear}}</p>
+            <ion-button style="margin-left: 50%;" color="tertiary" fill="outline" *ngIf="v.IsDone==false && v.Due2EPI==false && v.IsSkip != true" shape="round" size="small"
+              (click)="picker.open()">
+              <ion-icon slot="start" name="calendar">
+                <ion-datetime #picker picker-format="DD-MM-YYYY" value="{{v.Date}}"
+                  (ionChange)="updateDate($event, v.Id)">
+                </ion-datetime>
+              </ion-icon>
+              Reschedule
+            </ion-button>
+          </div>
+        </div>
+        </ion-card-content>
+        </ion-card>    
+    </div>
+    </div>
+    
+    <div *ngIf='homeBook'>
+      <form [formGroup]="fg1">
+        <ion-item>
+          <ion-label color="primary" position="floating">Patient Name</ion-label>
+          <ion-input type="text" formControlName="ChildName" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" position="floating">Father's Name</ion-label>
+          <ion-input type="text" formControlName="FatherName" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="floating">Email</ion-label>
+          <ion-input type="text" formControlName="Email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="floating">Mobile Number</ion-label>
+          <ion-input type="text" formControlName="Phone" required></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label color="primary" position="floating">Vaccines</ion-label>
+          <ion-input type="text" formControlName="Vaccines" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="floating">City</ion-label>
+          <ion-input type="text" formControlName="City" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="floating">Address</ion-label>
+          <ion-input type="text" formControlName="Address" required></ion-input>
+        </ion-item>
+
+        <ion-button color="tertiary" fill="outline" (click)="submitBooking()" [disabled]="!fg1.valid">Submit</ion-button>
+        <ion-button color="secondary" fill="outline"  (click)="setHomeBook(false)">Cancel</ion-button>
+      </form>
+    </div>
+    <ion-fab *ngIf='!homeBook' (click)="printdata()" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>Print</ion-fab-button>
+    </ion-fab>
+
 </ion-content>

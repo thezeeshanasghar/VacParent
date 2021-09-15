@@ -11,13 +11,10 @@ import { environment } from 'src/environments/environment';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
-import { mobiscroll, MbscCalendarOptions } from '@mobiscroll/angular';
+//import { mobiscroll, MbscCalendarOptions } from '@mobiscroll/angular';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from "@angular/forms";
+//const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-
-mobiscroll.settings = {
-  theme: 'material',
-  themeVariant: 'light'
-};
 const now = new Date();
 @Component({
   selector: "app-vaccine",
@@ -27,37 +24,19 @@ const now = new Date();
 })
 export class VaccinePage {
 
-  //
-  cal = now;
-  header = now;
-  nonForm = now;
-  external = now;
-
-  calSettings: MbscCalendarOptions = {
-      display: 'inline'
-  };
-
-  headerSettings: MbscCalendarOptions = {
-      display: 'bubble',
-      headerText: '{value}'
-  };
-
-  nonFormSettings: MbscCalendarOptions = {
-      display: 'bubble'
-  };
-
-  externalSettings: MbscCalendarOptions = {
-      display: 'bubble',
-      showOnTap: false,
-      showOnFocus: false
-  };
-  //
+  fg1: FormGroup;
+  homeBook = false;
+  given = 0;
+  due = 0;
+  missed = 0;
   vaccine: any[] = [];
+  dataGrouping: any[] = [];
   childId: any;
   Pneum2Date: any;
   today = Date.now();
   next = false;
   Child: any;
+  age: any;
   private readonly API_VACCINE = `${environment.BASE_URL}`
   constructor(
     public loadingController: LoadingController,
@@ -69,19 +48,68 @@ export class VaccinePage {
     public alertController: AlertController,
     private downloader: Downloader,
     private cdref: ChangeDetectorRef,
-    private datePicker: DatePicker
+    private datePicker: DatePicker,
+    private formBuilder: FormBuilder
 
   ) { }
 
   ionViewDidEnter() {
     this.childId = this.route.snapshot.paramMap.get("id");
     this.getVaccination();
+
+    this.fg1 = this.formBuilder.group({
+      ChildName: new FormControl("", Validators.required),
+      FatherName: new FormControl("", Validators.required),
+      Email: new FormControl(
+        "",
+        Validators.compose([
+          // Validators.required,
+          Validators.pattern(
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+          )
+        ])
+      ),
+      DOB: new FormControl('', Validators.required),
+      Vaccines: new FormControl('', Validators.required),
+      Phone: new FormControl(
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("[0-9]{10}$")
+        ])
+      ),
+      Address: new FormControl('', Validators.required),
+      BookingDate: moment(Date.now()).format("DD-MM-YYYY"),
+      City: [null],
+      Status: 'Booked'
+
+    });
   }
-  // ngAfterContentChecked() {
 
-  //   this.cdref.detectChanges();
+  calculateAge(birthday) { // birthday is a date
+    var today = new Date();
+    var age = today.getFullYear() - new Date(birthday).getFullYear();
+    var m = today.getMonth() - new Date(birthday).getMonth();
+    age = age * 12 + m;
+    return Math.round(age/12) +" Years " + age % 12 + " Months";
+  }
 
-  // }
+  checkVaccineIsDon(data): boolean {
+    var isdone: boolean = true;
+    for (let i = 0; i < data.length; i++) {
+      if (!data[i].IsDone == false) {
+        isdone = false;
+        break;
+      }
+    }
+    return isdone;
+  }
+
+  async loadGoogleSheet() {
+    console.log("called");
+
+  }
+
 
   async getVaccination() {
     const loading = await this.loadingController.create({
@@ -95,13 +123,23 @@ export class VaccinePage {
         res => {
           if (res.IsSuccess) {
             // res.ResponseData = res.ResponseData.filter(item=> (!item.IsSkip));
-           // console.log(res.ResponseData);
-
             //original code
-            this.vaccine = res.ResponseData;
+            this.vaccine = res.ResponseData.filter(x=>x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
-             this.vaccine.forEach(doc => {
-              
+            this.fg1.controls['ChildName'].setValue(this.Child.Name);
+            this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
+            this.fg1.controls['DOB'].setValue(this.Child.DOB);
+            this.fg1.controls['Email'].setValue(this.Child.Email);
+            this.fg1.controls['Phone'].setValue(this.Child.User.MobileNumber);
+            this.fg1.controls['City'].setValue(this.Child.City);
+            //this.fg1.controls['BookingDate'].setValue(this.Child.User.BookingDate);
+
+            this.age = this.calculateAge(moment(this.Child.DOB, "DD-MM-YYYY").format("YYYY-MM-DD"));
+            this.vaccine.forEach(doc => {
+              doc.Date = moment(doc.Date, "DD-MM-YYYY").format("YYYY-MM-DD");
+              if (doc.GivenDate)
+                doc.GivenDate = moment(doc.GivenDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+
               let date = moment(doc.Date, "DD-MM-YYYY").format("YYYY-MM-DD");
               var date1 = Date.parse(date);
               if (!this.next && this.today < date1) {
@@ -109,10 +147,22 @@ export class VaccinePage {
                 this.next = true;
               }
               else
-              doc.Next = false;
+                doc.Next = false;
+
+              //given due missed calculation
+              
+              if (doc.IsDone == true)
+                this.given++;
+              else if (doc.IsDone != true && this.today < date1)
+                this.due++;
+              else
+                this.missed++;
 
             });
-           // console.log(this.vaccine);
+
+            this.dataGrouping = this.groupBy(this.vaccine, "Date");
+            console.log(this.dataGrouping);
+            // console.log(this.vaccine);
             loading.dismiss();
 
           } else {
@@ -127,9 +177,41 @@ export class VaccinePage {
       );
   }
 
+  groupBy(objectArray, property) {
+    return objectArray.reduce(
+      function (acc, obj) {
+        var key = obj[property];
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      },
+
+      {}
+    );
+  }
+
+  setHomeBook(value) {
+    this.homeBook = value;
+  }
+
+  async submitBooking() {
+    console.log(this.fg1.value);
+    await this.vaccineService.addBooking(this.fg1.value).subscribe(
+      res => {
+        if (res.IsSuccess) {
+          this.toastService.create(res.Message);
+          this.homeBook = false;
+        }
+      },
+      err => {
+        this.toastService.create(err, "danger");
+      }
+    );
+  }
+
   printdata() {
-    //this.vaccineService.printVaccineSchedule(this.childID);
-   // console.log(this.childId);
     this.download(this.childId);
   }
 
@@ -154,16 +236,12 @@ export class VaccinePage {
   }
 
   checkForMissed(input) {
-    //console.log(this.today);
-    let todaydate = moment(input, "DD-MM-YYYY").format("YYYY-MM-DD");
-    var date1 = Date.parse(todaydate);
-    //console.log(date1);
-    if (this.today > date1) {
+    let today1 = moment(this.today).format("YYYY-MM-DD");
+    if (today1 > input) {
       return true;
     }
     else
       return false;
-
   }
 
   async updateDate($event, vacId) {
@@ -187,7 +265,7 @@ export class VaccinePage {
   }
 
 
-  datepick(){
+  datepick() {
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
@@ -198,8 +276,6 @@ export class VaccinePage {
     );
   }
 
-
-
   async resheduleAlert(message, data) {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -207,65 +283,9 @@ export class VaccinePage {
       message: message,
       buttons: [
         {
-          text: 'Ignore Rule',
-          // role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            if (message.search("it is greater than the Max Age of dose") != -1) {
-              this.vaccineService.updateVaccinationDate(data, true, false, false).subscribe(
-                res => {
-                  if (res.IsSuccess) {
-                    this.getVaccination();
-                    this.toastService.create(res.Message);
-                  } else {
-                    //this.toastService.create(res.Message, "danger");
-                    this.resheduleAlert(res.Message, data);
-                  }
-                },
-                err => {
-                  this.toastService.create(err, "danger");
-                }
-              );
-            }
-            else if (message.search("Minimum Age of this vaccine from date of birth should be") != -1) {
-              this.vaccineService.updateVaccinationDate(data, false, true, false).subscribe(
-                res => {
-                  if (res.IsSuccess) {
-                    this.getVaccination();
-                    this.toastService.create(res.Message);
-                  } else {
-                    //this.toastService.create(res.Message, "danger");
-                    this.resheduleAlert(res.Message, data);
-                  }
-                },
-                err => {
-                  this.toastService.create(err, "danger");
-                }
-              );
-            }
-            else if (message.search("Minimum Gap from previous dose of this vaccine should be") != -1) {
-              this.vaccineService.updateVaccinationDate(data, false, false, true).subscribe(
-                res => {
-                  if (res.IsSuccess) {
-                    this.getVaccination();
-                    this.toastService.create(res.Message);
-                  } else {
-                    //this.toastService.create(res.Message, "danger");
-                    this.resheduleAlert(res.Message, data);
-                  }
-                },
-                err => {
-                  this.toastService.create(err, "danger");
-                }
-              );
-            }
-
-          }
-        },
-        {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok');
+
           }
         }
       ]

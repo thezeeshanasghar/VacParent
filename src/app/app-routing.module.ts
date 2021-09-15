@@ -16,8 +16,20 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'forgotpassword',
+    loadChildren: () => import('./forgotpassword/forgotpassword.module').then( m => m.ForgotPasswordPageModule)
+  },
+  {
     path: 'child',
     loadChildren: () => import('./child/child.module').then( m => m.ChildPageModule)
+  },
+  {
+    path: 'vaccines',
+    loadChildren: () => import('./vaccines/vaccines.module').then( m => m.VaccinesPageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./aboutus/aboutus.module').then( m => m.AboutusPageModule)
   }
 ];
 

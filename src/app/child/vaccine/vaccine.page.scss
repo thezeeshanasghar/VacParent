@@ -1,3 +1,115 @@
+ion-content{
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+}
+form > ion-item{
+  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+}
+
+ion-col{
+  text-align: center;
+}
+.cardheader{
+  text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(76, 76, 92);
+}
+
+.card-div{
+  margin-bottom: 9px;
+}
+.img-div{
+padding: 20px;
+display: inline-block;
+float: left;
+position: relative;
+background: linear-gradient(135deg, #f08bd4, #ab51cb);
+}
+.name-div{
+padding: 20px;
+border-left: 1px solid gray;
+background: honeydew;
+line-height: 20pt;
+color:var(--ion-color-primary-custom);
+font-family: -webkit-body;
+}
+
+.vcard-div{
+  margin-bottom: 9px;
+}
+
+.vimg-div{
+padding: 5px;
+display: inline-block;
+float: left;
+position: relative;
+background: linear-gradient(135deg, #f08bd4, #ab51cb);
+border-radius: 20px 0px 0px 20px;
+vertical-align: center;
+}
+
+.vname-div{
+padding: 20px;
+border-left: 1px solid gray;
+background: honeydew;
+line-height: 20pt;
+color:var(--ion-color-primary-custom);
+font-family: -webkit-body;
+border-radius: 0px 20px 20px 0px;
+}
+
+.childname{
+    text-align: center;
+    color: #418386;
+    font-size: 15pt;
+    padding-left: 3px;
+}
+
+.childnamediv{
+  border: 1px solid cadetblue;
+  border-radius: 15px 40px;
+  text-align: center;
+}
+.childcard{
+  color: var(--ion-color-black);
+  background:#2dd36f;
+  // background: linear-gradient(90deg, pink , blue );
+  border-radius:15px;
+  padding: 4vh 2vh; 
+  margin-bottom: 3vh;
+  margin-left: 2vh;
+  //box-shadow: 0px 2px 2px 2px #2eb7bf;
+  box-sizing: border-box;
+  font-size: 12pt;
+}
+.card{
+  border-bottom: 1px solid rgb(192, 171, 171);
+  margin-top:5vh;
+}
+.none{
+  --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));
+  //border-bottom: 1px solid cadetblue;
+  margin-bottom: 3vh;
+  //display: flex;
+}
+
+// .none:only-child {
+//   border-bottom: 0px;
+// }
+
+ion-button{
+  text-transform: none;
+  // --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
+    //  color: var(--ion-color-light);
+     text-transform: none;
+     font-family: -webkit-body;
+}
+
+ion-fab-button{
+  --background: linear-gradient(135deg, rgb(55, 185, 61), rgb(0, 255, 42));
+}
+
+
 .col{
     //border: think solid black;
     border: solid 1px rgb(224, 215, 215);

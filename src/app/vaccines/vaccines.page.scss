@@ -1,0 +1,35 @@
+
+ion-content{
+  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+ }
+
+
+ion-row {
+  box-shadow: 0px 1vh 1vh cadetblue;
+  margin-bottom: 2vh;
+}
+
+
+#vacname{
+  //background: #0eca72;
+  background:  linear-gradient(
+    120deg
+    , #36d272, #0eb808);
+  font-size: 15pt;
+  color:var(--ion-color-light);
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  padding: 8px;
+
+}
+
+#vacdes{
+  background: linear-gradient(
+    120deg
+    , #7555b8db, #8031e0eb);
+ padding: 10px 20px;
+  font-size: 12pt;
+  color:rgba(243, 243, 236, 0.945);
+}
