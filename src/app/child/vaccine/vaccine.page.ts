@@ -19,8 +19,7 @@ const now = new Date();
 @Component({
   selector: "app-vaccine",
   templateUrl: "./vaccine.page.html",
-  styleUrls: ["./vaccine.page.scss"],
-  // changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ["./vaccine.page.scss"]
 })
 export class VaccinePage {
 
@@ -117,7 +116,7 @@ export class VaccinePage {
     });
 
     await loading.present();
-    await this.vaccineService
+    this.vaccineService
       .getVaccinationById(this.route.snapshot.paramMap.get("id"))
       .subscribe(
         res => {
@@ -164,7 +163,6 @@ export class VaccinePage {
             console.log(this.dataGrouping);
             // console.log(this.vaccine);
             loading.dismiss();
-
           } else {
             loading.dismiss();
             this.toastService.create(res.Message, "danger");
@@ -215,7 +213,7 @@ export class VaccinePage {
     this.download(this.childId);
   }
 
-  download(id) {
+  download(id: any) {
     var request: DownloadRequest = {
       uri: `${this.API_VACCINE}child/${id}/Download-Schedule-PDF`,
       title: 'Child Schedule',
@@ -244,17 +242,16 @@ export class VaccinePage {
       return false;
   }
 
-  async updateDate($event, vacId) {
+  async updateDate($event, vacId: any) {
     let newDate = $event.detail.value;
     newDate = moment(newDate, "YYYY-MM-DD").format("DD-MM-YYYY");
     let data = { Date: newDate, Id: vacId };
-    await this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
+    this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
       res => {
         if (res.IsSuccess) {
           this.getVaccination();
           this.toastService.create(res.Message);
         } else {
-          //this.toastService.create(res.Message, "danger");
           this.resheduleAlert(res.Message, data);
         }
       },
@@ -263,7 +260,6 @@ export class VaccinePage {
       }
     );
   }
-
 
   datepick() {
     this.datePicker.show({
@@ -279,7 +275,6 @@ export class VaccinePage {
   async resheduleAlert(message, data) {
     const alert = await this.alertController.create({
       header: 'Alert',
-      // message: message,
       message: message,
       buttons: [
         {
@@ -289,7 +284,6 @@ export class VaccinePage {
           }
         }
       ]
-      // buttons: ['OK']
     });
     await alert.present();
   }

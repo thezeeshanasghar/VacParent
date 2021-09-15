@@ -29,7 +29,6 @@ const routes: Routes = [
   declarations: [VaccinePage],
   providers: [
      Downloader , DatePicker
-
   ],
 })
 export class VaccinePageModule {}
