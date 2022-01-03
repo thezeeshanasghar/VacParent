@@ -1,3 +1,16 @@
 ion-content{
-    --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
+  }
+  .titletext  {
+      text-align: center;
+      font-family: -webkit-body;
+      font-size: 30pt;
+      color: blueviolet;
+      font-weight: 600;
+  }
+
+  ion-card-header{
+    --color: rgb(67, 37, 201);
+    font-family: -webkit-body;
+      font-size: 15pt;
   }

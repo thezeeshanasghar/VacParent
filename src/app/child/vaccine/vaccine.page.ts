@@ -105,7 +105,7 @@ export class VaccinePage {
   }
 
   async loadGoogleSheet() {
-    console.log("called");
+   // console.log("called");
 
   }
 
@@ -139,8 +139,8 @@ export class VaccinePage {
               if (doc.GivenDate)
                 doc.GivenDate = moment(doc.GivenDate, "DD-MM-YYYY").format("YYYY-MM-DD");
 
-              let date = moment(doc.Date, "DD-MM-YYYY").format("YYYY-MM-DD");
-              var date1 = Date.parse(date);
+             
+               var date1 = Date.parse(doc.Date);
               if (!this.next && this.today < date1) {
                 doc.Next = true;
                 this.next = true;
@@ -157,10 +157,13 @@ export class VaccinePage {
               else
                 this.missed++;
 
+              //  console.log(this.today); console.log(date1);
+
             });
+            //console.log(this.due);
 
             this.dataGrouping = this.groupBy(this.vaccine, "Date");
-            console.log(this.dataGrouping);
+            //console.log(this.dataGrouping);
             // console.log(this.vaccine);
             loading.dismiss();
           } else {

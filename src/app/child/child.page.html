@@ -16,12 +16,16 @@
     </ion-avatar>
   </ion-col>
     <ion-col size="8" class="name-div">
-    <span>{{child.Name}}</span> <br>
-    <span>{{calculateAge(child.DOB)}}</span> <br><span>{{child.Gender}}</span> <br>
-    <ion-button shape="round" disabled="false" size="small" 
+    <span style="font-weight: 600;">{{child.Name}}</span> <br>
+    <span>{{calculateAge(child.DOB)}}</span> <br><span>{{child.Gender}}</span>
+    <!-- <ion-button shape="round" disabled="false" size="small" 
       routerLink="vaccine/{{child.Id}}">
       Schedule
-    </ion-button>
+    </ion-button> -->
+    <span id="button"
+      routerLink="vaccine/{{child.Id}}">
+      View
+  </span>
   </ion-col>
   </ion-row>
 

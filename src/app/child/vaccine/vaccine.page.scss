@@ -1,5 +1,6 @@
 ion-content{
-  --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+  --background: linear-gradient(120deg, #b4c0e2, #d7d8da);
+   
 }
 form > ion-item{
   // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
@@ -8,6 +9,10 @@ form > ion-item{
 
 ion-col{
   text-align: center;
+}
+
+ion-card{
+  border-radius: 0px 20px 0px 20px
 }
 .cardheader{
   text-align: center;
@@ -24,18 +29,21 @@ display: inline-block;
 float: left;
 position: relative;
 background: linear-gradient(135deg, #f08bd4, #ab51cb);
+border-radius: 0px 0px 0px 20px;
 }
 .name-div{
-padding: 20px;
+padding: 10px;
 border-left: 1px solid gray;
 background: honeydew;
 line-height: 20pt;
 color:var(--ion-color-primary-custom);
 font-family: -webkit-body;
+border-radius: 0px 20px 0px 0px
 }
 
 .vcard-div{
   margin-bottom: 9px;
+  border-radius: 0px 20px 0px 20px
 }
 
 .vimg-div{
@@ -58,18 +66,18 @@ font-family: -webkit-body;
 border-radius: 0px 20px 20px 0px;
 }
 
-.childname{
-    text-align: center;
-    color: #418386;
-    font-size: 15pt;
-    padding-left: 3px;
-}
+// .childname{
+//     text-align: center;
+//     color: #418386;
+//     font-size: 15pt;
+//     padding-left: 3px;
+// }
 
-.childnamediv{
-  border: 1px solid cadetblue;
-  border-radius: 15px 40px;
-  text-align: center;
-}
+// .childnamediv{
+//   border: 1px solid cadetblue;
+//   border-radius: 15px 40px;
+//   text-align: center;
+// }
 .childcard{
   color: var(--ion-color-black);
   background:#2dd36f;

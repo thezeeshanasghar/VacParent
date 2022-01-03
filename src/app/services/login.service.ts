@@ -39,9 +39,9 @@ export class LoginService extends BaseService {
     );
   }
 
-  forgotPassword(data): Observable<any> {
-    const url = `${this.API_LOGIN}forgot-password`;
-    return this.http.post(url, data, this.httpOptions)
+  forgotPassword(number , date): Observable<any> {
+    const url = `${this.API_LOGIN}${number}/${date}`;
+    return this.http.get(url, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );

@@ -22,7 +22,7 @@
       </ion-col>
       <ion-col size="8" class="name-div">
         <ion-row>
-          <ion-col style="text-align: left; font-size: 15pt;"><span *ngIf="Child">{{Child.Name}}</span></ion-col>
+          <ion-col style="text-align: left; font-size: 15pt;font-weight: 600"><span *ngIf="Child">{{Child.Name}}</span></ion-col>
         </ion-row>
         <ion-row>
           <ion-col style="text-align: left;" size="9">
@@ -69,7 +69,7 @@
     <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue:mySortingFunction; let i=index">
       <ion-card>
         <ion-card-header>
-       <div  style="text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 5px;">
+       <div  style="color:#5260ff;text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 5px;">
         {{item.key | date}}
        </div>
        <div class="cardheader" style="text-align: center;">
@@ -89,7 +89,7 @@
            <ion-card-content>
         <div *ngFor="let v of item.value">
           <div class="none">
-            <ion-label>Dose: {{v.Dose.Name}} </ion-label>
+            <ion-label style="font-family: -webkit-body; font-weight:600">{{v.Dose.Name}} </ion-label>
             <p *ngIf="v.Due2EPI==true" style="color:rgb(55, 231, 10);">Due to EPI</p>
             <p *ngIf="v.Due2EPI==true"> Given by EPI</p>
             <p *ngIf="v.IsDone==true && v.Due2EPI==false && (v.IsDisease==false || v.IsDisease==null)"

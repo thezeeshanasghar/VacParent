@@ -6,8 +6,8 @@ export const environment = {
   production: false,
  
   // BASE_URL: "http://13.233.255.96:5002/api/",
-  //BASE_URL: "http://localhost:5000/api/",
-  BASE_URL: "https://fernflowers.com/api/",
+  BASE_URL: "http://localhost:5000/api/",
+  //BASE_URL: "https://fernflowers.com/api/",
 
   // BASE_URL: "https:fernflowers.com/api/",
   // RESOURCE_URL: "https://fernflowers.com/",

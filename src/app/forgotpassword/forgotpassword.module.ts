@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ForgotPasswordPage } from './forgotpassword.page';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
 //import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [ForgotPasswordPage],
-  providers:[]
+  providers:[  DatePicker
+]
 })
 export class ForgotPasswordPageModule {}

@@ -85,34 +85,34 @@ export class LoginPage implements OnInit {
   async forgotPasswordAlert(val) {
 this.forgot = val;
   }
-  async sendPassword() {
-    const loading = await this.loadingController.create({
-      message: 'Loading'
-    });
-let data = {
-  MobileNumber: this.MobileNumber,
-  CountryCode: "92",
-  UserType: "PARENT"
-}
-    await loading.present();
-    this.loginservice.forgotPassword(JSON.stringify(data)).subscribe(
-      res => {
-        if (res.IsSuccess) {
-          console.log(res.ResponseData);
-          loading.dismiss();
-          this.forgot = false;
-        }
-        else {
-          loading.dismiss();
-          this.toastService.create(res.Message, 'danger');
-        }
-      },
-      err => {
-        loading.dismiss();
-        this.toastService.create(err, 'danger');
-      }
-    );
-      }
+//   async sendPassword() {
+//     const loading = await this.loadingController.create({
+//       message: 'Loading'
+//     });
+// let data = {
+//   MobileNumber: this.MobileNumber,
+//   CountryCode: "92",
+//   UserType: "PARENT"
+// }
+//     await loading.present();
+//     this.loginservice.forgotPassword(JSON.stringify(data)).subscribe(
+//       res => {
+//         if (res.IsSuccess) {
+//           console.log(res.ResponseData);
+//           loading.dismiss();
+//           this.forgot = false;
+//         }
+//         else {
+//           loading.dismiss();
+//           this.toastService.create(res.Message, 'danger');
+//         }
+//       },
+//       err => {
+//         loading.dismiss();
+//         this.toastService.create(err, 'danger');
+//       }
+//     );
+//       }
 
 
 }
