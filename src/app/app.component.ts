@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       url: '/dashboard',
       icon: 'heart'
     },
-   
+
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private loginservice: LoginService,
+    public loginservice: LoginService,
   ) {
     this.initializeApp();
   }
