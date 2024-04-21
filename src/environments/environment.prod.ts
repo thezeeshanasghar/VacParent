@@ -1,8 +1,17 @@
 export const environment = {
   production: true,
-  
-  BASE_URL: "https:fernflowers.com/api/",
-  RESOURCE_URL: "https://fernflowers.com/",
+
+  // staging API URL's
+  BASE_URL: "https://stage.skintechno.com/api/",
+  RESOURCE_URL: "https://stage.skintechno.com/",
+
+  // production API URL's
+  // BASE_URL: "https://skintechno.com/api/",
+  // RESOURCE_URL: "https://skintechno.com/",
+
+  // local API URL's
+  // BASE_URL: "https://localhost:5001/api/",
+  // RESOURCE_URL: "https://localhost:5001/",
 
   USER: 'User',
   DOCTOR_Id: "DoctorId",
