@@ -1,16 +1,18 @@
 ion-content{
-  --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
+  // --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
   }
   .titletext  {
       text-align: center;
       font-family: -webkit-body;
       font-size: 30pt;
-      color: blueviolet;
+      // color: blueviolet;
       font-weight: 600;
   }
 
   ion-card-header{
-    --color: rgb(67, 37, 201);
+    color: black;
+    // --color: rgb(67, 37, 201);
     font-family: -webkit-body;
       font-size: 15pt;
   }

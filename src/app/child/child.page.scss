@@ -1,6 +1,6 @@
 ion-content{
   // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
-  --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
 }
 
 // .childcard{
@@ -20,7 +20,9 @@ ion-item{
 }
 
 ion-button {  
-  --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
+  // --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+
      color: var(--ion-color-light);
      text-transform: none;
      margin-left: 50%;
@@ -28,7 +30,7 @@ ion-button {
 }
 
 #button{
-  color:  #b85ccc;
+  color:  black;
   float: right;
 
 }
@@ -43,7 +45,7 @@ border-radius: 10px 0px 0px 20px;
 display: inline-block;
 float: left;
 position: relative;
-background: linear-gradient(135deg, #f08bd4, #ab51cb);
+background: linear-gradient(135deg, #007bff, #00bfff);
 }
 
 .name-div{

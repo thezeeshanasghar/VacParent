@@ -3,7 +3,8 @@ ion-menu-button {
 }
 ion-content{
  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
- --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+//  --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
+ --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
 }
 
 #container {
@@ -44,14 +45,22 @@ ion-content{
   font-size: 19pt;
 }
 #patientbox{
-  background: linear-gradient(120deg, rgb(0, 110, 255), rgb(5, 5, 107));
+  // background: linear-gradient(120deg, rgb(0, 110, 255), rgb(5, 5, 107));
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+  color: black;
 }
 #vaccinebox{
-  background: linear-gradient(120deg, rgb(33, 110, 33), rgb(75, 75, 94));
+  // background: linear-gradient(120deg, rgb(33, 110, 33), rgb(75, 75, 94));
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+  color: black;
 }
 #aboutbox{
-  background: linear-gradient(120deg, rgb(199, 27, 199) , rgb(94, 8, 79));
+  // background: linear-gradient(120deg, rgb(199, 27, 199) , rgb(94, 8, 79));
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+  color: black;
 }
 #logoutbox{
-  background: linear-gradient(120deg, rgb(206, 33, 33), rgb(136, 13, 19));
+  // background: linear-gradient(120deg, rgb(206, 33, 33), rgb(136, 13, 19));
+  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+  color: black;
 }

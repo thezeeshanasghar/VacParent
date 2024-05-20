@@ -27,10 +27,15 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Vaccines',
-      url: '/dashboard',
+      url: '/vaccines',
       icon: 'heart'
     },
 
+    {
+      title: 'About Us',
+      url: '/about',
+      icon: 'information'
+    },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 

@@ -12,12 +12,28 @@
          
 
         <ion-item>
-          <ion-input class="ion-clearInput" type="email" placeholder="Mobile" formControlName="MobileNumber"></ion-input>
+          <ion-input 
+            class="ion-clearInput" 
+            type="text" 
+            placeholder="Mobile" 
+            formControlName="MobileNumber">
+          </ion-input>
           <ion-icon name="call-outline"></ion-icon>
         </ion-item>
+        <div *ngIf="fg.get('MobileNumber').invalid && (fg.get('MobileNumber').dirty || fg.get('MobileNumber').touched)">
+          <div *ngIf="fg.get('MobileNumber').errors">
+            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.required">
+              Mobile number is required.
+            </div>
+            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.onlyNumbers">
+              Please enter only numbers.
+            </div>
+          </div>
+        </div>
+        
 
         <ion-item>
-          <ion-input class="ion-clearInput1" type="email" placeholder="Password" formControlName="Password"></ion-input>
+          <ion-input class="ion-clearInput1" type="password" placeholder="Password" formControlName="Password"></ion-input>
           <ion-icon name="lock-closed-outline"></ion-icon>
         </ion-item>
         
