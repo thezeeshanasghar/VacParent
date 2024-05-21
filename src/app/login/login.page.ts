@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { LoginService } from 'src/app/services/login.service';
@@ -34,12 +34,19 @@ export class LoginPage implements OnInit {
     this.skipLoginIfAlreadyLoggedIn();
     this.loginservice.changeState(false);
     this.fg = this.formBuilder.group({
-      'MobileNumber': [null, Validators.required],
+      'MobileNumber': [null,  [Validators.required, this.onlyNumbersValidator()]],
       'Password': [null, Validators.required],
       'CountryCode': ['92'],
       'UserType': ['PARENT']
     });
    
+  }
+
+  onlyNumbersValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const forbidden = /\D/.test(control.value); // Regular expression to test for non-digit characters
+      return forbidden ? { 'onlyNumbers': { value: control.value } } : null;
+    };
   }
 
   skipLoginIfAlreadyLoggedIn() {
