@@ -12,13 +12,20 @@
          
 
         <ion-item>
-          <ion-input 
-            class="ion-clearInput" 
-            type="text" 
-            placeholder="Mobile Number" 
-            formControlName="MobileNumber">
-          </ion-input>
-          <ion-icon name="call-outline"></ion-icon>
+          <div style="display: flex;  ">
+            <ion-select formControlName="CountryCode" >
+                <ion-select-option *ngFor="let country of countryCodes" [value]="country.code">
+                  (+{{ country.code }}) {{ country.name }} 
+                </ion-select-option>
+              </ion-select>
+              <ion-input 
+                class="ion-clearInput" 
+                type="text" 
+                placeholder="Mobile Number" 
+                formControlName="MobileNumber">
+              </ion-input>
+          </div>
+          <ion-icon name="call-outline" slot="end"></ion-icon>
         </ion-item>
         <div *ngIf="fg.get('MobileNumber').invalid && (fg.get('MobileNumber').dirty || fg.get('MobileNumber').touched)">
           <div *ngIf="fg.get('MobileNumber').errors">
