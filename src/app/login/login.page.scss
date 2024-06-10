@@ -1,13 +1,38 @@
-ion-content {
-    --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+ion-content{
+    --background: #fff url('../../../src/assets/login2.jpg') no-repeat center center / cover;
 }
 
-ion-item {
-    margin-top: 05%;
+
+// ion-content {
+//     --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+// }
+
+
+ion-card{
+    align-content: center;
+    width: 100%;
+    background-color: rgba(92, 92, 92, 0.459); 
+}
+
+ion-input{
+    --padding-start: 7px;
+    background-color: transparent;
+    color: white;
 }
 
 .item.item-trns {
-    color: white; 
+	border-color: rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0);
+	color: white; 
+}
+
+
+ion-item {
+    margin-top: 02%;
+}
+
+.item.item-trns {
+    color: rgb(182, 15, 15); 
 }
 
 h2 {
@@ -19,6 +44,7 @@ form {
     margin-right: 10%;
     height: 30%;
     padding-top: 10%;
+
 }
 
 #signin {
@@ -37,7 +63,7 @@ ion-label {
 
 p {
     margin-top: 20%;
-    font-size: 15pt;
+    font-size: 12pt;
 }
 
 a {
