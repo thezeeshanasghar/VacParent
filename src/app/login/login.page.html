@@ -12,7 +12,6 @@
     
     
     
-    <ion-card>
       <ion-item color="medium">
         <div style="display: flex;">
           <ion-select formControlName="CountryCode">
@@ -48,17 +47,14 @@
         </ion-item>
       
       
-      <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()"  style="margin-bottom: -27vh;">
-        <ion-icon name="log-in"></ion-icon>&nbsp;
-      Login
-    </ion-button>
+        <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
+          <ion-icon name="log-in"></ion-icon>&nbsp; Login
+        </ion-button>
     
     <ion-text>
       <a routerLink="/forgotpassword">
         <p class="ion-margin-right" style="color: white; margin-left: 23px;">Forgot Password?</p>
       </a>
     </ion-text>  
-    
-  </ion-card>
-      </form>
+    </form>
     </ion-content>
