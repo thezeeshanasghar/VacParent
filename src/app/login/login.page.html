@@ -9,9 +9,8 @@
 
   
   <form class="ion-padding" [formGroup]="fg">
-    
-    
-    
+    <ion-card>
+      <h1 style="text-align: center; color: white; font-weight: 400;">Log In</h1>
       <ion-item color="medium">
         <div style="display: flex;">
           <ion-select formControlName="CountryCode">
@@ -47,14 +46,15 @@
         </ion-item>
       
       
-        <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
-          <ion-icon name="log-in"></ion-icon>&nbsp; Login
-        </ion-button>
+     <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
+              <ion-icon name="log-in"></ion-icon>&nbsp; Login
+            </ion-button>
     
     <ion-text>
       <a routerLink="/forgotpassword">
         <p class="ion-margin-right" style="color: white; margin-left: 23px;">Forgot Password?</p>
       </a>
     </ion-text>  
+  </ion-card>
     </form>
     </ion-content>
