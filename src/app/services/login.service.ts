@@ -12,6 +12,7 @@ export class LoginService extends BaseService {
 
   private authenticationState = new BehaviorSubject(false);
   private readonly API_LOGIN = `${environment.BASE_URL}user/`
+   private readonly API_URL = `${environment.BASE_URL}/`
   constructor(
     protected http: HttpClient
   ) { super(http); }
@@ -41,6 +42,16 @@ export class LoginService extends BaseService {
 
   forgotPassword(number , date): Observable<any> {
     const url = `${this.API_LOGIN}${number}/${date}`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  forgotPassword2(email:string): Observable<any> {
+    const sanitizedEmail = email.replace(/^"|"$/g, '');
+  // Encode the email
+  const encodedEmail = encodeURIComponent(sanitizedEmail);
+  const url = `${this.API_LOGIN}forget/${encodedEmail}`;
     return this.http.get(url, this.httpOptions)
       .pipe(
         catchError(this.handleError)

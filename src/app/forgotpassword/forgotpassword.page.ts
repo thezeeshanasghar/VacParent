@@ -23,6 +23,7 @@ export class ForgotPasswordPage implements OnInit {
   forgot = false;
   MobileNumber: any;
   birthday1 = moment(Date.now()).format("YYYY-MM-DD");
+  Email: string;
 
   constructor(
     public router: Router,
@@ -296,25 +297,27 @@ this.forgot = val;
 //   UserType: "PARENT"
 // }
     await loading.present();
+console.log(this.Email);    
     
-    this.loginservice.forgotPassword("3345022330" , this.birthday1).subscribe(
-      res => {
-        if (res.IsSuccess) {
-          console.log(res.ResponseData);
-          this.toastService.create("Password has been sent to your Email address and Mobile Number")
-          loading.dismiss();
-          this.forgot = false;
-        }
-        else {
-          loading.dismiss();
-          this.toastService.create(res.Message, 'danger');
-        }
-      },
-      err => {
-        loading.dismiss();
-        this.toastService.create(err, 'danger');
-      }
-    );
+    
+    // this.loginservice.forgotPassword2(JSON.stringify(this.Email)).subscribe(
+    //   res => {
+    //     if (res.IsSuccess) {
+    //       console.log(res.ResponseData);
+    //       this.toastService.create("Password has been sent to your Email address and Mobile Number")
+    //       loading.dismiss();
+    //       this.forgot = false;
+    //     }
+    //     else {
+    //       loading.dismiss();
+    //       this.toastService.create(res.Message, 'danger');
+    //     }
+    //   },
+    //   err => {
+    //     loading.dismiss();
+    //     this.toastService.create(err, 'danger');
+    //   }
+    // );
       }
 
       updateDate(){
