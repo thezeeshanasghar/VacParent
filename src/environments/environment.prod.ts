@@ -2,8 +2,8 @@ export const environment = {
   production: true,
 
   // staging API URL's
-  BASE_URL: "https://stage.skintechno.com/api/",
-  RESOURCE_URL: "https://stage.skintechno.com/",
+  BASE_URL: "https://myapi.skintechno.com/api/",
+  RESOURCE_URL: "https://myapi.skintechno.com/",
 
   // production API URL's
   // BASE_URL: "https://skintechno.com/api/",
