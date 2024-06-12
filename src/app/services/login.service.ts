@@ -51,7 +51,7 @@ export class LoginService extends BaseService {
     const sanitizedEmail = email.replace(/^"|"$/g, '');
   // Encode the email
   const encodedEmail = encodeURIComponent(sanitizedEmail);
-  const url = `${this.API_LOGIN}forget/${encodedEmail}`;
+  const url = `${this.API_LOGIN}forgetemail/${encodedEmail}`;
     return this.http.get(url, this.httpOptions)
       .pipe(
         catchError(this.handleError)
