@@ -13,6 +13,7 @@ export class LoginService extends BaseService {
   private authenticationState = new BehaviorSubject(false);
   private readonly API_LOGIN = `${environment.BASE_URL}user/`
    private readonly API_URL = `${environment.BASE_URL}/`
+  
   constructor(
     protected http: HttpClient
   ) { super(http); }
@@ -65,5 +66,14 @@ export class LoginService extends BaseService {
         catchError(this.handleError)
       );
   }
+
+  sendPassword2(data: any): Observable<any> {
+    const url = `${this.API_LOGIN}verify`;
+    return this.http.post(url, data, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  
 
 }

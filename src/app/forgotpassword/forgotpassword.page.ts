@@ -19,11 +19,18 @@ export class ForgotPasswordPage implements OnInit {
 
 
   fg: FormGroup;
-  obj:any;
+  obj: any;
   forgot = false;
   MobileNumber: any;
   birthday1 = moment(Date.now()).format("YYYY-MM-DD");
   Email: string;
+  childName: string;
+  fatherName: string;
+  // birthday1: string;
+  email: string;
+
+  loading: boolean = false; // Define loading variable
+
 
   constructor(
     public router: Router,
@@ -37,7 +44,7 @@ export class ForgotPasswordPage implements OnInit {
   ) { }
 
   ngOnInit() {
-      
+
   }
 
   countryCodes = [
@@ -281,25 +288,24 @@ export class ForgotPasswordPage implements OnInit {
     { name: 'Yemen', code: '967' },
     { name: 'Zambia', code: '260' },
     { name: 'Zimbabwe', code: '263' },
-];
+  ];
 
   async forgotPasswordAlert(val) {
-this.forgot = val;
+    this.forgot = val;
   }
-  async sendPassword() 
-  {
+  async sendPassword() {
     const loading = await this.loadingController.create({
       message: 'Loading'
     });
-// let data = {
-//   MobileNumber: this.MobileNumber.substring(1,11),
-//   C: "92",
-//   UserType: "PARENT"
-// }
+    // let data = {
+    //   MobileNumber: this.MobileNumber.substring(1,11),
+    //   C: "92",
+    //   UserType: "PARENT"
+    // }
     await loading.present();
-console.log(this.Email);    
-    
-    
+    console.log(this.Email);
+
+
     // this.loginservice.forgotPassword2(JSON.stringify(this.Email)).subscribe(
     //   res => {
     //     if (res.IsSuccess) {
@@ -318,21 +324,69 @@ console.log(this.Email);
     //     this.toastService.create(err, 'danger');
     //   }
     // );
-      }
+  }
 
-      updateDate(){
-        console.log(this.birthday1);
-      }
+  updateDate() {
+    console.log(this.birthday1);
+  }
 
-      datepick() {
-        this.datePicker.show({
-          date: new Date(),
-          mode: 'date',
-          androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-        }).then(
-          date => console.log('Got date: ', date),
-          err => console.log('Error occurred while getting date: ', err)
-        );
-      }
-    
+  datepick() {
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    }).then(
+      date => console.log('Got date: ', date),
+      err => console.log('Error occurred while getting date: ', err)
+    );
+  }
+
+  async sendPassword2() {
+    // Consolidate data into a single object
+    const data = {
+        Name: this.childName,
+        FatherName: this.fatherName,
+        DOB: this.birthday1,
+        Email: this.email
+    };
+
+    // Log the data for debugging
+    console.log('Data to be sent:', data);
+
+    const loading = await this.loadingController.create({
+        message: "Loading..."
+    });
+    await loading.present();
+
+
+    try {
+
+        const res = await this.loginservice.sendPassword2(data).toPromise();
+        if (res.IsSuccess) {
+            console.log('Response Data:', res.ResponseData);
+
+            const ChildId = res.ResponseData.Id;
+            console.log('Child ID:', ChildId);
+
+            loading.dismiss();
+            this.toastService.create("Successfully added");
+
+            if (res.ResponseData.Type === "special") {
+                this.router.navigate([`/members/child/vaccine/${ChildId}`]);
+            } else {
+                this.router.navigate(["/members/child"]);
+            }
+        } else {
+            loading.dismiss();
+            this.toastService.create(res.Message, "danger");
+        }
+    } catch (err) {
+        loading.dismiss();
+        this.toastService.create('Error: ' + err.message, 'danger');
+    }
+}
+
+
+
+
 }
