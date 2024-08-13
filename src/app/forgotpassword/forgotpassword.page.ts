@@ -342,14 +342,19 @@ export class ForgotPasswordPage implements OnInit {
   }
 
   async sendPassword2() {
+    const formattedDate = moment(this.birthday1).format('YYYY-MM-DD');
+
     // Consolidate data into a single object
     const data = {
         Name: this.childName,
         FatherName: this.fatherName,
-        DOB: this.birthday1,
+        DOB: formattedDate,  // Use the formatted date here
         Email: this.email
     };
+    
+console.log("formattedDate" , formattedDate);
 
+    
     // Log the data for debugging
     console.log('Data to be sent:', data);
 
