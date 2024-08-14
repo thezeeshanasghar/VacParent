@@ -39,7 +39,7 @@ jobs:
           username: "${{ secrets.PROD_FTP_USERNAME }}"
           password: "${{ secrets.PROD_FTP_PASSWORD }}"
           local-dir: www/
-          server-dir: /patient
+          server-dir: /
           exclude: |
             **/.git*
             **/.git*/**
