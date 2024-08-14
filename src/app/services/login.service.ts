@@ -12,6 +12,8 @@ export class LoginService extends BaseService {
 
   private authenticationState = new BehaviorSubject(false);
   private readonly API_LOGIN = `${environment.BASE_URL}user/`
+   private readonly API_URL = `${environment.BASE_URL}/`
+  
   constructor(
     protected http: HttpClient
   ) { super(http); }
@@ -46,6 +48,16 @@ export class LoginService extends BaseService {
         catchError(this.handleError)
       );
   }
+  forgotPassword2(email:string): Observable<any> {
+    const sanitizedEmail = email.replace(/^"|"$/g, '');
+  // Encode the email
+  const encodedEmail = encodeURIComponent(sanitizedEmail);
+  const url = `${this.API_LOGIN}forgetemail/${encodedEmail}`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   ChangePassword(data): Observable<any> {
     const url = `${this.API_LOGIN}change-password`;
@@ -54,5 +66,14 @@ export class LoginService extends BaseService {
         catchError(this.handleError)
       );
   }
+
+  sendPassword2(data: any): Observable<any> {
+    const url = `${this.API_LOGIN}verify`;
+    return this.http.post(url, data, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  
 
 }

@@ -5,34 +5,56 @@
 
 <ion-content>
 
-  <div id="signin"> SIGN IN</div>
+  <div id="signin"></div>
 
-      <form class="ion-padding" [formGroup]="fg">
- 
-         
-
-        <ion-item>
-          <ion-input class="ion-clearInput" type="email" placeholder="Mobile" formControlName="MobileNumber"></ion-input>
-          <ion-icon name="call-outline"></ion-icon>
-        </ion-item>
-
-        <ion-item>
-          <ion-input class="ion-clearInput1" type="email" placeholder="Password" formControlName="Password"></ion-input>
-          <ion-icon name="lock-closed-outline"></ion-icon>
-        </ion-item>
+  
+  <form class="ion-padding" [formGroup]="fg">
+    <ion-card>
+      <h1 style="text-align: center; color: white; font-weight: 400;">Log In</h1>
+      <ion-item color="medium">
+        <div style="display: flex;">
+          <ion-select formControlName="CountryCode">
+            <ion-select-option *ngFor="let country of countryCodes" [value]="country.code">
+              (+{{ country.code }}) {{ country.name }} 
+            </ion-select-option>
+          </ion-select>
+          <ion-input 
+            class="ion-clearInput" 
+            type="text" 
+            placeholder="Mobile Number"
+            formControlName="MobileNumber">
+          </ion-input>
+        </div>
+        <ion-icon name="call-outline" slot="end"></ion-icon>
+      </ion-item>
+      
+        <div *ngIf="fg.get('MobileNumber').invalid && (fg.get('MobileNumber').dirty || fg.get('MobileNumber').touched)">
+          <div *ngIf="fg.get('MobileNumber').errors">
+            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.required">
+              Mobile number is required.
+            </div>
+            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.onlyNumbers">
+              Please enter only numbers.
+            </div>
+          </div>
+        </div>
         
 
-        <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
-          <ion-icon name="log-in"></ion-icon>&nbsp;
-          Login
-        </ion-button>
-
-      </form>
-
-      <ion-text class="ion-text-center">
-        <a routerLink="/forgotpassword">
-          <p class="ion-margin-right">Forgot Password?</p>
-        </a>
-      </ion-text>
-
-</ion-content>
+        <ion-item color="medium">
+          <ion-input class="ion-clearInput1" type="password" placeholder="Password" formControlName="Password"></ion-input>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+        </ion-item>
+      
+      
+     <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
+              <ion-icon name="log-in"></ion-icon>&nbsp; Login
+            </ion-button>
+    
+    <ion-text>
+      <a routerLink="/forgotpassword">
+        <p class="ion-margin-right" style="color: white; margin-left: 23px;">Forgot Password?</p>
+      </a>
+    </ion-text>  
+  </ion-card>
+    </form>
+    </ion-content>

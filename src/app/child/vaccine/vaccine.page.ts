@@ -90,7 +90,7 @@ export class VaccinePage {
     var age = today.getFullYear() - new Date(birthday).getFullYear();
     var m = today.getMonth() - new Date(birthday).getMonth();
     age = age * 12 + m;
-    return Math.round(age/12) +" Years " + age % 12 + " Months";
+    return Math.round(age / 12) + " Years " + age % 12 + " Months";
   }
 
   checkVaccineIsDon(data): boolean {
@@ -105,7 +105,7 @@ export class VaccinePage {
   }
 
   async loadGoogleSheet() {
-   // console.log("called");
+    // console.log("called");
 
   }
 
@@ -123,7 +123,7 @@ export class VaccinePage {
           if (res.IsSuccess) {
             // res.ResponseData = res.ResponseData.filter(item=> (!item.IsSkip));
             //original code
-            this.vaccine = res.ResponseData.filter(x=>x.IsSkip != true);
+            this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
             this.fg1.controls['ChildName'].setValue(this.Child.Name);
             this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
@@ -139,8 +139,8 @@ export class VaccinePage {
               if (doc.GivenDate)
                 doc.GivenDate = moment(doc.GivenDate, "DD-MM-YYYY").format("YYYY-MM-DD");
 
-             
-               var date1 = Date.parse(doc.Date);
+
+              var date1 = Date.parse(doc.Date);
               if (!this.next && this.today < date1) {
                 doc.Next = true;
                 this.next = true;
@@ -149,7 +149,7 @@ export class VaccinePage {
                 doc.Next = false;
 
               //given due missed calculation
-              
+
               if (doc.IsDone == true)
                 this.given++;
               else if (doc.IsDone != true && this.today < date1)
@@ -163,8 +163,6 @@ export class VaccinePage {
             //console.log(this.due);
 
             this.dataGrouping = this.groupBy(this.vaccine, "Date");
-            //console.log(this.dataGrouping);
-            // console.log(this.vaccine);
             loading.dismiss();
           } else {
             loading.dismiss();
@@ -291,6 +289,11 @@ export class VaccinePage {
     await alert.present();
   }
 
+  updateBulkDate(event: any, vaccineId: number) {
+    // Your implementation here
+    // Use `event` to get the new date and `vaccineId` to know which vaccine's date is being updated
+    throw new Error("Not implemented");
+  }
 }
 
 // https://stackoverflow.com/questions/14446511/most-efficient-method-to-groupby-on-a-array-of-objects

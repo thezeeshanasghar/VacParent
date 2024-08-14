@@ -1,5 +1,5 @@
 {
-  "name": "vacccinepk",
+  "name": "VacParent",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
     "@capacitor/android": "^2.2.1",
-    "@capacitor/core": "2.2.1",
+    "@capacitor/core": "2.5.0",
     "@ionic-native/core": "^5.0.7",
     "@ionic-native/date-picker": "^5.27.0",
     "@ionic-native/downloader": "^5.27.0",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.5",
-    "@angular/cli": "~9.1.5",
+    "@angular/cli": "9.1.13",
     "@angular/compiler": "~9.1.6",
     "@angular/compiler-cli": "~9.1.6",
     "@angular/language-service": "~9.1.6",
@@ -47,7 +47,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
-    "jasmine-core": "~3.5.0",
+    "jasmine-core": "~3.8",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~5.0.0",
     "karma-chrome-launcher": "~3.1.0",

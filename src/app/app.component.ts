@@ -27,10 +27,19 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Vaccines',
-      url: '/dashboard',
+      url: '/vaccines',
       icon: 'heart'
     },
-   
+    {
+      title: 'About Us',
+      url: '/about',
+      icon: 'information'
+    },
+    {
+      title: 'Change Password',
+      url: '/change-password',
+      icon: 'lock-closed'
+    }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
@@ -39,7 +48,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private loginservice: LoginService,
+    public loginservice: LoginService,
   ) {
     this.initializeApp();
   }

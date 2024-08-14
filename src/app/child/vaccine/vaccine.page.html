@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar class="themeheader">
+  <ion-toolbar >
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="black"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="!homeBook" slot="end" color="light">Vaccinations</ion-title>
     <ion-title *ngIf="homeBook" slot="end" color="light">Booking</ion-title>
@@ -66,7 +66,7 @@
 </div> -->
 
 
-    <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue:mySortingFunction; let i=index">
+    <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue; let i=index">
       <ion-card>
         <ion-card-header>
        <div  style="color:#5260ff;text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 5px;">
