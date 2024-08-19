@@ -1,34 +1,29 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="black"></ion-back-button>
     </ion-buttons>
-    <ion-title slot="end" >Patients</ion-title>
+    <ion-title slot="end">Patients</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-card *ngFor="let child of childs" [ngClass]="child.Gender=='Girl' ? 'girl' : 'boy'" style="margin-bottom: 15px; border-radius: 5px; border: 2px solid;" [style.border-color]="child.Gender=='Girl' ? '#f50ca7' : 'darkblue'">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'" class="{{child.Gender=='Girl' ? 'female-image' : 'male-image'}}"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2 style="font-weight: 600;">{{child.Name}}</h2>
+        <p style="color: gray;">{{calculateAge(child.DOB)}} years old</p>
+        <p [ngStyle]="{'font-style': 'italic', 'color': child.Gender == 'Girl' ? 'red' : 'black'}">{{child.Gender}}</p>
+      </ion-label>
+    </ion-item>
 
-<ion-row *ngFor="let child of childs" class="card-div">
-  <ion-col size="4" class="img-div">
-    <ion-avatar>
-      <img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'">
-    </ion-avatar>
-  </ion-col>
-    <ion-col size="8" class="name-div">
-    <span style="font-weight: 600;">{{child.Name}}</span> <br>
-    <span>{{calculateAge(child.DOB)}}</span> <br><span>{{child.Gender}}</span>
-    <!-- <ion-button shape="round" disabled="false" size="small" 
-      routerLink="vaccine/{{child.Id}}">
-      Schedule
-    </ion-button> -->
-    <span id="button"
-      routerLink="vaccine/{{child.Id}}">
-      View
-  </span>
-  </ion-col>
-  </ion-row>
-
- 
-
+    <ion-card-content>
+      <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}" style="float: right; margin-bottom: 10px;">
+        View Details
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
