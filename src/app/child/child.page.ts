@@ -66,12 +66,13 @@ export class ChildPage implements OnInit {
     )
   }
 
-  calculateAge(birthday) { // birthday is a date
-   var birthday1 = moment(birthday, "DD-MM-YYYY").format("YYYY-MM-DD");
-    var today = new Date();
-    var age = today.getFullYear() - new Date(birthday1).getFullYear();
-    var m = today.getMonth() - new Date(birthday1).getMonth();
-    age = age * 12 + m;
-    return Math.round(age/12) +" Years " + age % 12 + " Months";
+  calculateAge(birthday) {
+    var birthDate = moment(birthday, "DD-MM-YYYY");
+    var today = moment();
+    var years = today.diff(birthDate, 'years');
+    birthDate.add(years, 'years');
+    var months = today.diff(birthDate, 'months');
+    return `${years} Years ${months} Months`;
   }
+  
 }

@@ -85,13 +85,24 @@ export class VaccinePage {
     });
   }
 
-  calculateAge(birthday) { // birthday is a date
-    var today = new Date();
-    var age = today.getFullYear() - new Date(birthday).getFullYear();
-    var m = today.getMonth() - new Date(birthday).getMonth();
-    age = age * 12 + m;
-    return Math.round(age / 12) + " Years " + age % 12 + " Months";
+  calculateAge(birthday: string) {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    let years = today.getFullYear() - birthDate.getFullYear();
+    let months = today.getMonth() - birthDate.getMonth();
+    let days = today.getDate() - birthDate.getDate();
+    if (months < 0 || (months === 0 && days < 0)) {
+      years--;
+      months += 12;
+    }
+    if (days < 0) {
+      months--;
+      const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      days += lastMonth;
+    }
+    return `${years} Years ${months} Months`;
   }
+
 
   checkVaccineIsDon(data): boolean {
     var isdone: boolean = true;
