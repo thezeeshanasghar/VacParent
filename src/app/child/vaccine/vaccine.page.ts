@@ -15,6 +15,8 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from "@angular/forms";
 //const { GoogleSpreadsheet } = require('google-spreadsheet');
 
+declare var cordova: any;
+
 const now = new Date();
 @Component({
   selector: "app-vaccine",
