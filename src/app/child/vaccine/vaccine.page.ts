@@ -226,14 +226,27 @@ export class VaccinePage {
   }
 
   download(id: any) {
+    const fileUrl = `${this.API_VACCINE}child/${id}/Download-Schedule-PDF`;
+
+    if (typeof cordova === 'undefined') {
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = 'ChildSchedule.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      this.toastService.create('Download started in the browser.', 'success');
+      return;
+    }
+
+    // Mobile environment
     var request: DownloadRequest = {
-      uri: `${this.API_VACCINE}child/${id}/Download-Schedule-PDF`,
+      uri: fileUrl,
       title: 'Child Schedule',
       description: '',
       mimeType: '',
       visibleInDownloadsUi: true,
       notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
-      // notificationVisibility: 0,
       destinationInExternalFilesDir: {
         dirType: 'Downloads',
         subPath: 'ChildSchedule.pdf'
@@ -242,7 +255,6 @@ export class VaccinePage {
     this.downloader.download(request)
       .then((location: string) => console.log('File downloaded at:' + location))
       .catch((error: any) => console.error(error));
-
   }
 
   checkForMissed(input) {
