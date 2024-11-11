@@ -3,8 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button color="black"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="!homeBook" slot="end" color="light">Vaccinations</ion-title>
-    <ion-title *ngIf="homeBook" slot="end" color="light">Booking</ion-title>
+    <ion-title *ngIf="!homeBook" slot="end" color="dark" class="text-center">Vaccinations</ion-title>
+    <ion-title *ngIf="homeBook" slot="end" color="dark">Booking</ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only (click)="printdata()" style="font-size: 20px; margin-right: 40px;">
+        <ion-icon name="print"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -157,8 +162,6 @@
         <ion-button color="secondary" fill="outline"  (click)="setHomeBook(false)">Cancel</ion-button>
       </form>
     </div>
-    <ion-fab *ngIf='!homeBook' (click)="printdata()" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button>Print</ion-fab-button>
-    </ion-fab>
+
 
 </ion-content>
