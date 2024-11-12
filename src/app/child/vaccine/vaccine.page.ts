@@ -14,6 +14,7 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 //import { mobiscroll, MbscCalendarOptions } from '@mobiscroll/angular';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from "@angular/forms";
 //const { GoogleSpreadsheet } = require('google-spreadsheet');
+import { Platform } from '@ionic/angular';
 
 declare var cordova: any;
 
@@ -50,7 +51,8 @@ export class VaccinePage {
     private downloader: Downloader,
     private cdref: ChangeDetectorRef,
     private datePicker: DatePicker,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private platform: Platform
 
   ) { }
 
@@ -318,6 +320,43 @@ export class VaccinePage {
     // Your implementation here
     // Use `event` to get the new date and `vaccineId` to know which vaccine's date is being updated
     throw new Error("Not implemented");
+  }
+
+  download1(id: number, date: string, fee: number) {
+    const today = new Date(date); // Use the provided date instead of today's date
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-indexed
+    const day = today.getDate().toString().padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
+      const url = `${this.API_VACCINE}child/${id}/${formattedDate}/${formattedDate}/${fee}/Download-Invoice-PDF`;
+      window.open(url);
+    } else {
+      var request: DownloadRequest = {
+        uri: `${this.API_VACCINE}child/${id}/${formattedDate}/${fee}/Download-Invoice-PDF`,
+        title: 'Invoice',
+        description: '',
+        mimeType: '',
+        visibleInDownloadsUi: true,
+        notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+        destinationInExternalFilesDir: {
+          dirType: 'Downloads',
+          subPath: 'Invoice.pdf'
+        }
+      };
+      this.downloader.download(request)
+        .then((location: string) => console.log('File downloaded at:' + location))
+        .catch((error: any) => console.error(error));
+    }
+  }
+
+  triggerDownload(d:string) {
+    const id = this.childId; // Replace with the actual ID
+    const date = d // Get the given date
+    const fee = 0; // Replace with the actual fee
+
+    this.download1(id, date, fee);
   }
 }
 

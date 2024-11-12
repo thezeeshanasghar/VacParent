@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="black"></ion-back-button>
     </ion-buttons>
@@ -27,7 +27,8 @@
       </ion-col>
       <ion-col size="8" class="name-div">
         <ion-row>
-          <ion-col style="text-align: left; font-size: 15pt;font-weight: 600"><span *ngIf="Child">{{Child.Name}}</span></ion-col>
+          <ion-col style="text-align: left; font-size: 15pt;font-weight: 600"><span
+              *ngIf="Child">{{Child.Name}}</span></ion-col>
         </ion-row>
         <ion-row>
           <ion-col style="text-align: left;" size="9">
@@ -52,7 +53,7 @@
 
         <ion-row style="line-height: 1pt;">
           <ion-col style="color: rgb(27, 168, 14);" size="4">
-          {{given}}
+            {{given}}
           </ion-col>
           <ion-col style="color: rgb(211, 214, 42);" size="4">
             {{due}}
@@ -74,94 +75,103 @@
     <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue; let i=index">
       <ion-card>
         <ion-card-header>
-       <div  style="color:#5260ff;text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 5px;">
-        {{item.key | date}}
-       </div>
-       <div class="cardheader" style="text-align: center;">
-        <ion-button *ngIf="checkVaccineIsDon(item.value)" color="secondary" fill="outline" size="small" shape="round" (click)="picker.open()">
-          Reschedule All
-        </ion-button>
-        <ion-button shape="round" *ngIf="checkVaccineIsDon(item.value)" color="success" fill="outline" size="small" (click)="setHomeBook(true)">Home Booking
-        </ion-button>
-        <ion-icon>
-          <ion-datetime (ionChange)="updateBulkDate($event, item.value[0].Id)" max='2030' min='2000' #picker
-            picker-format="DD-MM-YYYY">
-          </ion-datetime>
-        </ion-icon>
-      </div>
-    </ion-card-header>
-
-           <ion-card-content>
-        <div *ngFor="let v of item.value">
-          <div class="none">
-            <ion-label style="font-family: -webkit-body; font-weight:600">{{v.Dose.Name}} </ion-label>
-            <p *ngIf="v.Due2EPI==true" style="color:rgb(55, 231, 10);">Due to EPI</p>
-            <p *ngIf="v.Due2EPI==true"> Given by EPI</p>
-            <p *ngIf="v.IsDone==true && v.Due2EPI==false && (v.IsDisease==false || v.IsDisease==null)"
-              style="color:#4854e0;">Given on {{v.GivenDate | date}}</p>
-            <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && !checkForMissed(v.Date)"
-              style="color: rgb(138, 138, 41);" src="../../assets/injectionEmpty.png">Due on {{v.Date | date}}</p>
-            <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && checkForMissed(v.Date)"
-              style="color: red;" src="../../assets/injectionMissed.png"> Missed on {{v.Date | date}}</p>
-            <p *ngIf="v.IsDone==true && v.Due2EPI==false && v.IsDisease==true" style="color:rgb(55, 231, 10);">Disease
-              Year: {{v.DiseaseYear}}</p>
-            <ion-button style="margin-left: 50%;" color="tertiary" fill="outline" *ngIf="v.IsDone==false && v.Due2EPI==false && v.IsSkip != true" shape="round" size="small"
-              (click)="picker.open()">
-              <ion-icon slot="start" name="calendar">
-                <ion-datetime #picker picker-format="DD-MM-YYYY" value="{{v.Date}}"
-                  (ionChange)="updateDate($event, v.Id)">
-                </ion-datetime>
-              </ion-icon>
-              Reschedule
+          <div
+            style="color:#121a79;text-align: center; font-size: 15pt; font-family: -webkit-body; font-weight: 600;margin-bottom: 10px; display: flex; justify-content: center;">
+            {{item.key | date}}
+            <button *ngIf="!checkVaccineIsDon(item.value)" (click)="triggerDownload(item.key)"
+              style="font-size: 17px; background: none; color: rgb(0, 87, 201); margin-left: 10px;">
+              <ion-icon name="Document-text"></ion-icon>
+            </button>
+          </div> <!-- Example button to trigger the download -->
+          <div class="cardheader" style="text-align: center;">
+            <ion-button *ngIf="checkVaccineIsDon(item.value)" color="secondary" fill="outline" size="small"
+              shape="round" (click)="picker.open()">
+              Reschedule All
             </ion-button>
+            <ion-button shape="round" *ngIf="checkVaccineIsDon(item.value)" color="success" fill="outline" size="small"
+              (click)="setHomeBook(true)">Home Booking
+            </ion-button>
+            <ion-icon>
+              <ion-datetime (ionChange)="updateBulkDate($event, item.value[0].Id)" max='2030' min='2000' #picker
+                picker-format="DD-MM-YYYY">
+              </ion-datetime>
+            </ion-icon>
           </div>
-        </div>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div *ngFor="let v of item.value">
+            <div class="none"
+              style="border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin-bottom: 10px; background-color: #f9f9f9; display: flex; flex-direction: column;">
+              <ion-label
+                style="font-family: -webkit-body; font-weight: 600; font-size: 16pt; margin-bottom: 5px;">{{v.Dose.Name}}</ion-label>
+              <p *ngIf="v.Due2EPI==true" style="color: rgb(55, 231, 10); font-weight: bold;">Due to EPI</p>
+              <p *ngIf="v.Due2EPI==true" style="color: #555;">Given by EPI</p>
+              <div style="display: flex;">
+                <p *ngIf="v.IsDone==true && v.Due2EPI==false && (v.IsDisease==false || v.IsDisease==null)"
+                  style="color: #4854e0; margin: 0;">Given on {{v.GivenDate | date}}</p>
+                <div style="flex-grow: 1; text-align: right;">
+                  <ion-button color="tertiary" fill="outline" *ngIf="v.IsDone==false && v.Due2EPI==false && v.IsSkip != true" shape="round" size="small"
+                    (click)="picker.open()" style="margin-top: -44px;">
+                    <ion-icon slot="start" name="calendar"></ion-icon>
+                    Reschedule
+                  </ion-button>
+                </div>
+              </div>
+              <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && !checkForMissed(v.Date)"
+                style="color: rgb(138, 138, 41); margin-top: -25px; margin-bottom: 0;">Due on {{v.Date | date}}</p>
+              <p *ngIf="(v.IsDone==false) && v.Due2EPI==false && (v.IsSkip!=true) && checkForMissed(v.Date)"
+                style="color: red; margin-top: -25px; margin-bottom: 0;">Missed on {{v.Date | date}}</p>
+              <p *ngIf="v.IsDone==true && v.Due2EPI==false && v.IsDisease==true" style="color: rgb(55, 231, 10);">
+                Disease Year: {{v.DiseaseYear}}</p>
+            </div>
+          </div>
         </ion-card-content>
-        </ion-card>    
+      </ion-card>
     </div>
-    </div>
-    
-    <div *ngIf='homeBook'>
-      <form [formGroup]="fg1">
-        <ion-item>
-          <ion-label color="primary" position="floating">Patient Name</ion-label>
-          <ion-input type="text" formControlName="ChildName" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary" position="floating">Father's Name</ion-label>
-          <ion-input type="text" formControlName="FatherName" required></ion-input>
-        </ion-item>
+  </div>
 
-        <ion-item>
-          <ion-label color="primary" position="floating">Email</ion-label>
-          <ion-input type="text" formControlName="Email"></ion-input>
-        </ion-item>
+  <div *ngIf='homeBook'>
+    <form [formGroup]="fg1">
+      <ion-item>
+        <ion-label color="primary" position="floating">Patient Name</ion-label>
+        <ion-input type="text" formControlName="ChildName" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Father's Name</ion-label>
+        <ion-input type="text" formControlName="FatherName" required></ion-input>
+      </ion-item>
 
-        <ion-item>
-          <ion-label color="primary" position="floating">Mobile Number</ion-label>
-          <ion-input type="text" formControlName="Phone" required></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input type="text" formControlName="Email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" position="floating">Mobile Number</ion-label>
+        <ion-input type="text" formControlName="Phone" required></ion-input>
+      </ion-item>
 
 
-        <ion-item>
-          <ion-label color="primary" position="floating">Vaccines</ion-label>
-          <ion-input type="text" formControlName="Vaccines" required></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Vaccines</ion-label>
+        <ion-input type="text" formControlName="Vaccines" required></ion-input>
+      </ion-item>
 
-        <ion-item>
-          <ion-label color="primary" position="floating">City</ion-label>
-          <ion-input type="text" formControlName="City" required></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">City</ion-label>
+        <ion-input type="text" formControlName="City" required></ion-input>
+      </ion-item>
 
-        <ion-item>
-          <ion-label color="primary" position="floating">Address</ion-label>
-          <ion-input type="text" formControlName="Address" required></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Address</ion-label>
+        <ion-input type="text" formControlName="Address" required></ion-input>
+      </ion-item>
 
-        <ion-button color="tertiary" fill="outline" (click)="submitBooking()">Submit</ion-button>
-        <ion-button color="secondary" fill="outline"  (click)="setHomeBook(false)">Cancel</ion-button>
-      </form>
-    </div>
+      <ion-button color="tertiary" fill="outline" (click)="submitBooking()">Submit</ion-button>
+      <ion-button color="secondary" fill="outline" (click)="setHomeBook(false)">Cancel</ion-button>
+    </form>
+  </div>
 
 
 </ion-content>
