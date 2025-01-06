@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { IonicModule } from '@ionic/angular';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { ChildPage } from './child.page';
 //import { Storage  } from '@ionic/storage';
 
@@ -26,6 +27,8 @@ const routes: Routes = [
     IonicModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
    // IonicStorageModule.forRoot(),
     RouterModule.forChild(routes),
     
