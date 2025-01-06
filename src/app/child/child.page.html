@@ -24,13 +24,12 @@
       <form [formGroup]="fg">
         <ion-item>
           <div class="form-and-button-wrapper">
-            <mat-form-field class="example-width">
+            <mat-form-field>
               <input type="text"
                      aria-label="text"
                      matInput
                      formControlName="DoctorDisplayName"
-                     [matAutocomplete]="auto"
-                     (ngModelChange)="filterDoctors($event)">
+                 >
               <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDoctorSelected($event.option.value)">
                 <mat-option *ngFor="let doctor of filteredDoctors" [value]="doctor.DisplayName">
                   {{ doctor.DisplayName }}
