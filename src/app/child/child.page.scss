@@ -57,3 +57,22 @@ line-height: 20pt;
 color:var(--ion-color-primary-custom);
 font-family: -webkit-body;
 }
+.form-and-button-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.form-and-button-wrapper mat-form-field {
+  flex: 1;
+  margin-right: 10px; /* Adjust the spacing between the fields and the button as needed */
+}
+
+.form-and-button-wrapper ion-select {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-and-button-wrapper ion-button {
+  flex-shrink: 0; /* Prevent the button from shrinking */
+}

@@ -21,9 +21,37 @@
     </ion-item>
 
     <ion-card-content>
-      <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}" style="float: right; margin-bottom: 10px;">
-        View Details
-      </ion-button>
+      <form [formGroup]="fg">
+        <ion-item>
+          <div class="form-and-button-wrapper">
+            <mat-form-field class="example-width">
+              <input type="text"
+                     aria-label="text"
+                     matInput
+                     formControlName="DoctorDisplayName"
+                     [matAutocomplete]="auto"
+                     (ngModelChange)="filterDoctors($event)">
+              <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDoctorSelected($event.option.value)">
+                <mat-option *ngFor="let doctor of filteredDoctors" [value]="doctor.DisplayName">
+                  {{ doctor.DisplayName }}
+                </mat-option>
+              </mat-autocomplete> -->
+            </mat-form-field>
+      
+            <mat-form-field class="example-full-width">
+              <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)">
+                <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
+                  {{ doctor.DisplayName }}
+                </ion-select-option>
+              </ion-select>
+            </mat-form-field>
+      
+          </div>
+            <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}">
+              View Details
+            </ion-button>
+        </ion-item>
+      </form>
     </ion-card-content>
   </ion-card>
 </ion-content>

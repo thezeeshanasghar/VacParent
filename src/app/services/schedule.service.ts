@@ -37,6 +37,21 @@ export class ScheduleService extends BaseService {
     );
   }
 
+  getAllDoctors(): Observable<any> {
+    const url = `${this.API}doctor`;
+    return this.http.get(url, this.httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  updateChildClinicId(doctorId: number, childId: number): Observable<any> {
+    const url = `${this.API}Doctor/update-clinic-id?doctorId=${doctorId}&childId=${childId}`;
+    return this.http.patch<any>(url, {}, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   updateVaccinationDate(data , max , min , gap): Observable<any> {
     //const url = `${this.API_VACCINE}schedule/Reschedule?ignoreMaxAgeRule=${max}false&ignoreMinAgeFromDOB=false&ignoreMinGapFromPreviousDose=false`;
     const url = `${this.API}schedule/Reschedule?ignoreMaxAgeRule=${max}&ignoreMinAgeFromDOB=${min}&ignoreMinGapFromPreviousDose=${gap}`;
