@@ -38,6 +38,7 @@ export class ChildPage implements OnInit {
       this.router.navigate(['login']);
       return;
     }
+
     this.nativeStorage.get(environment.USER_Id).then((Id) => {
       this.userId = Id;
       this.getChlidByUser(Id);
@@ -65,8 +66,9 @@ export class ChildPage implements OnInit {
           this.childs = res.ResponseData;
           console.log(this.childs);
           for (const child of this.childs) {
-            console.log(child.Id);
-            this.atta=child.Id
+            console.log(child);
+            this.getDoctorByClinicId(child.ClinicId);
+            this.atta=child.Id;
           }
         } else {
           this.toastService.create(res.Message, 'danger');
@@ -114,6 +116,33 @@ export class ChildPage implements OnInit {
     );
   }
 
+  async getDoctorByClinicId(clinicId: number): Promise<void> {
+    const loading = await this.loadingController.create({
+      message: "Get Doctor"
+    });
+    await loading.present();
+    this.scheduleservice.getDoctorByClinicId(clinicId).subscribe(
+      res => {
+        if (res.IsSuccess) {
+          if (res.ResponseData.Clinics && res.ResponseData.Clinics.length > 0) {
+            const doctorId = res.ResponseData.Clinics[0].DoctorId;
+            // this.doctorId = doctorId;
+            
+            this.fg.patchValue({
+              DoctorId: doctorId,
+              DoctorDisplayName: res.ResponseData.DisplayName
+            });
+          }
+        }
+        loading.dismiss();
+      },
+      error => {
+        loading.dismiss();
+        this.toastService.create('Error loading doctors', 'danger');
+      }
+    );
+  }
+
   async updateChildClinicId(doctorId: number, childId: number): Promise<void> {
     const loading = await this.loadingController.create({
       message: "Update Doctor"
@@ -129,7 +158,7 @@ export class ChildPage implements OnInit {
           loading.dismiss();
         },
         err => {
-          loading.dismiss();
+          loading.dismiss(); 
           
         }
       );

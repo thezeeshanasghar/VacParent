@@ -38,7 +38,15 @@ export class ScheduleService extends BaseService {
   }
 
   getAllDoctors(): Observable<any> {
-    const url = `${this.API}doctor`;
+    const url = `${this.API}Doctor/with-clinics`;
+    return this.http.get(url, this.httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  getDoctorByClinicId(clinicId: number): Observable<any> {
+    const url = `${this.API}clinic/doctor/${clinicId}`;
     return this.http.get(url, this.httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
