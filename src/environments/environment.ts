@@ -3,12 +3,12 @@ export const environment = {
   production: false,
 
   // staging API URL's
-  // BASE_URL: "https://myapi.skintechno.com/api/",
-  // RESOURCE_URL: "https://myapi.skintechno.com/",
+  BASE_URL: "https://myapi.ewarenet.com/api/",
+  RESOURCE_URL: "https://myapi.ewarenet.com/",
 
   // production API URL's
-  BASE_URL: "https://skintechno.com/api/",
-  RESOURCE_URL: "https://skintechno.com/",
+  // BASE_URL: "https://skintechno.com/api/",
+  // RESOURCE_URL: "https://skintechno.com/",
 
   // local API URL's
   // BASE_URL: "https://localhost:5001/api/",
