@@ -3,8 +3,8 @@ export const environment = {
   production: false,
 
   // staging API URL's
-  BASE_URL: "https://myapi.ewarenet.com/api/",
-  RESOURCE_URL: "https://myapi.ewarenet.com/",
+  BASE_URL: "https://myapi.vaccinationcentre.com/api/",
+  RESOURCE_URL: "https://myapi.vaccinationcentre.com/",
 
   // production API URL's
   // BASE_URL: "https://skintechno.com/api/",
