@@ -38,6 +38,8 @@ jobs:
           server: "client.vaccinationcentre.com"
           username: "vacparent@client.vaccinationcentre.com"
           password: "T3@ch!ng#P@ssw0rd9$"
+          port: 21
+          protocol: ftp
           local-dir: www/
           server-dir: /home/echoytac/client.vaccinationcentre.com/
           exclude: |
