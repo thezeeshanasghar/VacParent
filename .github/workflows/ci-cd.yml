@@ -39,7 +39,7 @@ jobs:
           username: "vacparent@client.vaccinationcentre.com"
           password: "T3@ch!ng#P@ssw0rd9$"
           local-dir: www/
-          server-dir: /
+          server-dir: /home/echoytac/client.vaccinationcentre.com/vacparent
           exclude: |
             **/.git*
             **/.git*/**
