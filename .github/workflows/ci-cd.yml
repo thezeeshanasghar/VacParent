@@ -35,7 +35,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "client.vaccinationcentre.com"
+          server: "198.54.114.164"
           username: "vacparent@client.vaccinationcentre.com"
           password: "T3@ch!ng#P@ssw0rd9$"
           port: 21
