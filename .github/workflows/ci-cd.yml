@@ -42,6 +42,8 @@ jobs:
           protocol: ftp
           local-dir: www/
           server-dir: /home/echoytac/client.vaccinationcentre.com/
+          dangerous-clean-slate: true
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
