@@ -9,38 +9,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 16
+      
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-      - run: npm install -g @ionic/cli # Install Ionic CLI globally
-      - run: npm install
-      - run: ionic build --prod
+          node-version: 18
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm install -g @ionic/cli
+          npm ci
+          
+      - name: Build
+        run: ionic build --prod
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Deploy to demo
         if: github.ref == 'refs/heads/demo'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "${{ secrets.STAGING_FTP_SERVER }}"
-          username: "${{ secrets.STAGING_FTP_USERNAME }}"
-          password: "${{ secrets.STAGING_FTP_PASSWORD }}"
-          local-dir: www/
+          server: ${{ secrets.STAGING_FTP_SERVER }}
+          username: ${{ secrets.STAGING_FTP_USERNAME }}
+          password: ${{ secrets.STAGING_FTP_PASSWORD }}
+          local-dir: ./www/
           server-dir: /
+          dangerous-clean-slate: true
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
-            web.config,
-      - name: Deploy for master
+            web.config
+
+      - name: Deploy to production
         if: github.ref == 'refs/heads/master'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: "198.54.114.164"
           username: "vacparent@client.vaccinationcentre.com"
-          password: "T3@ch!ng#P@ssw0rd9$"  #fixes
+          password: "T3@ch!ng#P@ssw0rd9$"
           port: 21
-          protocol: ftp
-          local-dir: www/
+          protocol: ftps  # Changed to FTPS for secure connection
+          local-dir: ./www/
           server-dir: /home/echoytac/client.vaccinationcentre.com/
           dangerous-clean-slate: true
           timeout: 120000
@@ -48,4 +60,4 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
-            web.config,
+            web.config
