@@ -37,7 +37,7 @@ jobs:
         with:
           server: "198.54.114.164"
           username: "vacparent@client.vaccinationcentre.com"
-          password: "T3@ch!ng#P@ssw0rd9$"
+          password: "T3@ch!ng#P@ssw0rd9$"  #fixes
           port: 21
           protocol: ftp
           local-dir: www/
