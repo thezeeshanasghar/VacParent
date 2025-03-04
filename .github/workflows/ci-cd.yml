@@ -1,4 +1,4 @@
-name: Angular CI/CD (FTP Deployment)
+name: Angular CI-CD (FTP Deployment)
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install -g @ionic/cli # Install Ionic CLI globally
+      - run: npm install -g @ionic/cli
       - run: npm install
       - run: ionic build --prod
 
@@ -21,27 +21,32 @@ jobs:
         if: github.ref == 'refs/heads/demo'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "${{ secrets.STAGING_FTP_SERVER }}"
-          username: "${{ secrets.STAGING_FTP_USERNAME }}"
-          password: "${{ secrets.STAGING_FTP_PASSWORD }}"
+          server: "doctor.vaccinationcentre.com"
+          username: "echoytac@doctor.vaccinationcentre.com"
+          password: "ZS,o.khSZk]$"
+          port: 21
+          protocol: ftps
           local-dir: www/
-          server-dir: /
+          server-dir: /home/echoytac/doctor.vaccinationcentre.com/
+          dangerous-clean-slate: true
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
             web.config,
+
       - name: Deploy for master
         if: github.ref == 'refs/heads/master'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "198.54.114.164"
-          username: "vacparent@client.vaccinationcentre.com"
-          password: "T3@ch!ng#P@ssw0rd9$"  #fixes
+          server: "doctor.vaccinationcentre.com"
+          username: "echoytac@doctor.vaccinationcentre.com"
+          password: "ZS,o.khSZk]$"
           port: 21
           protocol: ftps
           local-dir: www/
-          server-dir: /home/echoytac/client.vaccinationcentre.com/
+          server-dir: /home/echoytac/doctor.vaccinationcentre.com/
           dangerous-clean-slate: true
           timeout: 120000
           exclude: |
