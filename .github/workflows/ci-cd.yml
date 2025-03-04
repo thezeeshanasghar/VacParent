@@ -2,7 +2,7 @@ name: Angular CI-CD (FTP Deployment)
 
 on:
   push:
-    branches: [demo, master]
+    branches: [demo, master, ftp-deployment]
 
 jobs:
   build-and-deploy:
