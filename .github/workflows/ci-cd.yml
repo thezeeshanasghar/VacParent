@@ -2,10 +2,10 @@ name: Angular CI/CD (FTP Deployment)
 
 on:
   push:
-    branches: [demo, master]
+    branches: [master]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,23 +16,23 @@ jobs:
       - run: npm install -g @ionic/cli # Install Ionic CLI globally
       - run: npm install
       - run: ionic build --prod
-
-      - name: Deploy to demo
-        if: github.ref == 'refs/heads/demo'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          server: "${{ secrets.STAGING_FTP_SERVER }}"
-          username: "${{ secrets.STAGING_FTP_USERNAME }}"
-          password: "${{ secrets.STAGING_FTP_PASSWORD }}"
-          local-dir: www/
-          server-dir: /
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            web.config,
-      - name: Deploy for master
-        if: github.ref == 'refs/heads/master'
+          name: build-output
+          path: www/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: www/
+      - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: "198.54.114.164"
@@ -41,11 +41,11 @@ jobs:
           port: 21
           protocol: ftps
           local-dir: www/
-          server-dir: /home/echoytac/client.vaccinationcentre.com/
+          server-dir: /
           dangerous-clean-slate: true
           timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
-            web.config,
+            web.config
