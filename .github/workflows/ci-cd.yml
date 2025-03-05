@@ -43,7 +43,6 @@ jobs:
           local-dir: www/
           server-dir: /
           state-name: "ftp-deploy-sync-state.json"
-          dangerous-clean-slate: true
           timeout: 120000
           exclude: |
             **/.git*
