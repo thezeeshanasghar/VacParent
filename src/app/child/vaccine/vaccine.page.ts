@@ -118,10 +118,7 @@ export class VaccinePage {
     }
     return isdone;
   }
-
   async loadGoogleSheet() {
-    // console.log("called");
-
   }
 
 
@@ -201,7 +198,6 @@ export class VaccinePage {
         acc[key].push(obj);
         return acc;
       },
-
       {}
     );
   }
@@ -226,7 +222,12 @@ export class VaccinePage {
   }
 
   printdata() {
-    this.download(this.childId);
+    if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
+      const url = `${this.API_VACCINE}child/${this.childId}/ScheduleVerify`;
+      window.open(url);
+    } else {
+      this.download(this.childId);
+    }
   }
 
   download(id: any) {
@@ -330,7 +331,7 @@ export class VaccinePage {
     const formattedDate = `${year}-${month}-${day}`;
 
     if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
-      const url = `${this.API_VACCINE}child/${id}/${formattedDate}/${formattedDate}/${fee}/Download-Invoice-PDF`;
+      const url = `${this.API_VACCINE}child/${id}/${formattedDate}/${formattedDate}/${fee}/Verify-Invoice-PDF`;
       window.open(url);
     } else {
       var request: DownloadRequest = {

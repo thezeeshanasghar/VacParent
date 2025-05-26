@@ -25,15 +25,15 @@ ion-button {
 
      color: var(--ion-color-light);
      text-transform: none;
-     margin-left: 50%;
+    //  margin-left: 50%;
      font-family: -webkit-body;
 }
 
-#button{
-  color:  black;
-  float: right;
+// #button{
+//   color:  black;
+//   float: right;
 
-}
+// }
 
 .card-div{
   margin-bottom: 9px;
@@ -71,6 +71,7 @@ font-family: -webkit-body;
 .form-and-button-wrapper ion-select {
   flex: 1;
   margin-right: 10px;
+  justify-content: space-between; 
 }
 
 .form-and-button-wrapper ion-button {

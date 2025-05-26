@@ -23,27 +23,26 @@
       <form [formGroup]="fg">
         <ion-item>
           <div class="form-and-button-wrapper">
-            <label style="margin-right: 10px;color: blue;">Doctor</label>
-            
-            <ion-item>
-              <ion-input type="text"
-                         aria-label="text"
-                         formControlName="DoctorDisplayName">
-              </ion-input>
-            </ion-item>
-    
-            <ion-item class="example-full-width">
-              <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)">
-                <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
-                  {{ doctor.DisplayName }}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-    
+            <label style="margin-right: 10px;color: blue;">Doctor</label> 
+            <div class="dropdown-and-button">
+              <ion-item class="example-full-width">
+              <ion-item>
+                <ion-input type="text"
+                           aria-label="text"
+                           formControlName="DoctorDisplayName">
+                </ion-input>
+              </ion-item>
+                <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)">
+                  <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
+                    {{ doctor.DisplayName }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}">
+              Vaccines
+            </ion-button>
           </div>
-          <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}">
-            View Details
-          </ion-button>
         </ion-item>
       </form>
     </ion-card-content>    
