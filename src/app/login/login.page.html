@@ -1,60 +1,101 @@
-<!-- <ion-header>
-  <ion-toolbar class="themeheader">
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
+  <div class="login-bg">
 
-  <div id="signin"></div>
+    <!-- Decorative blobs -->
+    <div class="blob blob-top-left"></div>
+    <div class="blob blob-top-right"></div>
+    <div class="blob blob-bottom"></div>
 
-  
-  <form class="ion-padding" [formGroup]="fg">
-    <ion-card>
-      <h1 style="text-align: center; color: white; font-weight: 400;">Log In</h1>
-      <ion-item color="medium">
-        <div style="display: flex;">
-          <ion-select formControlName="CountryCode">
-            <ion-select-option *ngFor="let country of countryCodes" [value]="country.code">
-              (+{{ country.code }}) {{ country.name }} 
-            </ion-select-option>
-          </ion-select>
-          <ion-input 
-            class="ion-clearInput" 
-            type="text" 
-            placeholder="Mobile Number"
-            formControlName="MobileNumber">
-          </ion-input>
-        </div>
-        <ion-icon name="call-outline" slot="end"></ion-icon>
-      </ion-item>
-      
-        <div *ngIf="fg.get('MobileNumber').invalid && (fg.get('MobileNumber').dirty || fg.get('MobileNumber').touched)">
-          <div *ngIf="fg.get('MobileNumber').errors">
-            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.required">
-              Mobile number is required.
-            </div>
-            <div style="color: red;" *ngIf="fg.get('MobileNumber').errors.onlyNumbers">
-              Please enter only numbers.
-            </div>
+    <div class="login-overlay">
+
+      <!-- ── Brand ── -->
+      <div class="brand-wrap">
+        <div class="brand-icon">
+          <div class="brand-icon-ring">
+            <ion-icon name="medkit" class="brand-medkit"></ion-icon>
           </div>
         </div>
-        
+        <h1 class="brand-name">Vaccine<span class="brand-pk">.PK</span></h1>
+        <p class="brand-sub">Your child's health, our priority</p>
 
-        <ion-item color="medium">
-          <ion-input class="ion-clearInput1" type="password" placeholder="Password" formControlName="Password"></ion-input>
-          <ion-icon name="lock-closed-outline"></ion-icon>
-        </ion-item>
-      
-      
-     <ion-button shape="round" class="ion-margin-top ion-padding" expand="full" (click)="login()">
-              <ion-icon name="log-in"></ion-icon>&nbsp; Login
-            </ion-button>
-    
-    <ion-text>
-      <a routerLink="/forgotpassword">
-        <p class="ion-margin-right" style="color: white; margin-left: 23px;">Forgot Password?</p>
-      </a>
-    </ion-text>  
-  </ion-card>
-    </form>
-    </ion-content>
+        <div class="brand-dots">
+          <span class="dot dot-blue"></span>
+          <span class="dot dot-green"></span>
+          <span class="dot dot-orange"></span>
+        </div>
+      </div>
+
+      <!-- ── Login Card ── -->
+      <div class="login-card">
+
+        <div class="card-header-bar">
+          <span class="bar-segment bar-blue"></span>
+          <span class="bar-segment bar-green"></span>
+          <span class="bar-segment bar-orange"></span>
+        </div>
+
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-subtitle">Sign in to continue</p>
+
+        <form [formGroup]="fg">
+
+          <!-- Phone -->
+          <div class="input-group">
+            <div class="input-icon">
+              <ion-icon name="call-outline"></ion-icon>
+            </div>
+            <div class="input-body">
+              <ion-select formControlName="CountryCode" class="country-select" interface="action-sheet">
+                <ion-select-option *ngFor="let country of countryCodes" [value]="country.code">
+                  +{{ country.code }}
+                </ion-select-option>
+              </ion-select>
+              <div class="divider-v"></div>
+              <ion-input
+                class="phone-input"
+                type="tel"
+                placeholder="Mobile Number"
+                formControlName="MobileNumber">
+              </ion-input>
+            </div>
+          </div>
+          <div *ngIf="fg.get('MobileNumber').invalid && (fg.get('MobileNumber').dirty || fg.get('MobileNumber').touched)" class="error-text">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <span *ngIf="fg.get('MobileNumber').errors?.required">Mobile number is required.</span>
+            <span *ngIf="fg.get('MobileNumber').errors?.onlyNumbers">Please enter only numbers.</span>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <div class="input-icon">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            <div class="input-body">
+              <ion-input
+                class="text-input"
+                type="password"
+                placeholder="Password"
+                formControlName="Password">
+              </ion-input>
+            </div>
+          </div>
+
+          <!-- Login Button -->
+          <ion-button expand="full" class="login-btn" (click)="login()">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Login
+          </ion-button>
+
+          <div class="forgot-wrap">
+            <a routerLink="/forgotpassword" class="forgot-link">Forgot Password?</a>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer note -->
+      <p class="footer-note">Secure &amp; Encrypted &nbsp;•&nbsp; Pakistan</p>
+
+    </div>
+  </div>
+</ion-content>

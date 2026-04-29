@@ -1,18 +1,90 @@
-ion-content{
-  // --background: linear-gradient(120deg, #b4c0e2, #d7d8da);  
-  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
-  }
-  .titletext  {
-      text-align: center;
-      font-family: -webkit-body;
-      font-size: 30pt;
-      // color: blueviolet;
-      font-weight: 600;
-  }
+ion-content {
+  --background: #EEF2F7;
+}
 
-  ion-card-header{
-    color: black;
-    // --color: rgb(67, 37, 201);
-    font-family: -webkit-body;
-      font-size: 15pt;
+// ── Hero ──────────────────────────────────────────────────────────────────────
+.about-hero {
+  text-align: center;
+  padding: 28px 16px 24px;
+  margin-bottom: 4px;
+}
+
+.about-logo-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #43A047, #1E88E5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow: 0 6px 24px rgba(67, 160, 71, 0.40);
+}
+
+.about-logo-icon {
+  font-size: 38px;
+  color: #ffffff;
+}
+
+.about-brand {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0A3D79;
+  margin: 0 0 6px;
+}
+
+.about-pk { color: #FF4500; }
+
+.about-tagline {
+  font-size: 14px;
+  color: #546E7A;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// ── Feature cards ─────────────────────────────────────────────────────────────
+.feature-card {
+  display: flex;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 3px 16px rgba(10, 61, 121, 0.09);
+  align-items: flex-start;
+}
+
+.feature-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 24px;
+    color: #ffffff;
   }
+}
+
+.icon-blue   { background: linear-gradient(135deg, #0A3D79, #1E88E5); }
+.icon-green  { background: linear-gradient(135deg, #2E7D32, #43A047); }
+.icon-orange { background: linear-gradient(135deg, #FF4500, #FF6B35); }
+
+.feature-body { flex: 1; min-width: 0; }
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin: 0 0 6px;
+}
+
+.feature-desc {
+  font-size: 14px;
+  color: #546E7A;
+  line-height: 1.6;
+  margin: 0;
+}

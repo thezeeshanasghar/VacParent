@@ -1,22 +1,61 @@
-<ion-header [translucent]="true">
-  <ion-toolbar >
-    <ion-title slot="end">Home</ion-title>
+<ion-header>
+  <ion-toolbar>
+    <div class="toolbar-inner">
+      <div class="toolbar-brand">
+        <ion-icon name="medkit" class="toolbar-logo"></ion-icon>
+        <span class="toolbar-title">Vaccine<span class="toolbar-pk">.PK</span></span>
+      </div>
+      <span class="toolbar-sub">Parent Portal</span>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <ion-content>
- <ion-grid>
-   <ion-row>
-     <ion-col size="6"><div routerLink="/child" id="patientbox" class="box">Patients</div></ion-col>
-     <ion-col size="6"><div routerLink="/vaccines" id="vaccinebox" class="box">Vaccines</div></ion-col>
-   </ion-row>
-   <ion-row>
-    <ion-col size="6"><div routerLink="/about" id="aboutbox" class="box">About Us</div></ion-col>
-    <ion-col size="6"><div id="logoutbox" class="box" (click)="clearStorage()">Logout</div></ion-col>
-  </ion-row>
- </ion-grid>
+  <div class="dash-wrap">
 
- 
+    <div class="dash-greeting">
+      <p class="dash-hello">Welcome back</p>
+      <p class="dash-tagline">What would you like to do today?</p>
+    </div>
+
+    <div class="dash-grid">
+
+      <div routerLink="/child" class="dash-card card-patients">
+        <div class="dash-card-icon">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+        <span class="dash-card-label">Patients</span>
+        <span class="dash-card-sub">View your children</span>
+        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      </div>
+
+      <div routerLink="/vaccines" class="dash-card card-vaccines">
+        <div class="dash-card-icon">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+        <span class="dash-card-label">Vaccines</span>
+        <span class="dash-card-sub">Browse schedule</span>
+        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      </div>
+
+      <div routerLink="/about" class="dash-card card-about">
+        <div class="dash-card-icon">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </div>
+        <span class="dash-card-label">About Us</span>
+        <span class="dash-card-sub">Our mission</span>
+        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      </div>
+
+      <div class="dash-card card-logout" (click)="clearStorage()">
+        <div class="dash-card-icon">
+          <ion-icon name="log-out-outline"></ion-icon>
+        </div>
+        <span class="dash-card-label">Logout</span>
+        <span class="dash-card-sub">Sign out safely</span>
+        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      </div>
+
+    </div>
+  </div>
 </ion-content>

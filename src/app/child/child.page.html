@@ -1,50 +1,51 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button color="black"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title slot="end">Patients</ion-title>
+    <ion-title>Patients</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card *ngFor="let child of childs" [ngClass]="child.Gender=='Girl' ? 'girl' : 'boy'" style="margin-bottom: 15px; border-radius: 5px; border: 2px solid;" [style.border-color]="child.Gender=='Girl' ? '#f50ca7' : 'darkblue'">
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'" class="{{child.Gender=='Girl' ? 'female-image' : 'male-image'}}"></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <h2 style="font-weight: 600;">{{child.Name}}</h2>
-        <p style="color: gray;">{{calculateAge(child.DOB)}} years old</p>
-        <p [ngStyle]="{'font-style': 'italic', 'color': child.Gender == 'Girl' ? 'red' : 'black'}">{{child.Gender}}</p>
-      </ion-label>
-    </ion-item>
-    <ion-card-content>
-      <form [formGroup]="fg">
-        <ion-item>
-          <div class="form-and-button-wrapper">
-            <label style="margin-right: 10px;color: blue;">Doctor</label> 
-            <div class="dropdown-and-button">
-              <ion-item class="example-full-width">
-              <ion-item>
-                <ion-input type="text"
-                           aria-label="text"
-                           formControlName="DoctorDisplayName">
-                </ion-input>
-              </ion-item>
-                <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)">
-                  <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
-                    {{ doctor.DisplayName }}
-                  </ion-select-option>
-                </ion-select>
-              </ion-item>
-            </div>
-            <ion-button size="small" fill="outline" color="primary" routerLink="vaccine/{{child.Id}}">
-              Vaccines
-            </ion-button>
-          </div>
-        </ion-item>
+
+  <div *ngFor="let child of childs" class="patient-card" [ngClass]="child.Gender=='Girl' ? 'card-girl' : 'card-boy'">
+
+    <div class="patient-header">
+      <div class="avatar-wrap" [ngClass]="child.Gender=='Girl' ? 'avatar-girl' : 'avatar-boy'">
+        <ion-img [src]="child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'"
+                 class="patient-avatar"></ion-img>
+      </div>
+      <div class="patient-info">
+        <h2 class="patient-name">{{child.Name}}</h2>
+        <p class="patient-age">{{calculateAge(child.DOB)}} years old</p>
+        <span class="gender-badge" [ngClass]="child.Gender=='Girl' ? 'badge-girl' : 'badge-boy'">
+          <ion-icon [name]="child.Gender=='Girl' ? 'female-outline' : 'male-outline'"></ion-icon>
+          {{child.Gender}}
+        </span>
+      </div>
+    </div>
+
+    <div class="patient-footer">
+      <form [formGroup]="fg" class="doctor-row">
+        <div class="doctor-select-wrap">
+          <ion-icon name="person-circle-outline" class="doctor-icon"></ion-icon>
+          <ion-input type="text" aria-label="Doctor" formControlName="DoctorDisplayName"
+                     placeholder="Search doctor..." class="doctor-input"></ion-input>
+          <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)"
+                      interface="action-sheet" class="doctor-select">
+            <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
+              {{ doctor.DisplayName }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        <ion-button size="small" class="vaccine-btn" routerLink="vaccine/{{child.Id}}">
+          <ion-icon name="medkit-outline" slot="start"></ion-icon>
+          Vaccines
+        </ion-button>
       </form>
-    </ion-card-content>    
-  </ion-card>
+    </div>
+
+  </div>
+
 </ion-content>

@@ -1,30 +1,74 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
-
-/* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.themeheader{
-    --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom3));  
+// ── Global toolbar ──────────────────────────────────────────────────────────
+ion-toolbar {
+  --background: linear-gradient(135deg, var(--vac-navy) 0%, var(--vac-blue) 100%);
+  --color: #ffffff;
+  --border-width: 0;
+  box-shadow: 0 2px 12px rgba(10, 61, 121, 0.25);
+}
+
+ion-title {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+ion-back-button {
+  --color: #ffffff;
+}
+
+// ── Global card ──────────────────────────────────────────────────────────────
+ion-card {
+  border-radius: 16px;
+  box-shadow: var(--vac-shadow);
+  background: var(--vac-card);
+  margin: 12px 0;
+}
+
+ion-card-header {
+  padding-bottom: 6px;
+}
+
+// ── Global button ────────────────────────────────────────────────────────────
+ion-button {
+  --border-radius: 10px;
+  --box-shadow: 0 3px 12px rgba(255, 69, 0, 0.3);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: none;
+}
+
+ion-button[color="primary"],
+ion-button:not([fill="outline"]):not([fill="clear"]):not([color]) {
+  --background: linear-gradient(135deg, var(--vac-orange) 0%, var(--vac-orange2) 100%);
+  --background-activated: var(--vac-orange);
+  --color: #ffffff;
+}
+
+// ── Global item ──────────────────────────────────────────────────────────────
+ion-item {
+  --border-radius: 10px;
+  --background: #ffffff;
+  --border-color: var(--vac-border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+ion-item.item-has-focus {
+  --border-color: var(--vac-blue);
+}
+
+// ── Legacy header class ───────────────────────────────────────────────────────
+.themeheader {
+  --background: linear-gradient(135deg, var(--vac-navy), var(--vac-blue));
 }

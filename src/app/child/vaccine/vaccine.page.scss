@@ -1,193 +1,266 @@
-ion-content{
-  // --background: linear-gradient(120deg, #b4c0e2, #d7d8da);
-  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
-
-}
-form > ion-item{
-  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
-  // --background: linear-gradient(120deg, #b4c0e2, #d7d8da); 
-  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
-
+ion-content {
+  --background: #EEF2F7;
 }
 
-ion-col{
-  text-align: center;
+// ── Print button ──────────────────────────────────────────────────────────────
+.print-btn {
+  --color: #ffffff;
+  font-size: 22px;
 }
 
-ion-card{
-  border-radius: 0px 20px 0px 20px
-}
-// .cardheader{
-//   text-align: center;
-//     padding-bottom: 5px;
-//     border-bottom: 1px solid rgb(76, 76, 92);
-// }
-
-.card-div{
-  margin-bottom: 9px;
-}
-.img-div{
-padding: 20px;
-display: inline-block;
-float: left;
-position: relative;
-background: linear-gradient(135deg, #007bff, #00bfff);
-border-radius: 0px 0px 0px 20px;
-}
-.name-div{
-padding: 10px;
-border-left: 1px solid gray;
-background: honeydew;
-line-height: 20pt;
-color:var(--ion-color-primary-custom);
-font-family: -webkit-body;
-border-radius: 0px 20px 0px 0px
+// ── Child summary ─────────────────────────────────────────────────────────────
+.child-summary {
+  display: flex;
+  gap: 14px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.11);
 }
 
-.vcard-div{
-  margin-bottom: 9px;
-  border-radius: 0px 20px 0px 20px
+.child-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.vimg-div{
-padding: 5px;
-display: inline-block;
-float: left;
-position: relative;
-background: linear-gradient(135deg, #f08bd4, #ab51cb);
-border-radius: 20px 0px 0px 20px;
-vertical-align: center;
+.summary-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 
-.vname-div{
-padding: 20px;
-border-left: 1px solid gray;
-background: honeydew;
-line-height: 20pt;
-color:var(--ion-color-primary-custom);
-font-family: -webkit-body;
-border-radius: 0px 20px 20px 0px;
+.child-details { flex: 1; min-width: 0; }
+
+.child-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin: 0 0 3px;
 }
 
-// .childname{
-//     text-align: center;
-//     color: #418386;
-//     font-size: 15pt;
-//     padding-left: 3px;
-// }
-
-// .childnamediv{
-//   border: 1px solid cadetblue;
-//   border-radius: 15px 40px;
-//   text-align: center;
-// }
-.childcard{
-  // color: var(--ion-color-black);
-  // background:#2dd36f;
-  // background: linear-gradient(90deg, pink , blue );
-  border-radius:15px;
-  padding: 4vh 2vh; 
-  margin-bottom: 3vh;
-  margin-left: 2vh;
-  //box-shadow: 0px 2px 2px 2px #2eb7bf;
-  box-sizing: border-box;
-  font-size: 12pt;
-}
-.card{
-  border-bottom: 1px solid rgb(192, 171, 171);
-  margin-top:5vh;
-}
-.none{
-  --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));
-  //border-bottom: 1px solid cadetblue;
-  margin-bottom: 3vh;
-  //display: flex;
+.child-meta {
+  font-size: 13px;
+  color: #546E7A;
+  margin: 0 0 10px;
 }
 
-// .none:only-child {
-//   border-bottom: 0px;
-// }
-
-ion-button{
-  text-transform: none;
-  // --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
-    //  color: var(--ion-color-light);
-     text-transform: none;
-     font-family: -webkit-body;
+.vac-stats {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-ion-fab-button{
-  --background: linear-gradient(135deg, rgb(55, 185, 61), rgb(0, 255, 42));
+.stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+
+  ion-icon { font-size: 13px; }
 }
 
+.chip-given  { background: #E8F5E9; color: #2E7D32; }
+.chip-due    { background: #FFF8E1; color: #F57F17; }
+.chip-missed { background: #FFEBEE; color: #B71C1C; }
 
-.col{
-    //border: think solid black;
-    border: solid 1px rgb(224, 215, 215);
-    border-bottom-style: solid 1px grey;
-    border-right-style: solid 1px grey;
-    }
-.bgheader1{
-    background-color: #003372;
-}
-.bgheader2{
-    background-color: #366EB8
-}
-.bgcolum{
-    background-color: #EEECED
-}
-ion-img{
-    width: 70px;
+// ── Schedule card ─────────────────────────────────────────────────────────────
+.vcard-div { margin-bottom: 14px; }
+
+.schedule-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(10, 61, 121, 0.09);
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
+.schedule-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #0A3D79, #1565C0);
+}
+
+.cal-icon {
+  font-size: 20px;
+  color: rgba(255,255,255,0.85);
+}
+
+.schedule-date {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.dl-btn {
+  background: rgba(255,255,255,0.18);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: #ffffff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.schedule-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: #F5F8FD;
+  border-bottom: 1px solid #EEF2F7;
+}
+
+.home-book-btn {
+  --background: linear-gradient(135deg, #FF4500, #FF6B35);
+  --color: #ffffff;
+  --border-radius: 20px;
+}
+
+// ── Dose list ─────────────────────────────────────────────────────────────────
+.dose-list { padding: 8px 0; }
+
+.dose-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #F0F4F8;
+
+  &:last-child { border-bottom: none; }
+}
+
+.dose-left { flex-shrink: 0; }
+
+.dose-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.ind-given  { background: #43A047; }
+.ind-epi    { background: #1E88E5; }
+.ind-due    { background: #FFA000; }
+.ind-missed { background: #E53935; }
+
+.dose-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dose-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+
+.dose-status {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-given  { color: #2E7D32; }
+.status-epi    { color: #1565C0; }
+.status-due    { color: #F57F17; }
+.status-missed { color: #B71C1C; }
+
+.reschedule-btn {
+  --border-radius: 20px;
+  font-size: 12px;
+  flex-shrink: 0;
+  height: 32px;
+}
+
+// ── Home booking form ─────────────────────────────────────────────────────────
+.booking-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 18px 26px;
+  box-shadow: 0 4px 22px rgba(10, 61, 121, 0.11);
+}
+
+.booking-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0A3D79;
+  margin: 0 0 20px;
+
+  ion-icon { font-size: 22px; color: #FF4500; }
+}
+
+.field-group { margin-bottom: 14px; }
+
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #546E7A;
+  margin-bottom: 5px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.field-wrap {
+  display: flex;
+  align-items: center;
+  background: #F0F4FB;
+  border: 1.5px solid #D0DCF0;
+  border-radius: 12px;
+  padding: 0 12px;
+
+  &:focus-within {
+    border-color: #1565C0;
+    background: #F5F8FF;
   }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even){background-color: #f2f2f2}
-  
-  th {
-    background-color: #4066a8;
-    color: white;
-  }
-  .done{
-color: green;
-  }
-  .due{
-color: gray;
-  }
+}
 
-  .missed{
-    color: rgb(158, 12, 12);
-      }
+.field-icon {
+  font-size: 18px;
+  color: #1565C0;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
 
-      .next{
-        color: rgb(158, 148, 12);
-          }
+ion-input {
+  --padding-start: 0;
+  --padding-end: 4px;
+  --color: #1A1A2E;
+  --placeholder-color: #90A4AE;
+  font-size: 15px;
+  height: 44px;
+}
 
-          //
-          .demo-non-form {
-            color: initial;
-            width: 100%;
-            padding: 10px;
-            margin: 6px 0 12px 0;
-            border: 1px solid #ccc;
-            border-radius: 0;
-            font-family: arial, verdana, sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-            -webkit-appearance: none;
-        }
-        
-        .external-container button.external-button {
-            font-weight: 400;
-            padding: 10px;
-            margin: 6px 0 13px 0;
-            width: 100%;
-        }
+.booking-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  --background: linear-gradient(135deg, #FF4500, #FF6B35);
+  --color: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 16px rgba(255, 69, 0, 0.32);
+  flex: 1;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 700;
+}

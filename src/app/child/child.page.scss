@@ -1,79 +1,145 @@
-ion-content{
-  // --background:  linear-gradient(135deg, var(--ion-color-light), var(--ion-color-primary-custom2));
-  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+ion-content {
+  --background: #EEF2F7;
 }
 
-// .childcard{
-//   color: var(--ion-color-light);
-//   background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));
-//   text-align: center;
-//   border-radius:15px 50px;
-//   padding: 5vh 2vh;
-//   margin-top: 2vh;
-//   margin-left: 2vh;
-//   box-shadow: 0px 2px 2px 2px #2eb7bf;
-//   box-sizing: border-box;
-//   font-size: 10pt;
-// }
-ion-item{
-    // --background: linear-gradient(90deg, var(--ion-color-primary-custom2), var(--ion-color-primary-custom));;
+// ── Patient card ──────────────────────────────────────────────────────────────
+.patient-card {
+  background: #ffffff;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.11);
+  border-left: 5px solid transparent;
 }
 
-ion-button {  
-  // --background:  linear-gradient(135deg, #f08bd4, #ab51cb);
-  --background: linear-gradient(120deg, #eefcfb, #e3e7e7);
+.card-boy  { border-left-color: #1565C0; }
+.card-girl { border-left-color: #E91E8C; }
 
-     color: var(--ion-color-light);
-     text-transform: none;
-    //  margin-left: 50%;
-     font-family: -webkit-body;
-}
-
-// #button{
-//   color:  black;
-//   float: right;
-
-// }
-
-.card-div{
-  margin-bottom: 9px;
-}
-
-.img-div{
-padding: 20px;
-border-radius: 10px 0px 0px 20px;
-display: inline-block;
-float: left;
-position: relative;
-// background: linear-gradient(135deg, #007bff, #00bfff);
-}
-
-.name-div{
-padding: 12px 12px;
-border-radius: 0px 20px 10px 0px;
-border-left: 1px solid gray;
-background: honeydew;
-line-height: 20pt;
-color:var(--ion-color-primary-custom);
-font-family: -webkit-body;
-}
-.form-and-button-wrapper {
+// ── Header row ────────────────────────────────────────────────────────────────
+.patient-header {
   display: flex;
   align-items: center;
-  width: 100%;
+  padding: 18px 16px 14px;
+  gap: 16px;
 }
 
-.form-and-button-wrapper mat-form-field {
+.avatar-wrap {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
   display: flex;
-  // margin-right: 10px; /* Adjust the spacing between the fields and the button as needed */
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.form-and-button-wrapper ion-select {
+.avatar-boy  { background: linear-gradient(135deg, #0A3D79, #1E88E5); }
+.avatar-girl { background: linear-gradient(135deg, #AD1457, #F06292); }
+
+.patient-avatar {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.patient-info {
   flex: 1;
-  margin-right: 10px;
-  justify-content: space-between; 
+  min-width: 0;
 }
 
-.form-and-button-wrapper ion-button {
-  flex-shrink: 0; /* Prevent the button from shrinking */
+.patient-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin: 0 0 3px;
+}
+
+.patient-age {
+  font-size: 13px;
+  color: #546E7A;
+  margin: 0 0 6px;
+}
+
+.gender-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+
+  ion-icon { font-size: 14px; }
+}
+
+.badge-boy {
+  background: #E3EFFD;
+  color: #1565C0;
+}
+
+.badge-girl {
+  background: #FCE4F0;
+  color: #AD1457;
+}
+
+// ── Footer / doctor row ───────────────────────────────────────────────────────
+.patient-footer {
+  border-top: 1px solid #EEF2F7;
+  padding: 12px 16px 14px;
+  background: #F8FAFD;
+}
+
+.doctor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doctor-select-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #EEF2F7;
+  border: 1.5px solid #D0DCF0;
+  border-radius: 10px;
+  padding: 0 10px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.doctor-icon {
+  color: #1565C0;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.doctor-input {
+  --padding-start: 2px;
+  --padding-end: 2px;
+  --color: #1A1A2E;
+  --placeholder-color: #90A4AE;
+  font-size: 14px;
+  flex: 1;
+}
+
+.doctor-select {
+  --padding-start: 4px;
+  --padding-end: 0;
+  color: #1565C0;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  width: 32px;
+}
+
+.vaccine-btn {
+  --background: linear-gradient(135deg, #FF4500, #FF6B35);
+  --color: #ffffff;
+  --border-radius: 10px;
+  --box-shadow: 0 3px 12px rgba(255,69,0,0.30);
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  height: 38px;
 }
