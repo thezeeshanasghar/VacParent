@@ -58,7 +58,7 @@
         </div>
 
         <div class="schedule-actions" *ngIf="checkVaccineIsDon(item.value)">
-          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="picker.open()">
+          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="toggleGroupPicker(item.key)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
@@ -66,11 +66,11 @@
             <ion-icon slot="start" name="home-outline"></ion-icon>
             Home Booking
           </ion-button>
-          <ion-icon>
-            <ion-datetime (ionChange)="updateBulkDate($event, item.value[0].Id)" max='2030' min='2000'
-              #picker picker-format="DD-MM-YYYY">
-            </ion-datetime>
-          </ion-icon>
+          <ion-datetime
+            *ngIf="groupPickerOpen[item.key]"
+            (ionChange)="updateBulkDate($event, item.value[0].Id); toggleGroupPicker(item.key)"
+            max="2030" min="2000">
+          </ion-datetime>
         </div>
 
         <div class="dose-list">
@@ -101,11 +101,18 @@
                 Disease Year: {{v.DiseaseYear}}
               </span>
             </div>
-            <ion-button *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true" fill="outline" color="primary"
-              size="small" shape="round" (click)="picker.open()" class="reschedule-btn">
-              <ion-icon slot="start" name="calendar-outline"></ion-icon>
-              Reschedule
-            </ion-button>
+            <div *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true">
+              <ion-button fill="outline" color="primary" size="small" shape="round"
+                (click)="toggleItemPicker(v.Id)" class="reschedule-btn">
+                <ion-icon slot="start" name="calendar-outline"></ion-icon>
+                Reschedule
+              </ion-button>
+              <ion-datetime
+                *ngIf="itemPickerOpen[v.Id]"
+                (ionChange)="updateDate($event, v.Id); toggleItemPicker(v.Id)"
+                max="2030" min="2000">
+              </ion-datetime>
+            </div>
           </div>
         </div>
 

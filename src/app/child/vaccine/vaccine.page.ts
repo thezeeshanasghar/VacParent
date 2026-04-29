@@ -28,6 +28,8 @@ export class VaccinePage {
 
   fg1: FormGroup;
   homeBook = false;
+  groupPickerOpen: any = {};
+  itemPickerOpen: any = {};
   given = 0;
   due = 0;
   missed = 0;
@@ -288,6 +290,14 @@ export class VaccinePage {
         this.toastService.create(err, "danger");
       }
     );
+  }
+
+  toggleGroupPicker(key: string) {
+    this.groupPickerOpen[key] = !this.groupPickerOpen[key];
+  }
+
+  toggleItemPicker(id: any) {
+    this.itemPickerOpen[id] = !this.itemPickerOpen[id];
   }
 
   datepick() {
