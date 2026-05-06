@@ -23,10 +23,11 @@ export class ForgotPasswordPage implements OnInit {
   forgot = false;
   MobileNumber: any;
   birthday1 = moment(Date.now()).format("YYYY-MM-DD");
+  dobSelected = false;
+  formattedDisplayDate = '';
   Email: string;
   childName: string;
   fatherName: string;
-  // birthday1: string;
   email: string;
 
   loading: boolean = false; // Define loading variable
@@ -327,7 +328,8 @@ export class ForgotPasswordPage implements OnInit {
   }
 
   updateDate() {
-    console.log(this.birthday1);
+    this.dobSelected = true;
+    this.formattedDisplayDate = moment(this.birthday1).format('DD-MM-YYYY');
   }
 
   datepick() {
