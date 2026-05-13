@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="!homeBook">Vaccinations</ion-title>
-    <ion-title *ngIf="homeBook">Home Booking</ion-title>
+    <ion-title *ngIf="homeBook">{{bookingType === 'home' ? 'Home Booking' : 'Clinic Booking'}}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="!homeBook" (click)="printdata()" class="print-btn">
         <ion-icon name="print-outline"></ion-icon>
@@ -62,11 +62,11 @@
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home')">
+          <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home', item.value)">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             Home Booking
           </ion-button>
-          <ion-button *ngIf="allowClinicBooking" size="small" shape="round" color="primary" (click)="setHomeBook(true, 'clinic')">
+          <ion-button *ngIf="allowClinicBooking" size="small" shape="round" color="primary" (click)="setHomeBook(true, 'clinic', item.value)">
             <ion-icon slot="start" name="business-outline"></ion-icon>
             Clinic Booking
           </ion-button>
@@ -136,51 +136,56 @@
           <label class="field-label">Patient Name</label>
           <div class="field-wrap">
             <ion-icon name="person-outline" class="field-icon"></ion-icon>
-            <ion-input type="text" formControlName="ChildName" placeholder="Enter patient name"></ion-input>
+            <ion-input type="text" formControlName="ChildName" readonly></ion-input>
           </div>
         </div>
         <div class="field-group">
           <label class="field-label">Father's Name</label>
           <div class="field-wrap">
             <ion-icon name="people-outline" class="field-icon"></ion-icon>
-            <ion-input type="text" formControlName="FatherName" placeholder="Enter father's name"></ion-input>
-          </div>
-        </div>
-        <div class="field-group">
-          <label class="field-label">Email</label>
-          <div class="field-wrap">
-            <ion-icon name="mail-outline" class="field-icon"></ion-icon>
-            <ion-input type="email" formControlName="Email" placeholder="Enter email"></ion-input>
+            <ion-input type="text" formControlName="FatherName" readonly></ion-input>
           </div>
         </div>
         <div class="field-group">
           <label class="field-label">Mobile Number</label>
           <div class="field-wrap">
             <ion-icon name="call-outline" class="field-icon"></ion-icon>
-            <ion-input type="tel" formControlName="Phone" placeholder="Enter mobile number"></ion-input>
+            <ion-input type="tel" formControlName="Phone" readonly></ion-input>
           </div>
         </div>
         <div class="field-group">
           <label class="field-label">Vaccines</label>
           <div class="field-wrap">
             <ion-icon name="medkit-outline" class="field-icon"></ion-icon>
-            <ion-input type="text" formControlName="Vaccines" placeholder="Enter vaccines"></ion-input>
+            <ion-input type="text" formControlName="Vaccines" readonly></ion-input>
           </div>
         </div>
-        <div class="field-group">
-          <label class="field-label">City</label>
-          <div class="field-wrap">
-            <ion-icon name="location-outline" class="field-icon"></ion-icon>
-            <ion-input type="text" formControlName="City" placeholder="Enter city"></ion-input>
+
+        <!-- Home Booking only fields -->
+        <ng-container *ngIf="bookingType === 'home'">
+          <div class="field-group">
+            <label class="field-label">City</label>
+            <div class="field-wrap">
+              <ion-icon name="location-outline" class="field-icon"></ion-icon>
+              <ion-input type="text" formControlName="City"></ion-input>
+            </div>
           </div>
-        </div>
-        <div class="field-group">
-          <label class="field-label">Address</label>
-          <div class="field-wrap">
-            <ion-icon name="home-outline" class="field-icon"></ion-icon>
-            <ion-input type="text" formControlName="Address" placeholder="Enter address"></ion-input>
+          <div class="field-group">
+            <label class="field-label">Address</label>
+            <div class="field-wrap">
+              <ion-icon name="home-outline" class="field-icon"></ion-icon>
+              <ion-input type="text" formControlName="Address" placeholder="Enter your address"></ion-input>
+            </div>
           </div>
-        </div>
+          <div class="field-group">
+            <label class="field-label">Location Pin</label>
+            <ion-button expand="block" fill="outline" color="tertiary" (click)="shareLocation()">
+              <ion-icon slot="start" name="location-outline"></ion-icon>
+              {{fg1.controls['Location'].value ? 'Location Captured ✓' : 'Capture My Location'}}
+            </ion-button>
+          </div>
+        </ng-container>
+
         <div class="booking-actions">
           <ion-button class="submit-btn" (click)="submitBooking()">
             <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>

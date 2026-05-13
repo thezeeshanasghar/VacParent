@@ -11,6 +11,11 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item routerLink="/bookings" lines="none">
+            <ion-icon color="primary" slot="start" name="notifications-outline"></ion-icon>
+            <ion-label>My Bookings</ion-label>
+            <ion-badge *ngIf="unreadCount > 0" color="danger" slot="end">{{unreadCount}}</ion-badge>
+          </ion-item>
           <ion-item color="light" routerLink="/login" (click)="clearStorage()">
             <ion-icon color="primary" slot="start" name="power"></ion-icon>
             <ion-label>Logout</ion-label>

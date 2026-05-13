@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { LoadingController } from "@ionic/angular";
 import { ScheduleService } from "src/app/services/schedule.service";
+import { BookingService } from "src/app/services/booking.service";
 import { ToastService } from "src/app/services/toast.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Storage } from "@ionic/storage";
+import { environment } from "src/environments/environment";
 import * as moment from "moment";
 //import { BulkService } from "src/app/services/bulk.service";
 import { AlertController } from '@ionic/angular';
@@ -45,11 +48,14 @@ export class VaccinePage {
   Child: any;
   age: any;
   private readonly API_VACCINE = `${environment.BASE_URL}`
+  userId: any;
+
   constructor(
     public loadingController: LoadingController,
     public route: ActivatedRoute,
     public router: Router,
     private vaccineService: ScheduleService,
+    private bookingService: BookingService,
     //private bulkService: BulkService,
     private toastService: ToastService,
     public alertController: AlertController,
@@ -57,8 +63,8 @@ export class VaccinePage {
     private cdref: ChangeDetectorRef,
     private datePicker: DatePicker,
     private formBuilder: FormBuilder,
-    private platform: Platform
-
+    private platform: Platform,
+    private storage: Storage
   ) { }
 
   ionViewDidEnter() {
@@ -66,18 +72,19 @@ export class VaccinePage {
     this.getVaccination();
 
     this.fg1 = this.formBuilder.group({
+      ChildId: new FormControl(''),
+      UserId: new FormControl(''),
       ChildName: new FormControl("", Validators.required),
       FatherName: new FormControl("", Validators.required),
       Email: new FormControl(
         "",
         Validators.compose([
-          // Validators.required,
           Validators.pattern(
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
           )
         ])
       ),
-      DOB: new FormControl('', Validators.required),
+      DOB: new FormControl(''),
       Vaccines: new FormControl('', Validators.required),
       Phone: new FormControl(
         "",
@@ -86,11 +93,16 @@ export class VaccinePage {
           Validators.pattern("[0-9]{10}$")
         ])
       ),
-      Address: new FormControl('', Validators.required),
+      Address: new FormControl(''),
+      Location: new FormControl(''),
       BookingDate: moment(Date.now()).format("DD-MM-YYYY"),
       City: [null],
       Status: 'Booked'
+    });
 
+    this.storage.get(environment.USER_Id).then(id => {
+      this.userId = id;
+      this.fg1.controls['UserId'].setValue(id);
     });
   }
 
@@ -144,12 +156,24 @@ export class VaccinePage {
             this.Child = (this.vaccine[0].Child);
             this.allowHomeBooking   = this.Child.AllowHomeBooking   === true;
             this.allowClinicBooking = this.Child.AllowClinicBooking === true;
+            this.fg1.controls['ChildId'].setValue(this.Child.Id);
             this.fg1.controls['ChildName'].setValue(this.Child.Name);
             this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
             this.fg1.controls['DOB'].setValue(this.Child.DOB);
             this.fg1.controls['Email'].setValue(this.Child.Email);
             this.fg1.controls['Phone'].setValue(this.Child.User.MobileNumber);
             this.fg1.controls['City'].setValue(this.Child.City);
+            // pre-fill last address/location
+            this.bookingService.getLastBooking(this.Child.Id).subscribe(
+              function(r) {
+                if (r && r.IsSuccess && r.ResponseData) {
+                  if (r.ResponseData.Address) this.fg1.controls['Address'].setValue(r.ResponseData.Address);
+                  if (r.ResponseData.Location) this.fg1.controls['Location'].setValue(r.ResponseData.Location);
+                  if (r.ResponseData.City) this.fg1.controls['City'].setValue(r.ResponseData.City);
+                }
+              }.bind(this),
+              function() {}
+            );
             //this.fg1.controls['BookingDate'].setValue(this.Child.User.BookingDate);
 
             this.age = this.calculateAge(moment(this.Child.DOB, "DD-MM-YYYY").format("YYYY-MM-DD"));
@@ -209,16 +233,36 @@ export class VaccinePage {
     );
   }
 
-  setHomeBook(value: boolean, type: string = '') {
+  setHomeBook(value: boolean, type: string = '', vaccines: any[] = []) {
     this.homeBook = value;
     this.bookingType = type;
     if (value) {
       this.fg1.controls['Status'].setValue(type === 'home' ? 'HomeBooked' : 'ClinicBooked');
+      var names = vaccines.filter(function(v) { return !v.IsDone && !v.Due2EPI; }).map(function(v) { return v.Dose.Name; }).join(', ');
+      this.fg1.controls['Vaccines'].setValue(names);
+    }
+  }
+
+  shareLocation() {
+    var self = this;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          var mapsUrl = 'https://maps.google.com/?q=' + lat + ',' + lng;
+          self.fg1.controls['Location'].setValue(mapsUrl);
+          self.toastService.create('Location captured.');
+        },
+        function(err) {
+          console.error('Location error', err);
+        }
+      );
     }
   }
 
   async submitBooking() {
-    await this.vaccineService.addBooking(this.fg1.value).subscribe(
+    await this.bookingService.addBooking(this.fg1.value).subscribe(
       res => {
         if (res.IsSuccess) {
           this.toastService.create(res.Message);

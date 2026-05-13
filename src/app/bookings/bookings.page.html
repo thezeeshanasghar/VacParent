@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Bookings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-text color="medium" *ngIf="bookings.length === 0">
+    <p class="ion-text-center">No bookings in the last 30 days.</p>
+  </ion-text>
+
+  <ion-card *ngFor="let b of bookings">
+    <ion-card-header>
+      <ion-badge [color]="b.Type === 'HomeBooked' ? 'warning' : 'primary'" style="margin-right:8px">
+        {{ b.Type === 'HomeBooked' ? 'Home Visit' : 'Clinic Visit' }}
+      </ion-badge>
+      <ion-badge [color]="statusColor(b.Status)">{{ b.Status }}</ion-badge>
+      <ion-card-title style="margin-top:8px">{{ b.ChildName }}</ion-card-title>
+      <ion-card-subtitle>{{ b.Vaccines }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p *ngIf="b.Address"><strong>Address:</strong> {{ b.Address }}</p>
+      <p><strong>Submitted:</strong> {{ b.CreatedAt | date:'dd MMM yyyy' }}</p>
+      <ion-button *ngIf="b.Location" fill="outline" size="small" (click)="openLocation(b.Location)">
+        <ion-icon slot="start" name="location-outline"></ion-icon>
+        View Location
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

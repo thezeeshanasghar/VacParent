@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
+import { BookingService } from 'src/app/services/booking.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  public unreadCount = 0;
   public appPages = [
     {
       title: 'Dashboard',
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private storage: Storage,
     public loginservice: LoginService,
+    private bookingService: BookingService
   ) {
     this.initializeApp();
   }
@@ -67,8 +70,15 @@ export class AppComponent implements OnInit {
     // }
     this.storage.get(environment.USER_Id).then(value => {
       if (value) {
-        let state = true;
-        this.loginservice.changeState(state);
+        this.loginservice.changeState(true);
+        this.bookingService.getParentNotifications(value).subscribe(
+          function(res) {
+            if (res && res.IsSuccess && res.ResponseData) {
+              this.unreadCount = res.ResponseData.UnreadCount || 0;
+            }
+          }.bind(this),
+          function() {}
+        );
       }
     });
   }
