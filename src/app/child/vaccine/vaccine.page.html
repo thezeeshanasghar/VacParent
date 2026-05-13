@@ -57,14 +57,18 @@
           </button>
         </div>
 
-        <div class="schedule-actions" *ngIf="checkVaccineIsDon(item.value)">
+        <div class="schedule-actions" *ngIf="!checkVaccineIsDon(item.value)">
           <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="toggleGroupPicker(item.key)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <ion-button size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true)">
+          <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home')">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             Home Booking
+          </ion-button>
+          <ion-button *ngIf="allowClinicBooking" size="small" shape="round" color="primary" (click)="setHomeBook(true, 'clinic')">
+            <ion-icon slot="start" name="business-outline"></ion-icon>
+            Clinic Booking
           </ion-button>
           <ion-datetime
             *ngIf="groupPickerOpen[item.key]"
@@ -124,8 +128,8 @@
   <div *ngIf="homeBook">
     <div class="booking-card">
       <h3 class="booking-title">
-        <ion-icon name="home-outline"></ion-icon>
-        Home Vaccination Booking
+        <ion-icon [name]="bookingType === 'home' ? 'home-outline' : 'business-outline'"></ion-icon>
+        {{bookingType === 'home' ? 'Home Vaccination Booking' : 'Clinic Visit Booking'}}
       </h3>
       <form [formGroup]="fg1">
         <div class="field-group">
@@ -182,7 +186,7 @@
             <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
             Submit Booking
           </ion-button>
-          <ion-button fill="outline" color="medium" (click)="setHomeBook(false)">
+          <ion-button fill="outline" color="medium" (click)="setHomeBook(false, '')">
             Cancel
           </ion-button>
         </div>

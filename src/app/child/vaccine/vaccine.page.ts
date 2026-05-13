@@ -28,6 +28,9 @@ export class VaccinePage {
 
   fg1: FormGroup;
   homeBook = false;
+  bookingType: string = '';
+  allowHomeBooking = false;
+  allowClinicBooking = false;
   groupPickerOpen: any = {};
   itemPickerOpen: any = {};
   given = 0;
@@ -139,6 +142,8 @@ export class VaccinePage {
             //original code
             this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
+            this.allowHomeBooking   = this.Child.AllowHomeBooking   === true;
+            this.allowClinicBooking = this.Child.AllowClinicBooking === true;
             this.fg1.controls['ChildName'].setValue(this.Child.Name);
             this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
             this.fg1.controls['DOB'].setValue(this.Child.DOB);
@@ -204,12 +209,15 @@ export class VaccinePage {
     );
   }
 
-  setHomeBook(value) {
+  setHomeBook(value: boolean, type: string = '') {
     this.homeBook = value;
+    this.bookingType = type;
+    if (value) {
+      this.fg1.controls['Status'].setValue(type === 'home' ? 'HomeBooked' : 'ClinicBooked');
+    }
   }
 
   async submitBooking() {
-    console.log(this.fg1.value);
     await this.vaccineService.addBooking(this.fg1.value).subscribe(
       res => {
         if (res.IsSuccess) {
