@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       icon: 'mail'
     },
     {
-      title: 'My Child',
+      title: 'My People',
       url: '/child',
       icon: 'paper-plane'
     },
