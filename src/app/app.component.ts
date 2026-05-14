@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private storage: Storage,
     public loginservice: LoginService,
-    private bookingService: BookingService
+    public bookingService: BookingService
   ) {
     this.initializeApp();
   }
