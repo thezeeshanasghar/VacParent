@@ -354,27 +354,60 @@ export class VaccinePage {
     this.itemPickerOpen[id] = !this.itemPickerOpen[id];
   }
 
-  openGroupDatePicker(inputId: string) {
-    const el = document.getElementById(inputId) as HTMLInputElement;
-    if (el) el.click();
+  async promptReschedule(vacId: any) {
+    const alert = await this.alertController.create({
+      header: 'Reschedule',
+      inputs: [{ name: 'date', type: 'date', min: '2020-01-01', max: '2035-12-31' }],
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Reschedule',
+          handler: (data: any) => {
+            if (!data.date) return;
+            const newDate = moment(data.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            const payload = { Date: newDate, Id: vacId };
+            this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
+              (res: any) => {
+                if (res.IsSuccess) {
+                  this.getVaccination();
+                  this.toastService.create(res.Message || 'Rescheduled successfully');
+                } else {
+                  this.resheduleAlert(res.Message, payload);
+                }
+              },
+              (err: any) => { this.toastService.create(err, 'danger'); }
+            );
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
-  updateDateNative(event: any, vacId: any) {
-    const raw = event.target.value;
-    if (!raw) return;
-    const newDate = moment(raw, 'YYYY-MM-DD').format('DD-MM-YYYY');
-    const data = { Date: newDate, Id: vacId };
-    this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
-      res => {
-        if (res.IsSuccess) {
-          this.getVaccination();
-          this.toastService.create(res.Message);
-        } else {
-          this.resheduleAlert(res.Message, data);
+  async promptBulkReschedule(vaccines: any[]) {
+    const alert = await this.alertController.create({
+      header: 'Reschedule All',
+      inputs: [{ name: 'date', type: 'date', min: '2020-01-01', max: '2035-12-31' }],
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Reschedule',
+          handler: (data: any) => {
+            if (!data.date) return;
+            const newDate = moment(data.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true).forEach(v => {
+              const payload = { Date: newDate, Id: v.Id };
+              this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
+                (res: any) => { if (res.IsSuccess) this.getVaccination(); },
+                () => {}
+              );
+            });
+            this.toastService.create('All rescheduled successfully');
+          }
         }
-      },
-      err => { this.toastService.create(err, 'danger'); }
-    );
+      ]
+    });
+    await alert.present();
   }
 
   datepick() {

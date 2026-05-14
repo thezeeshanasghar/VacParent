@@ -54,19 +54,13 @@
 
         <div class="schedule-card-header">
           <span class="schedule-date">{{item.key | date}}</span>
-          <button *ngIf="!checkVaccineIsDon(item.value)" (click)="triggerDownload(item.key)" class="dl-btn">
-            <ion-icon name="document-text-outline"></ion-icon>
-          </button>
         </div>
 
         <div class="schedule-actions" *ngIf="!checkVaccineIsDon(item.value)">
-          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="openGroupDatePicker('group_' + item.key)">
+          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="promptBulkReschedule(item.value)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <input type="date" [id]="'group_' + item.key"
-            style="position:absolute;opacity:0;width:1px;height:1px;overflow:hidden;"
-            (change)="updateBulkDate($event, item.value)">
           <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home', item.value)">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             Home Booking
@@ -107,13 +101,10 @@
             </div>
             <div *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true">
               <ion-button fill="outline" color="primary" size="small" shape="round"
-                (click)="openGroupDatePicker('item_' + v.Id)" class="reschedule-btn">
+                (click)="promptReschedule(v.Id)" class="reschedule-btn">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
                 Reschedule
               </ion-button>
-              <input type="date" [id]="'item_' + v.Id"
-                style="position:absolute;opacity:0;width:1px;height:1px;overflow:hidden;"
-                (change)="updateDateNative($event, v.Id)">
             </div>
           </div>
         </div>
