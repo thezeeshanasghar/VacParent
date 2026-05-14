@@ -65,7 +65,7 @@
             Reschedule All
           </ion-button>
           <input type="date" [id]="'group_' + item.key"
-            style="position:absolute;visibility:hidden;width:0;height:0;"
+            style="position:absolute;opacity:0;width:1px;height:1px;overflow:hidden;"
             (change)="updateBulkDate($event, item.value)">
           <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home', item.value)">
             <ion-icon slot="start" name="home-outline"></ion-icon>
@@ -112,7 +112,7 @@
                 Reschedule
               </ion-button>
               <input type="date" [id]="'item_' + v.Id"
-                style="position:absolute;visibility:hidden;width:0;height:0;"
+                style="position:absolute;opacity:0;width:1px;height:1px;overflow:hidden;"
                 (change)="updateDateNative($event, v.Id)">
             </div>
           </div>

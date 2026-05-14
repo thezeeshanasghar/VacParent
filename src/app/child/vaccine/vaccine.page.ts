@@ -238,6 +238,10 @@ export class VaccinePage {
       this.fg1.controls['Status'].setValue(type === 'home' ? 'HomeBooked' : 'ClinicBooked');
       var names = vaccines.filter(function(v) { return !v.IsDone && !v.Due2EPI; }).map(function(v) { return v.Dose.Name; }).join(', ');
       this.fg1.controls['Vaccines'].setValue(names);
+      if (type !== 'home') {
+        this.fg1.controls['Address'].setValue('');
+        this.fg1.controls['Location'].setValue('');
+      }
     }
   }
 
