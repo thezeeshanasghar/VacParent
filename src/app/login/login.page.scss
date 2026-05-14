@@ -69,6 +69,10 @@ ion-content {
   background: radial-gradient(ellipse, rgba($lava-red, 0.42) 0%, rgba($lava-orange, 0.18) 50%, transparent 70%);
 }
 
+@media (max-width: 480px) {
+  .blob-top-left, .blob-top-right, .blob-bottom { display: none; }
+}
+
 // ── Overlay / centred column ──────────────────────────────────────────────────
 .login-overlay {
   position: relative;

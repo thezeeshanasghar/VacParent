@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content" when="lg">
     <ion-menu contentId="main-content" type="overlay" *ngIf="loginservice.isAuthenticated()">
       <ion-content>
         <ion-list id="inbox-list">
