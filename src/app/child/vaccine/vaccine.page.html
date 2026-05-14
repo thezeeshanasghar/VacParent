@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button *ngIf="!homeBook"></ion-back-button>
+      <ion-button *ngIf="homeBook" (click)="setHomeBook(false, '')">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title *ngIf="!homeBook">Vaccinations</ion-title>
     <ion-title *ngIf="homeBook">{{bookingType === 'home' ? 'Home Booking' : 'Clinic Booking'}}</ion-title>
