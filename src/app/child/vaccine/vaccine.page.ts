@@ -350,6 +350,29 @@ export class VaccinePage {
     this.itemPickerOpen[id] = !this.itemPickerOpen[id];
   }
 
+  openGroupDatePicker(inputId: string) {
+    const el = document.getElementById(inputId) as HTMLInputElement;
+    if (el) el.click();
+  }
+
+  updateDateNative(event: any, vacId: any) {
+    const raw = event.target.value;
+    if (!raw) return;
+    const newDate = moment(raw, 'YYYY-MM-DD').format('DD-MM-YYYY');
+    const data = { Date: newDate, Id: vacId };
+    this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
+      res => {
+        if (res.IsSuccess) {
+          this.getVaccination();
+          this.toastService.create(res.Message);
+        } else {
+          this.resheduleAlert(res.Message, data);
+        }
+      },
+      err => { this.toastService.create(err, 'danger'); }
+    );
+  }
+
   datepick() {
     this.datePicker.show({
       date: new Date(),
@@ -377,10 +400,22 @@ export class VaccinePage {
     await alert.present();
   }
 
-  updateBulkDate(event: any, vaccineId: number) {
-    // Your implementation here
-    // Use `event` to get the new date and `vaccineId` to know which vaccine's date is being updated
-    throw new Error("Not implemented");
+  updateBulkDate(event: any, vaccines: any[]) {
+    const raw = event.target.value;
+    if (!raw) return;
+    const newDate = moment(raw, 'YYYY-MM-DD').format('DD-MM-YYYY');
+    vaccines.forEach(v => {
+      if (!v.IsDone && !v.Due2EPI && v.IsSkip != true) {
+        const data = { Date: newDate, Id: v.Id };
+        this.vaccineService.updateVaccinationDate(data, false, false, false).subscribe(
+          (res: any) => {
+            if (res.IsSuccess) this.getVaccination();
+          },
+          () => {}
+        );
+      }
+    });
+    this.toastService.create('Rescheduled successfully');
   }
 
   download1(id: number, date: string, fee: number) {

@@ -53,7 +53,6 @@
       <div class="schedule-card">
 
         <div class="schedule-card-header">
-          <ion-icon name="calendar-outline" class="cal-icon"></ion-icon>
           <span class="schedule-date">{{item.key | date}}</span>
           <button *ngIf="!checkVaccineIsDon(item.value)" (click)="triggerDownload(item.key)" class="dl-btn">
             <ion-icon name="document-text-outline"></ion-icon>
@@ -61,10 +60,13 @@
         </div>
 
         <div class="schedule-actions" *ngIf="!checkVaccineIsDon(item.value)">
-          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="toggleGroupPicker(item.key)">
+          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="openGroupDatePicker('group_' + item.key)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
+          <input type="date" [id]="'group_' + item.key"
+            style="position:absolute;visibility:hidden;width:0;height:0;"
+            (change)="updateBulkDate($event, item.value)">
           <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home', item.value)">
             <ion-icon slot="start" name="home-outline"></ion-icon>
             Home Booking
@@ -73,11 +75,6 @@
             <ion-icon slot="start" name="business-outline"></ion-icon>
             Clinic Booking
           </ion-button>
-          <ion-datetime
-            *ngIf="groupPickerOpen[item.key]"
-            (ionChange)="updateBulkDate($event, item.value[0].Id); toggleGroupPicker(item.key)"
-            max="2030" min="2000">
-          </ion-datetime>
         </div>
 
         <div class="dose-list">
@@ -110,15 +107,13 @@
             </div>
             <div *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true">
               <ion-button fill="outline" color="primary" size="small" shape="round"
-                (click)="toggleItemPicker(v.Id)" class="reschedule-btn">
+                (click)="openGroupDatePicker('item_' + v.Id)" class="reschedule-btn">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
                 Reschedule
               </ion-button>
-              <ion-datetime
-                *ngIf="itemPickerOpen[v.Id]"
-                (ionChange)="updateDate($event, v.Id); toggleItemPicker(v.Id)"
-                max="2030" min="2000">
-              </ion-datetime>
+              <input type="date" [id]="'item_' + v.Id"
+                style="position:absolute;visibility:hidden;width:0;height:0;"
+                (change)="updateDateNative($event, v.Id)">
             </div>
           </div>
         </div>
