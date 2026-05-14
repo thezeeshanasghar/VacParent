@@ -10,7 +10,6 @@ import * as moment from "moment";
 //import { BulkService } from "src/app/services/bulk.service";
 import { AlertController } from '@ionic/angular';
 //import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
-import { environment } from 'src/environments/environment';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
