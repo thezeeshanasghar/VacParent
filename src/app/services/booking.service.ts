@@ -8,6 +8,7 @@ import { BaseService } from './base.service';
 @Injectable({ providedIn: 'root' })
 export class BookingService extends BaseService {
   private readonly API = `${environment.BASE_URL}`;
+  unreadCount: number = 0;
 
   constructor(protected http: HttpClient) { super(http); }
 
@@ -33,6 +34,11 @@ export class BookingService extends BaseService {
 
   markRead(notifId: number): Observable<any> {
     return this.http.put(`${this.API}notification/${notifId}/read`, {}, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  markAllReadParent(userId: number): Observable<any> {
+    return this.http.put(`${this.API}notification/parent/${userId}/read-all`, {}, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 }

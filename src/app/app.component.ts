@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
         this.bookingService.getParentNotifications(value).subscribe(
           function(res) {
             if (res && res.IsSuccess && res.ResponseData) {
-              this.unreadCount = res.ResponseData.UnreadCount || 0;
+              this.bookingService.unreadCount = res.ResponseData.UnreadCount || 0;
             }
           }.bind(this),
           function() {}

@@ -95,6 +95,7 @@ export class VaccinePage {
       Address: new FormControl(''),
       Location: new FormControl(''),
       BookingDate: moment(Date.now()).format("DD-MM-YYYY"),
+      PreferredDate: new FormControl(''),
       City: [null],
       Status: 'Booked'
     });

@@ -24,6 +24,9 @@ export class BookingsPage {
   async ionViewDidEnter() {
     this.userId = await this.storage.get(environment.USER_Id);
     this.load();
+    this.bookingService.markAllReadParent(this.userId).subscribe(() => {
+      this.bookingService.unreadCount = 0;
+    }, () => {});
   }
 
   async load() {
