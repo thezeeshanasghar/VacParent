@@ -125,14 +125,12 @@ export class VaccinePage {
 
 
   checkVaccineIsDon(data): boolean {
-    var isdone: boolean = true;
     for (let i = 0; i < data.length; i++) {
-      if (!data[i].IsDone == false) {
-        isdone = false;
-        break;
+      if (!data[i].IsDone) {
+        return false;
       }
     }
-    return isdone;
+    return true;
   }
   async loadGoogleSheet() {
   }
