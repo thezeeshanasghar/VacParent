@@ -10,6 +10,14 @@
       </div>
       <span class="toolbar-sub">Parent Portal</span>
     </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToBookings()" class="bell-btn">
+        <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+        <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" class="bell-badge">
+          {{bookingService.unreadCount}}
+        </ion-badge>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -47,6 +55,18 @@
         </div>
         <span class="dash-card-label">About Us</span>
         <span class="dash-card-sub">Our mission</span>
+        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      </div>
+
+      <div routerLink="/bookings" class="dash-card card-bookings">
+        <div class="dash-card-icon">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <span class="dash-card-label">My Bookings</span>
+        <span class="dash-card-sub">View & track bookings</span>
+        <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" class="card-notif-badge">
+          {{bookingService.unreadCount}}
+        </ion-badge>
         <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
       </div>
 
