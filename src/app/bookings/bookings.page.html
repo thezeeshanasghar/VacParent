@@ -26,6 +26,7 @@
     <ion-card-content>
       <p *ngIf="b.Address"><strong>Address:</strong> {{ b.Address }}</p>
       <p><strong>Submitted:</strong> {{ b.CreatedAt | date:'dd MMM yyyy' }}</p>
+      <p *ngIf="b.DoctorComment" style="color:#1565C0"><strong>Note from Doctor:</strong> {{ b.DoctorComment }}</p>
       <ion-button *ngIf="b.Location" fill="outline" size="small" (click)="openLocation(b.Location)">
         <ion-icon slot="start" name="location-outline"></ion-icon>
         View Location
