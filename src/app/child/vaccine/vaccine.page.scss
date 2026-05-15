@@ -240,6 +240,16 @@ ion-content {
   &--top { align-self: flex-start; margin-top: 12px; }
 }
 
+.field-wrap--datetime {
+  padding: 4px 12px;
+  ion-datetime {
+    --padding-start: 0;
+    --padding-end: 0;
+    font-size: 15px;
+    flex: 1;
+  }
+}
+
 .field-wrap--textarea {
   align-items: flex-start;
   padding: 4px 12px;

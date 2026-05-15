@@ -41,6 +41,12 @@ export class VaccinePage {
   vaccine: any[] = [];
   dataGrouping: any[] = [];
   childId: any;
+
+  // Date-picker modal state
+  datePickerOpen = false;
+  datePickerTitle = 'Select Date';
+  pickedDate: string = '';
+  private _datePickerCallback: ((date: string) => void) | null = null;
   Pneum2Date: any;
   today = Date.now();
   next = false;
@@ -355,60 +361,52 @@ export class VaccinePage {
     this.itemPickerOpen[id] = !this.itemPickerOpen[id];
   }
 
-  async promptReschedule(vacId: any) {
-    const alert = await this.alertController.create({
-      header: 'Reschedule',
-      inputs: [{ name: 'date', type: 'date', min: '2020-01-01', max: '2035-12-31' }],
-      buttons: [
-        { text: 'Cancel', role: 'cancel' },
-        {
-          text: 'Reschedule',
-          handler: (data: any) => {
-            if (!data.date) return;
-            const newDate = moment(data.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
-            const payload = { Date: newDate, Id: vacId };
-            this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
-              (res: any) => {
-                if (res.IsSuccess) {
-                  this.getVaccination();
-                  this.toastService.create(res.Message || 'Rescheduled successfully');
-                } else {
-                  this.resheduleAlert(res.Message, payload);
-                }
-              },
-              (err: any) => { this.toastService.create(err, 'danger'); }
-            );
+  promptReschedule(vacId: any) {
+    this.datePickerTitle = 'Reschedule';
+    this.pickedDate = '';
+    this._datePickerCallback = (dateStr: string) => {
+      const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
+      const payload = { Date: newDate, Id: vacId };
+      this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
+        (res: any) => {
+          if (res.IsSuccess) {
+            this.getVaccination();
+            this.toastService.create(res.Message || 'Rescheduled successfully');
+          } else {
+            this.resheduleAlert(res.Message, payload);
           }
-        }
-      ]
-    });
-    await alert.present();
+        },
+        (err: any) => { this.toastService.create(err, 'danger'); }
+      );
+    };
+    this.datePickerOpen = true;
   }
 
-  async promptBulkReschedule(vaccines: any[]) {
-    const alert = await this.alertController.create({
-      header: 'Reschedule All',
-      inputs: [{ name: 'date', type: 'date', min: '2020-01-01', max: '2035-12-31' }],
-      buttons: [
-        { text: 'Cancel', role: 'cancel' },
-        {
-          text: 'Reschedule',
-          handler: (data: any) => {
-            if (!data.date) return;
-            const newDate = moment(data.date, 'YYYY-MM-DD').format('DD-MM-YYYY');
-            vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true).forEach(v => {
-              const payload = { Date: newDate, Id: v.Id };
-              this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
-                (res: any) => { if (res.IsSuccess) this.getVaccination(); },
-                () => {}
-              );
-            });
-            this.toastService.create('All rescheduled successfully');
-          }
-        }
-      ]
-    });
-    await alert.present();
+  promptBulkReschedule(vaccines: any[]) {
+    this.datePickerTitle = 'Reschedule All';
+    this.pickedDate = '';
+    this._datePickerCallback = (dateStr: string) => {
+      const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
+      vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true).forEach(v => {
+        const payload = { Date: newDate, Id: v.Id };
+        this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
+          (res: any) => { if (res.IsSuccess) this.getVaccination(); },
+          () => {}
+        );
+      });
+      this.toastService.create('All rescheduled successfully');
+    };
+    this.datePickerOpen = true;
+  }
+
+  onDatePickerChange(event: any) {
+    const dateStr = event.detail.value?.split('T')[0];
+    if (!dateStr) return;
+    this.datePickerOpen = false;
+    if (this._datePickerCallback) {
+      this._datePickerCallback(dateStr);
+      this._datePickerCallback = null;
+    }
   }
 
   datepick() {

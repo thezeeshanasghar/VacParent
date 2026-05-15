@@ -17,6 +17,33 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- ── Date-picker modal (replaces ion-alert date input, broken on iOS Safari) ── -->
+<ion-modal [isOpen]="datePickerOpen" (didDismiss)="datePickerOpen = false" [breakpoints]="[0, 1]" initialBreakpoint="1">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ datePickerTitle }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="datePickerOpen = false">Cancel</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-datetime
+        presentation="date"
+        [min]="'2020-01-01'"
+        [max]="'2035-12-31'"
+        [(ngModel)]="pickedDate"
+        (ionChange)="onDatePickerChange($event)"
+        showDefaultButtons="true"
+        doneText="Confirm"
+        cancelText="Cancel"
+        (ionCancel)="datePickerOpen = false">
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
 <ion-content *ngIf="vaccine" class="ion-padding">
 
   <!-- ── Vaccination view ──────────────────────────────────────────────── -->
@@ -181,9 +208,15 @@
 
         <div class="field-group">
           <label class="field-label">Preferred Date</label>
-          <div class="field-wrap">
+          <div class="field-wrap field-wrap--datetime">
             <ion-icon name="calendar-outline" class="field-icon"></ion-icon>
-            <ion-input type="date" formControlName="PreferredDate"></ion-input>
+            <ion-datetime
+              presentation="date"
+              [min]="'2020-01-01'"
+              [max]="'2035-12-31'"
+              formControlName="PreferredDate"
+              displayFormat="DD MMM YYYY">
+            </ion-datetime>
           </div>
         </div>
 
