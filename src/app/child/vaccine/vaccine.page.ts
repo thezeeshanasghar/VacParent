@@ -42,9 +42,10 @@ export class VaccinePage {
   dataGrouping: any[] = [];
   childId: any;
 
-  // Date-picker modal state
+  // Date-picker overlay state
   datePickerOpen = false;
   datePickerTitle = 'Select Date';
+  pickedDate: string = '';
   private _datePickerCallback: ((date: string) => void) | null = null;
   Pneum2Date: any;
   today = Date.now();
@@ -396,8 +397,8 @@ export class VaccinePage {
     this.datePickerOpen = true;
   }
 
-  onDatePickerChange(event: any) {
-    const dateStr = event.detail.value?.split('T')[0];
+  confirmDatePicker() {
+    const dateStr = this.pickedDate ? this.pickedDate.split('T')[0] : '';
     if (!dateStr) return;
     this.datePickerOpen = false;
     if (this._datePickerCallback) {

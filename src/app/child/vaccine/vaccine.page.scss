@@ -240,6 +240,46 @@ ion-content {
   &--top { align-self: flex-start; margin-top: 12px; }
 }
 
+// ── Date-picker overlay ───────────────────────────────────────────────────────
+.datepicker-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.datepicker-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+.datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.datepicker-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0A3D79;
+}
+
+.datepicker-confirm {
+  --background: #0A3D79;
+  --color: #ffffff;
+  --border-radius: 10px;
+  margin-top: 12px;
+}
+
 .field-wrap--datetime {
   padding: 4px 12px;
   ion-datetime {

@@ -17,33 +17,25 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- ── Date-picker modal (replaces ion-alert date input, broken on iOS Safari) ── -->
-<ion-modal [isOpen]="datePickerOpen" (didDismiss)="datePickerOpen = false" [breakpoints]="[0, 1]" initialBreakpoint="1">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ datePickerTitle }}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="datePickerOpen = false">Cancel</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-datetime
-        presentation="date"
-        [min]="'2020-01-01'"
-        [max]="'2035-12-31'"
-        (ionChange)="onDatePickerChange($event)"
-        showDefaultButtons="true"
-        doneText="Confirm"
-        cancelText="Cancel"
-        (ionCancel)="datePickerOpen = false">
-      </ion-datetime>
-    </ion-content>
-  </ng-template>
-</ion-modal>
-
 <ion-content *ngIf="vaccine" class="ion-padding">
+
+  <!-- ── Inline date-picker overlay (Ionic 5 compatible, fixes iOS Safari) ── -->
+  <div *ngIf="datePickerOpen" class="datepicker-overlay" (click)="datePickerOpen = false">
+    <div class="datepicker-card" (click)="$event.stopPropagation()">
+      <div class="datepicker-header">
+        <span class="datepicker-title">{{ datePickerTitle }}</span>
+        <ion-button fill="clear" size="small" (click)="datePickerOpen = false">Cancel</ion-button>
+      </div>
+      <ion-datetime
+        display-format="DD MMM YYYY"
+        picker-format="DD MMMM YYYY"
+        min="2020-01-01"
+        max="2035-12-31"
+        [(ngModel)]="pickedDate">
+      </ion-datetime>
+      <ion-button expand="block" class="datepicker-confirm" (click)="confirmDatePicker()">Confirm</ion-button>
+    </div>
+  </div>
 
   <!-- ── Vaccination view ──────────────────────────────────────────────── -->
   <div *ngIf="!homeBook">
@@ -210,11 +202,11 @@
           <div class="field-wrap field-wrap--datetime">
             <ion-icon name="calendar-outline" class="field-icon"></ion-icon>
             <ion-datetime
-              presentation="date"
-              [min]="'2020-01-01'"
-              [max]="'2035-12-31'"
-              formControlName="PreferredDate"
-              displayFormat="DD MMM YYYY">
+              display-format="DD MMM YYYY"
+              picker-format="DD MMMM YYYY"
+              min="2020-01-01"
+              max="2035-12-31"
+              formControlName="PreferredDate">
             </ion-datetime>
           </div>
         </div>
