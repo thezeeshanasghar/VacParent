@@ -45,7 +45,6 @@ export class VaccinePage {
   // Date-picker modal state
   datePickerOpen = false;
   datePickerTitle = 'Select Date';
-  pickedDate: string = '';
   private _datePickerCallback: ((date: string) => void) | null = null;
   Pneum2Date: any;
   today = Date.now();
@@ -363,7 +362,6 @@ export class VaccinePage {
 
   promptReschedule(vacId: any) {
     this.datePickerTitle = 'Reschedule';
-    this.pickedDate = '';
     this._datePickerCallback = (dateStr: string) => {
       const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
       const payload = { Date: newDate, Id: vacId };
@@ -384,7 +382,6 @@ export class VaccinePage {
 
   promptBulkReschedule(vaccines: any[]) {
     this.datePickerTitle = 'Reschedule All';
-    this.pickedDate = '';
     this._datePickerCallback = (dateStr: string) => {
       const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
       vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true).forEach(v => {
