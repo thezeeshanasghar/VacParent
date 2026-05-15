@@ -55,6 +55,9 @@
 
         <div class="schedule-card-header">
           <span class="schedule-date">{{item.key | date}}</span>
+          <button *ngIf="groupHasInvoice(item.value)" class="dl-btn" (click)="triggerDownload(invoiceDateForGroup(item.value))">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </button>
         </div>
 
         <div class="schedule-actions" *ngIf="!checkVaccineIsDon(item.value)">

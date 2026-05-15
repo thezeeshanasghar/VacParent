@@ -485,12 +485,17 @@ export class VaccinePage {
     }
   }
 
-  triggerDownload(d:string) {
-    const id = this.childId; // Replace with the actual ID
-    const date = d // Get the given date
-    const fee = 0; // Replace with the actual fee
+  triggerDownload(d: string) {
+    this.download1(this.childId, d, 0);
+  }
 
-    this.download1(id, date, fee);
+  groupHasInvoice(vaccines: any[]): boolean {
+    return vaccines.some(v => v.IsDone && v.InvoiceDate);
+  }
+
+  invoiceDateForGroup(vaccines: any[]): string {
+    const v = vaccines.find(x => x.IsDone && x.InvoiceDate);
+    return v ? v.GivenDate : '';
   }
 }
 
