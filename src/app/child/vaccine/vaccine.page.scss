@@ -237,6 +237,21 @@ ion-content {
   color: #1565C0;
   flex-shrink: 0;
   margin-right: 8px;
+  &--top { align-self: flex-start; margin-top: 12px; }
+}
+
+.field-wrap--textarea {
+  align-items: flex-start;
+  padding: 4px 12px;
+
+  ion-textarea {
+    --padding-start: 0;
+    --padding-end: 4px;
+    --color: #1A1A2E;
+    --placeholder-color: #90A4AE;
+    font-size: 15px;
+    width: 100%;
+  }
 }
 
 ion-input {
