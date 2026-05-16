@@ -182,17 +182,19 @@
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label">Address</label>
+            <label class="field-label">Address <span class="required-star">*</span></label>
             <div class="field-wrap">
               <ion-icon name="home-outline" class="field-icon"></ion-icon>
-              <ion-input type="text" formControlName="Address" placeholder="Enter your address"></ion-input>
+              <ion-input type="text" formControlName="Address" placeholder="Enter your full address"></ion-input>
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label">Location Pin</label>
-            <ion-button expand="block" fill="outline" color="tertiary" (click)="shareLocation()">
-              <ion-icon slot="start" name="location-outline"></ion-icon>
-              {{fg1.controls['Location'].value ? 'Location Captured ✓' : 'Capture My Location'}}
+            <label class="field-label">Location Pin <span class="required-star">*</span></label>
+            <ion-button expand="block" fill="outline"
+              [color]="fg1.controls['Location'].value ? 'success' : 'tertiary'"
+              (click)="shareLocation()">
+              <ion-icon slot="start" [name]="fg1.controls['Location'].value ? 'checkmark-circle-outline' : 'location-outline'"></ion-icon>
+              {{fg1.controls['Location'].value ? 'Location Captured ✓' : 'Capture My Location (Required)'}}
             </ion-button>
           </div>
         </ng-container>
