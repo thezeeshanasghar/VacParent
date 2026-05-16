@@ -452,19 +452,23 @@ export class VaccinePage {
     this.toastService.create('Rescheduled successfully');
   }
 
-  download1(id: number, date: string, fee: number) {
-    const today = new Date(date); // Use the provided date instead of today's date
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-indexed
-    const day = today.getDate().toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
+  download1(id: number, scheduleDate: string, givenDate: string, fee: number) {
+    const fmt = (d: string) => {
+      const dt = new Date(d);
+      const y = dt.getFullYear();
+      const m = (dt.getMonth() + 1).toString().padStart(2, '0');
+      const day = dt.getDate().toString().padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
+    const sd = fmt(scheduleDate);
+    const gd = fmt(givenDate);
 
     if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
-      const url = `${this.API_VACCINE}child/${id}/${formattedDate}/${formattedDate}/${fee}/Verify-Invoice-PDF`;
+      const url = `${this.API_VACCINE}child/${id}/${sd}/${gd}/${fee}/Verify-Invoice-PDF`;
       window.open(url);
     } else {
       var request: DownloadRequest = {
-        uri: `${this.API_VACCINE}child/${id}/${formattedDate}/${fee}/Download-Invoice-PDF`,
+        uri: `${this.API_VACCINE}child/${id}/${sd}/${gd}/${fee}/Download-Invoice-PDF`,
         title: 'Invoice',
         description: '',
         mimeType: '',
@@ -481,8 +485,8 @@ export class VaccinePage {
     }
   }
 
-  triggerDownload(d: string) {
-    this.download1(this.childId, d, 0);
+  triggerDownload(scheduleDate: string, givenDate: string) {
+    this.download1(this.childId, scheduleDate, givenDate, 0);
   }
 
   groupHasInvoice(vaccines: any[]): boolean {
