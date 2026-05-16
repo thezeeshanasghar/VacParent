@@ -48,8 +48,6 @@ export class VaccinePage {
   pickedDate: string = '';
   private _datePickerCallback: ((date: string) => void) | null = null;
 
-  // invoice-info per scheduled date: { exists, consultationFee, givenDate }
-  invoiceMap: { [date: string]: { exists: boolean; consultationFee: number; givenDate: string } } = {};
   Pneum2Date: any;
   today = Date.now();
   next = false;
@@ -214,23 +212,6 @@ export class VaccinePage {
             //console.log(this.due);
 
             this.dataGrouping = this.groupBy(this.vaccine, "Date");
-            this.invoiceMap = {};
-            const doneDates = [...new Set(
-              this.vaccine.filter(v => v.IsDone && v.GivenDate).map(v => v.Date)
-            )];
-            doneDates.forEach(schedDate => {
-              const givenDate = this.vaccine.find(v => v.Date === schedDate && v.IsDone && v.GivenDate).GivenDate;
-              this.vaccineService.getInvoiceInfo(this.childId, schedDate).subscribe(
-                (info: any) => {
-                  this.invoiceMap[schedDate] = {
-                    exists: info && info.exists,
-                    consultationFee: info ? info.consultationFee : 0,
-                    givenDate: givenDate
-                  };
-                },
-                () => { this.invoiceMap[schedDate] = { exists: false, consultationFee: 0, givenDate }; }
-              );
-            });
             loading.dismiss();
           } else {
             loading.dismiss();
@@ -472,7 +453,7 @@ export class VaccinePage {
     this.toastService.create('Rescheduled successfully');
   }
 
-  download1(id: number, scheduleDate: string, givenDate: string, fee: number) {
+  triggerDownload(scheduleDate: string) {
     const fmt = (d: string) => {
       const dt = new Date(d);
       const y = dt.getFullYear();
@@ -481,15 +462,13 @@ export class VaccinePage {
       return `${y}-${m}-${day}`;
     };
     const sd = fmt(scheduleDate);
-    const gd = fmt(givenDate);
-    // Same URL as doctor/PA — identical PDF with same invoice number and QR code
-    const url = `${this.API_VACCINE}child/${id}/${sd}/${gd}/${fee}/Verify-Invoice-PDF`;
+    const url = `${this.API_VACCINE}child/${this.childId}/${sd}/invoice-file`;
 
     if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
       window.open(url);
     } else {
       var request: DownloadRequest = {
-        uri: `${this.API_VACCINE}child/${id}/${sd}/${gd}/${fee}/Download-Invoice-PDF`,
+        uri: url,
         title: 'Invoice',
         description: '',
         mimeType: '',
@@ -506,23 +485,13 @@ export class VaccinePage {
     }
   }
 
-  triggerDownload(info: { scheduleDate: string; givenDate: string; fee: number }) {
-    this.download1(this.childId, info.scheduleDate, info.givenDate, info.fee);
-  }
-
   groupHasInvoice(vaccines: any[]): boolean {
-    const date = vaccines[0] && vaccines[0].Date;
-    return !!(date && this.invoiceMap[date] && this.invoiceMap[date].exists);
+    return vaccines.some(v => v.IsDone && v.GivenDate);
   }
 
-  invoiceInfoForGroup(vaccines: any[]): { scheduleDate: string; givenDate: string; fee: number } {
-    const date = vaccines[0] && vaccines[0].Date;
-    const info = date && this.invoiceMap[date];
-    return {
-      scheduleDate: date || '',
-      givenDate: info ? info.givenDate : '',
-      fee: info ? info.consultationFee : 0
-    };
+  invoiceDateForGroup(vaccines: any[]): string {
+    const v = vaccines.find(x => x.IsDone && x.GivenDate);
+    return v ? v.Date : '';
   }
 }
 
