@@ -92,13 +92,7 @@ export class VaccinePage {
       ),
       DOB: new FormControl(''),
       Vaccines: new FormControl('', Validators.required),
-      Phone: new FormControl(
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.pattern("[0-9]{10}$")
-        ])
-      ),
+      Phone: new FormControl(''),
       Address: new FormControl(''),
       Location: new FormControl(''),
       BookingDate: moment(Date.now()).format("DD-MM-YYYY"),
