@@ -28,23 +28,16 @@
     </div>
 
     <div class="patient-footer">
-      <form [formGroup]="fg" class="doctor-row">
-        <div class="doctor-select-wrap">
-          <ion-icon name="person-circle-outline" class="doctor-icon"></ion-icon>
-          <ion-input type="text" aria-label="Doctor" formControlName="DoctorDisplayName"
-                     placeholder="Search doctor..." class="doctor-input"></ion-input>
-          <ion-select formControlName="DoctorId" (ionChange)="onDoctorSelected($event.detail.value)"
-                      interface="action-sheet" class="doctor-select">
-            <ion-select-option *ngFor="let doctor of filteredDoctors" [value]="doctor">
-              {{ doctor.DisplayName }}
-            </ion-select-option>
-          </ion-select>
-        </div>
+      <div class="action-row">
         <ion-button size="small" class="vaccine-btn" routerLink="vaccine/{{child.Id}}">
           <ion-icon name="medkit-outline" slot="start"></ion-icon>
           Vaccines
         </ion-button>
-      </form>
+        <ion-button size="small" class="followup-btn" routerLink="followup/{{child.Id}}">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          Follow Up
+        </ion-button>
+      </div>
     </div>
 
   </div>

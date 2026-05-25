@@ -117,3 +117,9 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+ion-item.coming-soon {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

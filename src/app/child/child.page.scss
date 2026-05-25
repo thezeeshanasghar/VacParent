@@ -82,55 +82,16 @@ ion-content {
   color: #AD1457;
 }
 
-// ── Footer / doctor row ───────────────────────────────────────────────────────
+// ── Footer / action row ───────────────────────────────────────────────────────
 .patient-footer {
   border-top: 1px solid #EEF2F7;
   padding: 12px 16px 14px;
   background: #F8FAFD;
 }
 
-.doctor-row {
+.action-row {
   display: flex;
-  align-items: center;
   gap: 10px;
-}
-
-.doctor-select-wrap {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background: #EEF2F7;
-  border: 1.5px solid #D0DCF0;
-  border-radius: 10px;
-  padding: 0 10px;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.doctor-icon {
-  color: #1565C0;
-  font-size: 20px;
-  flex-shrink: 0;
-  margin-right: 6px;
-}
-
-.doctor-input {
-  --padding-start: 2px;
-  --padding-end: 2px;
-  --color: #1A1A2E;
-  --placeholder-color: #90A4AE;
-  font-size: 14px;
-  flex: 1;
-}
-
-.doctor-select {
-  --padding-start: 4px;
-  --padding-end: 0;
-  color: #1565C0;
-  font-size: 13px;
-  font-weight: 600;
-  flex-shrink: 0;
-  width: 32px;
 }
 
 .vaccine-btn {
@@ -140,6 +101,17 @@ ion-content {
   --box-shadow: 0 3px 12px rgba(255,69,0,0.30);
   font-size: 13px;
   font-weight: 600;
-  flex-shrink: 0;
+  flex: 1;
+  height: 38px;
+}
+
+.followup-btn {
+  --background: linear-gradient(135deg, #0A3D79, #1E88E5);
+  --color: #ffffff;
+  --border-radius: 10px;
+  --box-shadow: 0 3px 12px rgba(10,61,121,0.25);
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1;
   height: 38px;
 }

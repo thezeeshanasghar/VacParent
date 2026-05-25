@@ -78,5 +78,14 @@ export class ScheduleService extends BaseService {
       );
   }
 
+  getFollowUps(childId: number): Observable<any> {
+    const url = `${this.API}child/followup`;
+    return this.http.post(url, { ChildId: childId, DoctorId: 0 }, this.httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+
  
 }

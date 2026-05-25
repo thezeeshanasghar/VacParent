@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { IonicModule } from '@ionic/angular';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ChildPage } from './child.page';
-//import { Storage  } from '@ionic/storage';
 
 const routes: Routes = [
   {
@@ -17,6 +13,10 @@ const routes: Routes = [
  {
   path: 'vaccine/:id',
   loadChildren: () => import('./vaccine/vaccine.module').then( m => m.VaccinePageModule)
+},
+{
+  path: 'followup/:id',
+  loadChildren: () => import('./followup/followup.module').then(m => m.FollowupPageModule)
 }
 ];
 
@@ -25,13 +25,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatFormFieldModule,
-   // IonicStorageModule.forRoot(),
     RouterModule.forChild(routes),
-    
   ],
   declarations: [ChildPage],
   providers:[]
