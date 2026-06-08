@@ -1,0 +1,308 @@
+// ─── Page Shell ───────────────────────────────────────────────────────────────
+ion-content {
+  --background: #EEF2F7;
+}
+
+.bookings-page {
+  padding: 20px 16px 32px;
+}
+
+// ─── Page Header ──────────────────────────────────────────────────────────────
+.page-header {
+  margin-bottom: 18px;
+}
+.page-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0A3D79;
+  margin: 0 0 4px;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: #78909C;
+  margin: 0;
+}
+
+// ─── Summary Cards ────────────────────────────────────────────────────────────
+.summary-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 14px;
+  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.10);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  &.orange-card {
+    background: #FFF8F4;
+    border: 1.5px solid #FFCCBC;
+  }
+
+  &.green-card {
+    background: #F4FBF4;
+    border: 1.5px solid #C8E6C9;
+  }
+
+  @media (max-width: 480px) {
+    align-items: center;
+  }
+}
+
+.card-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &.blue-icon {
+    background: #E3F0FF;
+    ion-icon { color: #1565C0; }
+  }
+  &.orange-icon {
+    background: #FFE8DC;
+    ion-icon { color: #E65100; }
+  }
+  &.green-icon {
+    background: #E6F4E6;
+    ion-icon { color: #2E7D32; }
+  }
+}
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #78909C;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 3px;
+}
+
+.card-amount {
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 2px;
+  line-height: 1.1;
+
+  &.blue   { color: #1565C0; }
+  &.orange { color: #E65100; }
+  &.green  { color: #2E7D32; }
+}
+
+.card-sub {
+  font-size: 10px;
+  color: #90A4AE;
+  line-height: 1.3;
+}
+
+.warn-text {
+  color: #E65100 !important;
+}
+
+// ─── Empty State ──────────────────────────────────────────────────────────────
+.bookings-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 10px;
+  color: #90A4AE;
+  text-align: center;
+
+  ion-icon { font-size: 48px; }
+
+  p {
+    font-size: 15px;
+    font-weight: 700;
+    color: #546E7A;
+    margin: 0;
+  }
+
+  span { font-size: 13px; }
+}
+
+// ─── Booking Row ──────────────────────────────────────────────────────────────
+.booking-row {
+  background: #fff;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.10);
+  border-left: 4px solid #B0BEC5;
+
+  &.row-confirmed { border-left-color: #2E7D32; }
+  &.row-cancelled { border-left-color: #C62828; }
+}
+
+.booking-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px 0;
+}
+
+.booking-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.booking-date {
+  font-size: 11px;
+  color: #90A4AE;
+  white-space: nowrap;
+}
+
+// Badges (pill style — matches VacDoc reconciliation page)
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  ion-icon { font-size: 12px; }
+
+  &.badge-home {
+    background: #FFF3E0;
+    color: #E65100;
+  }
+  &.badge-clinic {
+    background: #E3F2FD;
+    color: #1565C0;
+  }
+  &.badge-confirmed {
+    background: #E8F5E9;
+    color: #2E7D32;
+  }
+  &.badge-pending {
+    background: #FFF3E0;
+    color: #E65100;
+  }
+  &.badge-cancelled {
+    background: #FEECEC;
+    color: #C62828;
+  }
+}
+
+.booking-body {
+  padding: 10px 16px 14px;
+}
+
+.booking-child {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-bottom: 2px;
+}
+
+.booking-vaccines {
+  font-size: 13px;
+  color: #546E7A;
+  margin-bottom: 8px;
+}
+
+.booking-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  color: #546E7A;
+  margin-bottom: 8px;
+
+  .meta-icon {
+    font-size: 14px;
+    color: #90A4AE;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+.booking-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #F8FAFF;
+  border-radius: 10px;
+  padding: 10px 12px;
+
+  .note-icon {
+    font-size: 16px;
+    color: #1565C0;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+.note-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #90A4AE;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+}
+
+.note-text {
+  font-size: 13px;
+  color: #1A1A2E;
+  line-height: 1.4;
+}
+
+.booking-footer {
+  border-top: 1px solid #EEF2F7;
+  padding: 10px 16px 14px;
+  background: #F8FAFD;
+}
+
+.btn-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 0;
+  background: transparent;
+  color: #1565C0;
+  border: 1.5px solid #1565C0;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  ion-icon { font-size: 15px; }
+
+  &:hover {
+    background: #1565C0;
+    color: #fff;
+  }
+}

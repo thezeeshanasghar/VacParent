@@ -41,10 +41,18 @@ export class BookingsPage {
     );
   }
 
-  statusColor(status: string): string {
-    if (status === 'Confirmed') return 'success';
-    if (status === 'Cancelled') return 'danger';
-    return 'medium';
+  get confirmedCount(): number {
+    return this.bookings.filter(b => b.Status === 'Confirmed').length;
+  }
+
+  get pendingCount(): number {
+    return this.bookings.filter(b => b.Status !== 'Confirmed' && b.Status !== 'Cancelled').length;
+  }
+
+  statusBadgeClass(status: string): string {
+    if (status === 'Confirmed') return 'badge-confirmed';
+    if (status === 'Cancelled') return 'badge-cancelled';
+    return 'badge-pending';
   }
 
   openLocation(url: string) {
