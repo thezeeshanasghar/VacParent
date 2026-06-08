@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { ToastService } from 'src/app/services/toast.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-followup',
@@ -28,7 +29,13 @@ export class FollowupPage {
       res => {
         loading.dismiss();
         if (res.IsSuccess) {
-          this.followups = res.ResponseData || [];
+          // FollowUpDTO dates arrive as "DD-MM-YYYY" (OnlyDateConverter) — normalize
+          // to "YYYY-MM-DD" so the template's `| date` pipe parses them unambiguously.
+          this.followups = (res.ResponseData || []).map(f => {
+            if (f.CurrentVisitDate) { f.CurrentVisitDate = moment(f.CurrentVisitDate, 'DD-MM-YYYY').format('YYYY-MM-DD'); }
+            if (f.NextVisitDate) { f.NextVisitDate = moment(f.NextVisitDate, 'DD-MM-YYYY').format('YYYY-MM-DD'); }
+            return f;
+          });
         } else {
           this.toastService.create(res.Message, 'danger');
         }
