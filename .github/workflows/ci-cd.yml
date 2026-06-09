@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 18
       - run: npm install -g @ionic/cli
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: ionic build --prod
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
