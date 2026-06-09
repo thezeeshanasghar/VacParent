@@ -296,6 +296,10 @@ export class VaccinePage {
 
   async submitBooking() {
     if (this.bookingType === 'home') {
+      if (!this.fg1.controls['City'].value) {
+        this.toastService.create('Please select a city for home booking.', 'danger');
+        return;
+      }
       if (!this.fg1.controls['Address'].value || !this.fg1.controls['Address'].value.trim()) {
         this.toastService.create('Address is required for home booking.', 'danger');
         return;
