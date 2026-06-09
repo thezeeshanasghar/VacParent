@@ -31,8 +31,9 @@ export class VaccinePage {
   fg1: FormGroup;
   homeBook = false;
   bookingType: string = '';
-  allowHomeBooking = false;
-  allowClinicBooking = false;
+  isHomeBookingDoctor = false;
+  showTypeChooser = false;
+  pendingBookVaccines: any[] = [];
   groupPickerOpen: any = {};
   itemPickerOpen: any = {};
   given = 0;
@@ -154,8 +155,7 @@ export class VaccinePage {
             //original code
             this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
-            this.allowHomeBooking   = this.Child.AllowHomeBooking   === true;
-            this.allowClinicBooking = this.Child.AllowClinicBooking === true;
+            this.isHomeBookingDoctor = this.Child.IsHomeBookingDoctor === true;
             this.fg1.controls['ChildId'].setValue(this.Child.Id);
             this.fg1.controls['ChildName'].setValue(this.Child.Name);
             this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
@@ -233,8 +233,23 @@ export class VaccinePage {
     );
   }
 
+  bookNow(vaccines: any[]) {
+    if (this.isHomeBookingDoctor) {
+      this.pendingBookVaccines = vaccines;
+      this.showTypeChooser = true;
+    } else {
+      this.setHomeBook(true, 'clinic', vaccines);
+    }
+  }
+
+  chooseBookingType(type: string) {
+    this.showTypeChooser = false;
+    this.setHomeBook(true, type, this.pendingBookVaccines);
+  }
+
   setHomeBook(value: boolean, type: string = '', vaccines: any[] = []) {
     this.homeBook = value;
+    this.showTypeChooser = false;
     this.bookingType = type;
     if (value) {
       this.fg1.controls['Status'].setValue(type === 'home' ? 'HomeBooked' : 'ClinicBooked');

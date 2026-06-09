@@ -37,6 +37,21 @@
     </div>
   </div>
 
+  <!-- ── Booking type chooser overlay (Home vs Clinic) ────────────────── -->
+  <div *ngIf="showTypeChooser" class="type-chooser-overlay" (click)="showTypeChooser=false">
+    <div class="type-chooser-card" (click)="$event.stopPropagation()">
+      <h4 class="chooser-title">How would you like to book?</h4>
+      <ion-button expand="block" color="primary" (click)="chooseBookingType('home')">
+        <ion-icon slot="start" name="home-outline"></ion-icon>
+        Home Visit
+      </ion-button>
+      <ion-button expand="block" fill="outline" color="primary" (click)="chooseBookingType('clinic')">
+        <ion-icon slot="start" name="business-outline"></ion-icon>
+        Clinic Visit
+      </ion-button>
+    </div>
+  </div>
+
   <!-- ── Vaccination view ──────────────────────────────────────────────── -->
   <div *ngIf="!homeBook">
 
@@ -83,13 +98,9 @@
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <ion-button *ngIf="allowHomeBooking" size="small" shape="round" class="home-book-btn" (click)="setHomeBook(true, 'home', item.value)">
-            <ion-icon slot="start" name="home-outline"></ion-icon>
-            Home Booking
-          </ion-button>
-          <ion-button *ngIf="allowClinicBooking" size="small" shape="round" color="primary" (click)="setHomeBook(true, 'clinic', item.value)">
-            <ion-icon slot="start" name="business-outline"></ion-icon>
-            Clinic Booking
+          <ion-button size="small" shape="round" color="primary" (click)="bookNow(item.value)">
+            <ion-icon slot="start" name="calendar-outline"></ion-icon>
+            Book Now
           </ion-button>
         </div>
 
@@ -126,6 +137,11 @@
                 (click)="promptReschedule(v.Id)" class="reschedule-btn">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
                 Reschedule
+              </ion-button>
+              <ion-button fill="solid" color="tertiary" size="small" shape="round"
+                (click)="bookNow([v])">
+                <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+                Book Now
               </ion-button>
             </div>
           </div>
