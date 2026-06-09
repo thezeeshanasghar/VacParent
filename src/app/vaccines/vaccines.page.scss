@@ -1,70 +1,72 @@
 ion-content {
-  --background: #EEF2F7;
+  --background: var(--vac-surface);
 }
 
 .section-label {
-  font-size: 13px;
-  color: #546E7A;
-  margin: 4px 0 14px;
+  font-size: 0.8125rem;
+  color: var(--ion-color-medium);
+  margin: 0.25rem 0 0.875rem;
   letter-spacing: 0.2px;
 }
 
 .vac-row {
-  background: #ffffff;
+  background: var(--vac-card);
   border-radius: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 3px 14px rgba(10, 61, 121, 0.09);
+  box-shadow: var(--vac-shadow);
   cursor: pointer;
   transition: box-shadow 0.15s;
+  -webkit-tap-highlight-color: transparent;
 
-  &:active { box-shadow: 0 1px 6px rgba(10, 61, 121, 0.07); }
+  &:active { box-shadow: 0 1px 6px rgba(10,61,121,0.07); }
 }
 
 .vac-header {
   display: flex;
   align-items: center;
-  padding: 16px 14px;
-  gap: 12px;
+  padding: 1rem 0.875rem;
+  gap: 0.75rem;
+  min-height: 60px;
 }
 
 .vac-icon-wrap {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0A3D79, #1E88E5);
+  background: linear-gradient(135deg, var(--vac-navy), var(--vac-sky));
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
   ion-icon {
-    font-size: 20px;
+    font-size: 1.25rem;
     color: #ffffff;
   }
 }
 
 .vac-name {
   flex: 1;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
-  color: #1A1A2E;
+  color: var(--vac-black);
 }
 
 .vac-chevron {
-  font-size: 18px;
-  color: #1565C0;
+  font-size: 1.125rem;
+  color: var(--vac-blue);
   flex-shrink: 0;
 }
 
 .vac-desc {
-  border-top: 1px solid #EEF2F7;
-  padding: 14px 16px;
-  background: #F5F8FD;
+  border-top: 1px solid var(--vac-surface);
+  padding: 0.875rem 1rem;
+  background: var(--ion-color-light-tint);
 
   p {
-    font-size: 14px;
-    color: #546E7A;
+    font-size: 0.875rem;
+    color: var(--ion-color-medium);
     line-height: 1.6;
     margin: 0;
   }

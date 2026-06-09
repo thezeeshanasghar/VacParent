@@ -2,7 +2,6 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Patients</ion-title>
   </ion-toolbar>
@@ -10,7 +9,18 @@
 
 <ion-content class="ion-padding">
 
-  <div *ngFor="let child of childs" class="patient-card" [ngClass]="child.Gender=='Girl' ? 'card-girl' : 'card-boy'">
+  <div *ngIf="!childs" class="loading-state">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="childs && childs.length === 0" class="empty-state">
+    <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
+    <p>No patients found</p>
+  </div>
+
+  <div *ngFor="let child of childs"
+       class="patient-card"
+       [ngClass]="child.Gender=='Girl' ? 'card-girl' : 'card-boy'">
 
     <div class="patient-header">
       <div class="avatar-wrap" [ngClass]="child.Gender=='Girl' ? 'avatar-girl' : 'avatar-boy'">
@@ -21,7 +31,7 @@
         <h2 class="patient-name">{{child.Name}}</h2>
         <p class="patient-age">{{calculateAge(child.DOB)}} years old</p>
         <span class="gender-badge" [ngClass]="child.Gender=='Girl' ? 'badge-girl' : 'badge-boy'">
-          <ion-icon [name]="child.Gender=='Girl' ? 'female-outline' : 'male-outline'"></ion-icon>
+          <ion-icon [name]="child.Gender=='Girl' ? 'female-outline' : 'male-outline'" aria-hidden="true"></ion-icon>
           {{child.Gender}}
         </span>
       </div>
@@ -29,11 +39,11 @@
 
     <div class="patient-footer">
       <div class="action-row">
-        <ion-button size="small" class="vaccine-btn" routerLink="vaccine/{{child.Id}}">
+        <ion-button class="vaccine-btn" routerLink="vaccine/{{child.Id}}">
           <ion-icon name="medkit-outline" slot="start"></ion-icon>
           Vaccines
         </ion-button>
-        <ion-button size="small" class="followup-btn" routerLink="followup/{{child.Id}}">
+        <ion-button class="followup-btn" routerLink="followup/{{child.Id}}">
           <ion-icon name="calendar-outline" slot="start"></ion-icon>
           Follow Up
         </ion-button>

@@ -1,48 +1,46 @@
-// ─── Page Shell ───────────────────────────────────────────────────────────────
 ion-content {
-  --background: #EEF2F7;
+  --background: var(--vac-surface);
 }
 
 .bookings-page {
-  padding: 20px 16px 32px;
+  padding: 1.25rem 1rem calc(2rem + env(safe-area-inset-bottom));
 }
 
-// ─── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
-  margin-bottom: 18px;
+  margin-bottom: 1.125rem;
 }
 .page-title {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 800;
-  color: #0A3D79;
-  margin: 0 0 4px;
+  color: var(--vac-navy);
+  margin: 0 0 0.25rem;
 }
 .page-subtitle {
-  font-size: 13px;
-  color: #78909C;
+  font-size: 0.8125rem;
+  color: var(--ion-color-medium-tint);
   margin: 0;
 }
 
 // ─── Summary Cards ────────────────────────────────────────────────────────────
 .summary-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 .summary-card {
-  background: #fff;
+  background: var(--vac-card);
   border-radius: 14px;
-  padding: 14px 14px;
-  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.10);
+  padding: 0.875rem;
+  box-shadow: var(--vac-shadow);
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 0.75rem;
 
   &.orange-card {
     background: #FFF8F4;
@@ -53,73 +51,53 @@ ion-content {
     background: #F4FBF4;
     border: 1.5px solid #C8E6C9;
   }
-
-  @media (max-width: 480px) {
-    align-items: center;
-  }
 }
 
 .card-icon-wrap {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
-  ion-icon {
-    font-size: 20px;
-  }
+  ion-icon { font-size: 1.25rem; }
 
-  &.blue-icon {
-    background: #E3F0FF;
-    ion-icon { color: #1565C0; }
-  }
-  &.orange-icon {
-    background: #FFE8DC;
-    ion-icon { color: #E65100; }
-  }
-  &.green-icon {
-    background: #E6F4E6;
-    ion-icon { color: #2E7D32; }
-  }
+  &.blue-icon   { background: #E3F0FF; ion-icon { color: var(--vac-blue); } }
+  &.orange-icon { background: #FFE8DC; ion-icon { color: #E65100; } }
+  &.green-icon  { background: #E6F4E6; ion-icon { color: var(--vac-green); } }
 }
 
-.card-body {
-  flex: 1;
-  min-width: 0;
-}
+.card-body { flex: 1; min-width: 0; }
 
 .card-label {
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #78909C;
+  color: var(--ion-color-medium-tint);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 3px;
 }
 
 .card-amount {
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 800;
   margin-bottom: 2px;
   line-height: 1.1;
 
-  &.blue   { color: #1565C0; }
+  &.blue   { color: var(--vac-blue); }
   &.orange { color: #E65100; }
-  &.green  { color: #2E7D32; }
+  &.green  { color: var(--vac-green); }
 }
 
 .card-sub {
-  font-size: 10px;
-  color: #90A4AE;
+  font-size: 0.625rem;
+  color: var(--ion-color-medium);
   line-height: 1.3;
 }
 
-.warn-text {
-  color: #E65100 !important;
-}
+.warn-text { color: #E65100 !important; }
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
 .bookings-empty {
@@ -127,120 +105,104 @@ ion-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
-  gap: 10px;
-  color: #90A4AE;
+  padding: 3.75rem 1.25rem;
+  gap: 0.625rem;
+  color: var(--ion-color-medium);
   text-align: center;
 
-  ion-icon { font-size: 48px; }
+  ion-icon { font-size: 3rem; }
 
   p {
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 700;
-    color: #546E7A;
+    color: var(--ion-color-medium);
     margin: 0;
   }
 
-  span { font-size: 13px; }
+  span { font-size: 0.8125rem; }
 }
 
 // ─── Booking Row ──────────────────────────────────────────────────────────────
 .booking-row {
-  background: #fff;
+  background: var(--vac-card);
   border-radius: 16px;
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.10);
-  border-left: 4px solid #B0BEC5;
+  box-shadow: var(--vac-shadow);
+  border-left: 4px solid var(--ion-color-medium-tint);
 
-  &.row-confirmed { border-left-color: #2E7D32; }
-  &.row-cancelled { border-left-color: #C62828; }
+  &.row-confirmed { border-left-color: var(--vac-green); }
+  &.row-cancelled { border-left-color: var(--ion-color-danger); }
 }
 
 .booking-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 14px 16px 0;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem 0;
 }
 
 .booking-badges {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   flex-wrap: wrap;
 }
 
 .booking-date {
-  font-size: 11px;
-  color: #90A4AE;
+  font-size: 0.6875rem;
+  color: var(--ion-color-medium);
   white-space: nowrap;
 }
 
-// Badges (pill style — matches VacDoc reconciliation page)
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   white-space: nowrap;
 
-  ion-icon { font-size: 12px; }
+  ion-icon { font-size: 0.75rem; }
 
-  &.badge-home {
-    background: #FFF3E0;
-    color: #E65100;
-  }
-  &.badge-clinic {
-    background: #E3F2FD;
-    color: #1565C0;
-  }
-  &.badge-confirmed {
-    background: #E8F5E9;
-    color: #2E7D32;
-  }
-  &.badge-pending {
-    background: #FFF3E0;
-    color: #E65100;
-  }
-  &.badge-cancelled {
-    background: #FEECEC;
-    color: #C62828;
-  }
+  &.badge-home    { background: #FFF3E0; color: #E65100; }
+  &.badge-clinic  { background: #E3F2FD; color: var(--vac-blue); }
+  &.badge-confirmed { background: #E8F5E9; color: var(--vac-green); }
+  &.badge-pending   { background: #FFF3E0; color: #E65100; }
+  &.badge-cancelled { background: #FEECEC; color: var(--ion-color-danger); }
 }
 
 .booking-body {
-  padding: 10px 16px 14px;
+  padding: 0.625rem 1rem 0.875rem;
 }
 
 .booking-child {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
-  color: #1A1A2E;
+  color: var(--vac-black);
   margin-bottom: 2px;
 }
 
 .booking-vaccines {
-  font-size: 13px;
-  color: #546E7A;
-  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  color: var(--ion-color-medium);
+  margin-bottom: 0.5rem;
 }
 
 .booking-meta {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
-  font-size: 12px;
-  color: #546E7A;
-  margin-bottom: 8px;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+  margin-bottom: 0.5rem;
 
   .meta-icon {
-    font-size: 14px;
-    color: #90A4AE;
+    font-size: 0.875rem;
+    color: var(--ion-color-medium);
     margin-top: 1px;
     flex-shrink: 0;
   }
@@ -249,89 +211,45 @@ ion-content {
 .booking-note {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  background: #F8FAFF;
+  gap: 0.5rem;
+  background: var(--ion-color-light-tint);
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 0.625rem 0.75rem;
 
   .note-icon {
-    font-size: 16px;
-    color: #1565C0;
+    font-size: 1rem;
+    color: var(--vac-blue);
     margin-top: 1px;
     flex-shrink: 0;
   }
 }
 
 .note-label {
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
-  color: #90A4AE;
+  color: var(--ion-color-medium);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 2px;
 }
 
 .note-text {
-  font-size: 13px;
-  color: #1A1A2E;
+  font-size: 0.8125rem;
+  color: var(--vac-black);
   line-height: 1.4;
 }
 
 .booking-footer {
-  border-top: 1px solid #EEF2F7;
-  padding: 10px 16px 14px;
-  background: #F8FAFD;
-}
-
-.btn-location {
+  border-top: 1px solid var(--vac-surface);
+  padding: 0.625rem 0.75rem 0.75rem;
+  background: var(--ion-color-light-tint);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
-  padding: 9px 0;
-  background: transparent;
-  color: #1565C0;
-  border: 1.5px solid #1565C0;
-  border-radius: 9px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  gap: 0.5rem;
 
-  ion-icon { font-size: 15px; }
-
-  &:hover {
-    background: #1565C0;
-    color: #fff;
-  }
-}
-
-.booking-footer {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-cancel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex: 1;
-  padding: 9px 0;
-  background: transparent;
-  color: #c62828;
-  border: 1.5px solid #c62828;
-  border-radius: 9px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-
-  ion-icon { font-size: 15px; }
-
-  &:hover {
-    background: #c62828;
-    color: #fff;
+  ion-button {
+    flex: 1;
+    min-height: 44px;
+    font-size: 0.8125rem;
+    font-weight: 700;
   }
 }

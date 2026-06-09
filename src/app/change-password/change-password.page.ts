@@ -14,6 +14,10 @@ import { environment } from 'src/environments/environment';
 })
 export class ChangePasswordPage implements OnInit {
   changePasswordForm: FormGroup;
+  showOld = false;
+  showNew = false;
+  showConfirm = false;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,14 +56,10 @@ export class ChangePasswordPage implements OnInit {
   }
 
   async changePassword() {
-    if (this.changePasswordForm.invalid) {
+    if (this.changePasswordForm.invalid || this.isLoading) {
       return;
     }
-
-    const loading = await this.loadingController.create({
-      message: 'Changing password...'
-    });
-    await loading.present();
+    this.isLoading = true;
 
     try {
       const userId = await this.storage.get(environment.USER_Id);
@@ -77,7 +77,7 @@ export class ChangePasswordPage implements OnInit {
 
       this.loginService.ChangePassword(data).subscribe(
         async (res: any) => {
-          loading.dismiss();
+          this.isLoading = false;
           if (res.IsSuccess) {
             await this.storage.remove('USER_EMAIL');
             this.toastService.create('Password changed successfully');
@@ -87,14 +87,12 @@ export class ChangePasswordPage implements OnInit {
           }
         },
         (err: any) => {
-          loading.dismiss();
-          console.error('Change password error:', err);
+          this.isLoading = false;
           this.toastService.create(err.error?.message || 'An error occurred while changing the password', 'danger');
         }
       );
     } catch (error) {
-      loading.dismiss();
-      console.error('Error:', error);
+      this.isLoading = false;
       this.toastService.create('An error occurred while changing the password', 'danger');
       this.router.navigate(['/login']);
     }

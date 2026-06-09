@@ -42,6 +42,19 @@ export class BookingsPage {
     );
   }
 
+  doRefresh(event: any) {
+    this.bookingService.getByParent(this.userId).subscribe(
+      res => {
+        if (res.IsSuccess) this.bookings = res.ResponseData;
+        event.target.complete();
+      },
+      err => {
+        this.toastService.create(err, 'danger');
+        event.target.complete();
+      }
+    );
+  }
+
   get confirmedCount(): number {
     return this.bookings.filter(b => b.Status === 'Confirmed').length;
   }

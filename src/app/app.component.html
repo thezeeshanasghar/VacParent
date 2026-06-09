@@ -3,8 +3,8 @@
     <ion-menu contentId="main-content" type="overlay" *ngIf="loginservice.isAuthenticated()">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>Public Portal</ion-note>
+          <ion-list-header>Navigation</ion-list-header>
+          <ion-note>Parent Portal</ion-note>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
@@ -16,29 +16,20 @@
             <ion-label>Change Doctor</ion-label>
             <ion-badge slot="end" color="medium">Coming Soon</ion-badge>
           </ion-item>
-          <ion-item routerLink="/bookings" lines="none">
-            <ion-icon color="primary" slot="start" name="notifications-outline"></ion-icon>
-            <ion-label>My Bookings</ion-label>
-            <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" slot="end">{{bookingService.unreadCount}}</ion-badge>
-          </ion-item>
-          <ion-item color="light" routerLink="/login" (click)="clearStorage()">
-            <ion-icon color="primary" slot="start" name="power"></ion-icon>
-            <ion-label>Logout</ion-label>
-          </ion-item>
-          <ion-menu-toggle></ion-menu-toggle>
-          
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/bookings" lines="none">
+              <ion-icon color="primary" slot="start" name="calendar-outline"></ion-icon>
+              <ion-label>My Bookings</ion-label>
+              <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" slot="end">{{bookingService.unreadCount}}</ion-badge>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item lines="none" (click)="clearStorage()" routerLink="/login" [button]="true">
+              <ion-icon color="danger" slot="start" name="log-out-outline"></ion-icon>
+              <ion-label color="danger">Logout</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
-        
-          
-
-        <!-- <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
-        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

@@ -20,6 +20,8 @@ export class LoginPage implements OnInit {
   obj:any;
   forgot = false;
   MobileNumber: any;
+  showPassword = false;
+  isLoading = false;
   constructor(
     public router: Router,
     public alertController: AlertController,
@@ -303,32 +305,28 @@ export class LoginPage implements OnInit {
 ];
 
   async login() {
-
-    const loading = await this.loadingController.create({
-      message: 'Loading'
-    });
-    await loading.present();
-    await this.loginservice.checkAuth(this.fg.value)
-      .subscribe(res => {
-        if (res.IsSuccess) {
-          this.nativeStorage.set(environment.USER, res.ResponseData);
-        //  this.nativeStorage.setItem(environment.DOCTOR_Id, res.ResponseData.DoctorId);
-          this.nativeStorage.set(environment.USER_Id, res.ResponseData.Id);
-          let state = true;
-          this.loginservice.changeState(state);
-         // this.getdoctorprofile(res.ResponseData.Id);
-          this.router.navigate(['/dashboard']);
-          loading.dismiss();
-        }
-        else {
-          loading.dismiss();
-          this.toastService.create(res.Message, 'danger');
-
-        }
-      }, (err) => {
-        loading.dismiss();
-        this.toastService.create(err, 'danger');
-      });
+    if (this.isLoading) return;
+    this.isLoading = true;
+    try {
+      await this.loginservice.checkAuth(this.fg.value)
+        .subscribe(res => {
+          if (res.IsSuccess) {
+            this.nativeStorage.set(environment.USER, res.ResponseData);
+            this.nativeStorage.set(environment.USER_Id, res.ResponseData.Id);
+            let state = true;
+            this.loginservice.changeState(state);
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.toastService.create(res.Message, 'danger');
+          }
+          this.isLoading = false;
+        }, (err) => {
+          this.toastService.create(err, 'danger');
+          this.isLoading = false;
+        });
+    } catch (e) {
+      this.isLoading = false;
+    }
   }
  
 

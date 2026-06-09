@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>About Us</ion-title>
   </ion-toolbar>
@@ -11,14 +11,14 @@
 
   <div class="about-hero">
     <div class="about-logo-wrap">
-      <ion-icon name="medkit" class="about-logo-icon"></ion-icon>
+      <ion-icon name="medkit" class="about-logo-icon" aria-hidden="true"></ion-icon>
     </div>
-    <h1 class="about-brand">Vaccine<span class="about-pk">.PK</span></h1>
+    <h2 class="about-brand">Vaccine<span class="about-pk">.PK</span></h2>
     <p class="about-tagline">Protecting Pakistan's children, one dose at a time</p>
   </div>
 
-  <div class="feature-card">
-    <div class="feature-icon-wrap icon-blue">
+  <div class="feature-card" role="article">
+    <div class="feature-icon-wrap icon-blue" aria-hidden="true">
       <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
     </div>
     <div class="feature-body">
@@ -27,8 +27,8 @@
     </div>
   </div>
 
-  <div class="feature-card">
-    <div class="feature-icon-wrap icon-green">
+  <div class="feature-card" role="article">
+    <div class="feature-icon-wrap icon-green" aria-hidden="true">
       <ion-icon name="shield-checkmark-outline"></ion-icon>
     </div>
     <div class="feature-body">
@@ -37,8 +37,8 @@
     </div>
   </div>
 
-  <div class="feature-card">
-    <div class="feature-icon-wrap icon-orange">
+  <div class="feature-card" role="article">
+    <div class="feature-icon-wrap icon-orange" aria-hidden="true">
       <ion-icon name="notifications-outline"></ion-icon>
     </div>
     <div class="feature-body">

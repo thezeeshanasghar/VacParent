@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/child"></ion-back-button>
     </ion-buttons>
     <ion-title>Follow Up</ion-title>
   </ion-toolbar>
@@ -9,46 +9,62 @@
 
 <ion-content class="ion-padding">
 
-  <div *ngIf="followups && followups.length === 0" class="empty-state">
-    <ion-icon name="calendar-outline" class="empty-icon"></ion-icon>
+  <ion-refresher slot="top" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && loadError" class="error-state">
+    <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+    <p>Could not load records</p>
+    <ion-button fill="outline" size="small" (click)="loadData()">Try Again</ion-button>
+  </div>
+
+  <div *ngIf="!isLoading && !loadError && followups && followups.length === 0" class="empty-state">
+    <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
     <p class="empty-text">No follow-up records found.</p>
   </div>
 
-  <div *ngFor="let f of followups; let i = index" class="fu-card">
-    <div class="fu-card-header">
-      <span class="fu-serial">Visit #{{i + 1}}</span>
-      <span class="fu-date">{{f.CurrentVisitDate | date:'dd MMM yyyy'}}</span>
-    </div>
+  <div *ngIf="!isLoading && !loadError">
+    <div *ngFor="let f of followups; let i = index" class="fu-card">
+      <div class="fu-card-header">
+        <span class="fu-serial">Visit #{{i + 1}}</span>
+        <span class="fu-date">{{f.CurrentVisitDate | date:'dd MMM yyyy'}}</span>
+      </div>
 
-    <div class="fu-body">
-      <div class="fu-row" *ngIf="f.Disease">
-        <span class="fu-label">Reason / Disease</span>
-        <span class="fu-value">{{f.Disease}}</span>
-      </div>
-      <div class="fu-row">
-        <span class="fu-label">Next Visit</span>
-        <span class="fu-value next-visit">{{f.NextVisitDate | date:'dd MMM yyyy'}}</span>
-      </div>
-      <div class="fu-metrics">
-        <div class="fu-metric" *ngIf="f.Weight">
-          <span class="metric-val">{{f.Weight}} kg</span>
-          <span class="metric-lbl">Weight</span>
+      <div class="fu-body">
+        <div class="fu-row" *ngIf="f.Disease">
+          <span class="fu-label">Reason / Disease</span>
+          <span class="fu-value">{{f.Disease}}</span>
         </div>
-        <div class="fu-metric" *ngIf="f.Height">
-          <span class="metric-val">{{f.Height}} cm</span>
-          <span class="metric-lbl">Height</span>
+        <div class="fu-row">
+          <span class="fu-label">Next Visit</span>
+          <span class="fu-value next-visit">{{f.NextVisitDate | date:'dd MMM yyyy'}}</span>
         </div>
-        <div class="fu-metric" *ngIf="f.OFC">
-          <span class="metric-val">{{f.OFC}} cm</span>
-          <span class="metric-lbl">OFC</span>
-        </div>
-        <div class="fu-metric" *ngIf="f.BloodPressure">
-          <span class="metric-val">{{f.BloodPressure}}</span>
-          <span class="metric-lbl">BP</span>
-        </div>
-        <div class="fu-metric" *ngIf="f.BloodSugar">
-          <span class="metric-val">{{f.BloodSugar}}</span>
-          <span class="metric-lbl">Sugar</span>
+        <div class="fu-metrics">
+          <div class="fu-metric" *ngIf="f.Weight">
+            <span class="metric-val">{{f.Weight}} kg</span>
+            <span class="metric-lbl">Weight</span>
+          </div>
+          <div class="fu-metric" *ngIf="f.Height">
+            <span class="metric-val">{{f.Height}} cm</span>
+            <span class="metric-lbl">Height</span>
+          </div>
+          <div class="fu-metric" *ngIf="f.OFC">
+            <span class="metric-val">{{f.OFC}} cm</span>
+            <span class="metric-lbl">OFC</span>
+          </div>
+          <div class="fu-metric" *ngIf="f.BloodPressure">
+            <span class="metric-val">{{f.BloodPressure}}</span>
+            <span class="metric-lbl">BP</span>
+          </div>
+          <div class="fu-metric" *ngIf="f.BloodSugar">
+            <span class="metric-val">{{f.BloodSugar}}</span>
+            <span class="metric-lbl">Sugar</span>
+          </div>
         </div>
       </div>
     </div>

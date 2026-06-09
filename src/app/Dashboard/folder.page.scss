@@ -1,5 +1,5 @@
 ion-content {
-  --background: #EEF2F7;
+  --background: var(--vac-surface);
 }
 
 // ── Toolbar branding ──────────────────────────────────────────────────────────
@@ -16,8 +16,8 @@ ion-content {
 }
 
 .toolbar-logo {
-  font-size: 26px;
-  color: #43A047;
+  font-size: 1.625rem;
+  color: var(--vac-green2);
 }
 
 .toolbar-logo-img {
@@ -28,7 +28,7 @@ ion-content {
 }
 
 .toolbar-title-vc {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .toolbar-sub-vc {
@@ -36,18 +36,18 @@ ion-content {
 }
 
 .toolbar-title {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.3px;
 }
 
 .toolbar-pk {
-  color: #FF6B35;
+  color: var(--vac-orange2);
 }
 
 .toolbar-sub {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: rgba(255,255,255,0.70);
   margin-left: 34px;
   margin-top: 1px;
@@ -56,23 +56,24 @@ ion-content {
 
 // ── Dashboard body ────────────────────────────────────────────────────────────
 .dash-wrap {
-  padding: 24px 16px 32px;
+  padding: 1.5rem 1rem 2rem;
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
 }
 
 .dash-greeting {
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
 }
 
 .dash-hello {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
-  color: #0A3D79;
-  margin: 0 0 4px;
+  color: var(--vac-navy);
+  margin: 0 0 0.25rem;
 }
 
 .dash-tagline {
-  font-size: 14px;
-  color: #546E7A;
+  font-size: 0.875rem;
+  color: var(--ion-color-medium);
   margin: 0;
 }
 
@@ -80,32 +81,33 @@ ion-content {
 .dash-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 1rem;
 
-  @media (max-width: 400px) {
+  @media (max-width: 340px) {
     grid-template-columns: 1fr;
   }
 }
 
-// ── Cards — light-tint pattern (matches VacDoc dashboard) ─────────────────────
+// ── Cards ─────────────────────────────────────────────────────────────────────
 .dash-card {
   position: relative;
   border-radius: 16px;
-  padding: 18px 16px 16px;
+  padding: 1.125rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  cursor: pointer;
   overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 2px 12px rgba(10, 61, 121, 0.08);
+  background: var(--vac-card);
+  box-shadow: var(--vac-shadow);
   border: 1.5px solid transparent;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
   text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 110px;
 
   &:active {
     transform: scale(0.97);
-    box-shadow: 0 1px 6px rgba(10, 61, 121, 0.06);
+    box-shadow: 0 1px 6px rgba(10,61,121,0.06);
   }
 }
 
@@ -116,52 +118,46 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 
-  ion-icon {
-    font-size: 24px;
-  }
+  ion-icon { font-size: 1.5rem; }
 }
 
 .dash-card-label {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
-  margin-bottom: 3px;
+  margin-bottom: 0.1875rem;
   letter-spacing: 0.1px;
 }
 
 .dash-card-sub {
-  font-size: 11px;
-  color: #78909C;
+  font-size: 0.6875rem;
+  color: var(--ion-color-medium-tint);
 }
 
 .dash-card-arrow {
   position: absolute;
   bottom: 14px;
   right: 14px;
-  font-size: 16px;
+  font-size: 1rem;
   opacity: 0.35;
 }
 
-// ── Individual card colours — light tint + dark text ──────────────────────────
-
-// Blue family
+// ── Individual card colours ───────────────────────────────────────────────────
 .card-patients {
   background: #E3F0FF; border-color: #BBDEFB;
-  .dash-card-icon { background: #C9E2FB; ion-icon { color: #1565C0; } }
-  .dash-card-label { color: #1565C0; }
-  .dash-card-arrow { color: #1565C0; }
+  .dash-card-icon { background: #C9E2FB; ion-icon { color: var(--vac-blue); } }
+  .dash-card-label { color: var(--vac-blue); }
+  .dash-card-arrow { color: var(--vac-blue); }
 }
 
-// Green family
 .card-vaccines {
   background: #E8F5E9; border-color: #C8E6C9;
-  .dash-card-icon { background: #C3E6C4; ion-icon { color: #2E7D32; } }
-  .dash-card-label { color: #2E7D32; }
-  .dash-card-arrow { color: #2E7D32; }
+  .dash-card-icon { background: #C3E6C4; ion-icon { color: var(--vac-green); } }
+  .dash-card-label { color: var(--vac-green); }
+  .dash-card-arrow { color: var(--vac-green); }
 }
 
-// Orange family
 .card-about {
   background: #FFF3E0; border-color: #FFCC80;
   .dash-card-icon { background: #FFE0B2; ion-icon { color: #E65100; } }
@@ -169,7 +165,6 @@ ion-content {
   .dash-card-arrow { color: #E65100; }
 }
 
-// Purple family
 .card-bookings {
   background: #F3E5F5; border-color: #E1BEE7;
   .dash-card-icon { background: #E1BEE7; ion-icon { color: #7B1FA2; } }
@@ -177,38 +172,39 @@ ion-content {
   .dash-card-arrow { color: #7B1FA2; }
 }
 
-// Navy family
 .card-logout {
   background: #E8EEF6; border-color: #C5D3E8;
-  .dash-card-icon { background: #D0DCED; ion-icon { color: #0A3D79; } }
-  .dash-card-label { color: #0A3D79; }
-  .dash-card-arrow { color: #0A3D79; }
+  .dash-card-icon { background: #D0DCED; ion-icon { color: var(--vac-navy); } }
+  .dash-card-label { color: var(--vac-navy); }
+  .dash-card-arrow { color: var(--vac-navy); }
 }
 
 .card-notif-badge {
   position: absolute;
   top: 12px;
   right: 36px;
-  font-size: 10px;
+  font-size: 0.625rem;
   min-width: 18px;
   height: 18px;
   border-radius: 9px;
   padding: 0 5px;
 }
 
-// ── Bell icon in toolbar ───────────────────────────────────────────────────────
+// ── Bell icon ──────────────────────────────────────────────────────────────────
 .bell-btn {
   position: relative;
   --color: #ffffff;
-  font-size: 22px;
+  font-size: 1.375rem;
   margin-right: 4px;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .bell-badge {
   position: absolute;
   top: 4px;
   right: 2px;
-  font-size: 9px;
+  font-size: 0.5625rem;
   min-width: 16px;
   height: 16px;
   border-radius: 8px;

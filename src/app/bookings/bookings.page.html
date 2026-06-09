@@ -1,65 +1,65 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>My Bookings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="bookings-page">
 
-    <!-- Page header -->
+    <ion-refresher slot="top" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <div class="page-header">
-      <h1 class="page-title">My Bookings</h1>
+      <h2 class="page-title">My Bookings</h2>
       <p class="page-subtitle">Track your appointment requests and their status</p>
     </div>
 
-    <!-- Summary cards -->
     <div class="summary-cards" *ngIf="bookings.length > 0">
       <div class="summary-card">
         <div class="card-icon-wrap blue-icon">
-          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
         </div>
         <div class="card-body">
-          <div class="card-label">Total Bookings</div>
+          <div class="card-label">Total</div>
           <div class="card-amount blue">{{ bookings.length }}</div>
-          <div class="card-sub">In the last 30 days</div>
+          <div class="card-sub">Last 30 days</div>
         </div>
       </div>
 
       <div class="summary-card green-card">
         <div class="card-icon-wrap green-icon">
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
         </div>
         <div class="card-body">
           <div class="card-label">Confirmed</div>
           <div class="card-amount green">{{ confirmedCount }}</div>
-          <div class="card-sub">Approved by the clinic</div>
+          <div class="card-sub">Approved</div>
         </div>
       </div>
 
       <div class="summary-card orange-card">
         <div class="card-icon-wrap orange-icon">
-          <ion-icon name="time-outline"></ion-icon>
+          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
         </div>
         <div class="card-body">
           <div class="card-label">Pending</div>
           <div class="card-amount orange">{{ pendingCount }}</div>
-          <div class="card-sub warn-text">Awaiting clinic response</div>
+          <div class="card-sub warn-text">Awaiting response</div>
         </div>
       </div>
     </div>
 
-    <!-- Empty state -->
     <div *ngIf="bookings.length === 0" class="bookings-empty">
-      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
       <p>No bookings yet</p>
       <span>Your appointment requests from the last 30 days will appear here</span>
     </div>
 
-    <!-- Booking list -->
     <div class="booking-row" *ngFor="let b of bookings"
          [class.row-confirmed]="b.Status === 'Confirmed'"
          [class.row-cancelled]="b.Status === 'Cancelled'">
@@ -67,7 +67,7 @@
       <div class="booking-top">
         <div class="booking-badges">
           <span class="badge" [ngClass]="b.Type === 'HomeBooked' ? 'badge-home' : 'badge-clinic'">
-            <ion-icon [name]="b.Type === 'HomeBooked' ? 'home-outline' : 'business-outline'"></ion-icon>
+            <ion-icon [name]="b.Type === 'HomeBooked' ? 'home-outline' : 'business-outline'" aria-hidden="true"></ion-icon>
             {{ b.Type === 'HomeBooked' ? 'Home Visit' : 'Clinic Visit' }}
           </span>
           <span class="badge" [ngClass]="statusBadgeClass(b.Status)">{{ b.Status }}</span>
@@ -80,12 +80,12 @@
         <div class="booking-vaccines">{{ b.Vaccines }}</div>
 
         <div class="booking-meta" *ngIf="b.Address">
-          <ion-icon name="location-outline" class="meta-icon"></ion-icon>
+          <ion-icon name="location-outline" class="meta-icon" aria-hidden="true"></ion-icon>
           <span>{{ b.Address }}</span>
         </div>
 
         <div class="booking-note" *ngIf="b.DoctorComment">
-          <ion-icon name="chatbubble-ellipses-outline" class="note-icon"></ion-icon>
+          <ion-icon name="chatbubble-ellipses-outline" class="note-icon" aria-hidden="true"></ion-icon>
           <div>
             <div class="note-label">Note from Doctor</div>
             <div class="note-text">{{ b.DoctorComment }}</div>
@@ -94,14 +94,16 @@
       </div>
 
       <div class="booking-footer">
-        <button class="btn-location" *ngIf="b.Location" (click)="openLocation(b.Location)">
-          <ion-icon name="location-outline"></ion-icon>
+        <ion-button fill="outline" color="primary" expand="block"
+                    *ngIf="b.Location" (click)="openLocation(b.Location)">
+          <ion-icon slot="start" name="location-outline"></ion-icon>
           View Location
-        </button>
-        <button class="btn-cancel" *ngIf="b.Status === 'Pending'" (click)="cancelBooking(b)">
-          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="outline" color="danger" expand="block"
+                    *ngIf="b.Status === 'Pending'" (click)="cancelBooking(b)">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
           Cancel Booking
-        </button>
+        </ion-button>
       </div>
 
     </div>

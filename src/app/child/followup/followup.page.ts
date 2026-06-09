@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { ToastService } from 'src/app/services/toast.service';
 import * as moment from 'moment';
@@ -11,39 +10,49 @@ import * as moment from 'moment';
   styleUrls: ['./followup.page.scss']
 })
 export class FollowupPage {
-  followups: any[] = [];
+  followups: any[] = null;
+  isLoading = false;
+  loadError = false;
+  private childId: number;
 
   constructor(
     private route: ActivatedRoute,
     private scheduleService: ScheduleService,
-    private toastService: ToastService,
-    private loadingController: LoadingController
+    private toastService: ToastService
   ) {}
 
-  async ionViewDidEnter() {
-    const childId = +this.route.snapshot.paramMap.get('id');
-    const loading = await this.loadingController.create({ message: 'Loading' });
-    await loading.present();
+  ionViewDidEnter() {
+    this.childId = +this.route.snapshot.paramMap.get('id');
+    this.loadData();
+  }
 
-    this.scheduleService.getFollowUps(childId).subscribe(
+  loadData() {
+    this.isLoading = true;
+    this.loadError = false;
+    this.scheduleService.getFollowUps(this.childId).subscribe(
       res => {
-        loading.dismiss();
+        this.isLoading = false;
         if (res.IsSuccess) {
-          // FollowUpDTO dates arrive as "DD-MM-YYYY" (OnlyDateConverter) — normalize
-          // to "YYYY-MM-DD" so the template's `| date` pipe parses them unambiguously.
           this.followups = (res.ResponseData || []).map(f => {
             if (f.CurrentVisitDate) { f.CurrentVisitDate = moment(f.CurrentVisitDate, 'DD-MM-YYYY').format('YYYY-MM-DD'); }
             if (f.NextVisitDate) { f.NextVisitDate = moment(f.NextVisitDate, 'DD-MM-YYYY').format('YYYY-MM-DD'); }
             return f;
           });
         } else {
+          this.loadError = true;
           this.toastService.create(res.Message, 'danger');
         }
       },
       err => {
-        loading.dismiss();
+        this.isLoading = false;
+        this.loadError = true;
         this.toastService.create(err, 'danger');
       }
     );
+  }
+
+  doRefresh(event: any) {
+    this.loadData();
+    setTimeout(() => event.target.complete(), 1500);
   }
 }

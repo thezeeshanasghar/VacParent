@@ -21,8 +21,8 @@
 
     </div>
     <ion-buttons slot="end">
-      <ion-button (click)="goToBookings()" class="bell-btn">
-        <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+      <ion-button (click)="goToBookings()" class="bell-btn" aria-label="My Bookings">
+        <ion-icon name="notifications-outline" slot="icon-only" aria-hidden="true"></ion-icon>
         <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" class="bell-badge">
           {{bookingService.unreadCount}}
         </ion-badge>
@@ -31,7 +31,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="dash-wrap">
 
     <div class="dash-greeting">
@@ -80,7 +80,7 @@
         <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
       </div>
 
-      <div class="dash-card card-logout" (click)="clearStorage()">
+      <div class="dash-card card-logout" (click)="clearStorage()" role="button" tabindex="0" (keydown.enter)="clearStorage()" aria-label="Logout">
         <div class="dash-card-icon">
           <ion-icon name="log-out-outline"></ion-icon>
         </div>

@@ -1,14 +1,11 @@
 <ion-content>
   <div class="login-bg">
-
-    <!-- Decorative blobs -->
     <div class="blob blob-top-left"></div>
     <div class="blob blob-top-right"></div>
     <div class="blob blob-bottom"></div>
 
     <div class="login-overlay">
 
-      <!-- ── Brand ── -->
       <div class="brand-wrap">
         <div class="brand-icon">
           <div class="brand-icon-ring">
@@ -16,7 +13,6 @@
           </div>
         </div>
         <p class="brand-sub">Your child's health, our priority</p>
-
         <div class="brand-dots">
           <span class="dot dot-blue"></span>
           <span class="dot dot-green"></span>
@@ -24,9 +20,7 @@
         </div>
       </div>
 
-      <!-- ── Login Card ── -->
       <div class="login-card">
-
         <div class="card-header-bar">
           <span class="bar-segment bar-blue"></span>
           <span class="bar-segment bar-green"></span>
@@ -38,7 +32,6 @@
 
         <form [formGroup]="fg">
 
-          <!-- Phone -->
           <div class="input-group">
             <div class="input-icon">
               <ion-icon name="call-outline"></ion-icon>
@@ -53,7 +46,9 @@
               <ion-input
                 class="phone-input"
                 type="tel"
+                inputmode="numeric"
                 placeholder="Mobile Number"
+                [clearInput]="true"
                 formControlName="MobileNumber">
               </ion-input>
             </div>
@@ -64,7 +59,6 @@
             <span *ngIf="fg.get('MobileNumber').errors?.onlyNumbers">Please enter only numbers.</span>
           </div>
 
-          <!-- Password -->
           <div class="input-group">
             <div class="input-icon">
               <ion-icon name="lock-closed-outline"></ion-icon>
@@ -72,27 +66,33 @@
             <div class="input-body">
               <ion-input
                 class="text-input"
-                type="password"
+                [type]="showPassword ? 'text' : 'password'"
                 placeholder="Password"
+                autocomplete="current-password"
                 formControlName="Password">
               </ion-input>
+              <ion-button fill="clear" size="small" class="eye-btn" (click)="showPassword = !showPassword"
+                          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+                <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
             </div>
           </div>
 
-          <!-- Login Button -->
-          <ion-button expand="full" class="login-btn" (click)="login()">
-            <ion-icon name="log-in-outline" slot="start"></ion-icon>
-            Login
+          <ion-button expand="full" class="login-btn" [disabled]="isLoading" (click)="login()">
+            <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+            <ion-icon *ngIf="!isLoading" name="log-in-outline" slot="start"></ion-icon>
+            {{ isLoading ? 'Signing in...' : 'Login' }}
           </ion-button>
 
           <div class="forgot-wrap">
-            <a routerLink="/forgotpassword" class="forgot-link">Forgot Password?</a>
+            <ion-button fill="clear" routerLink="/forgotpassword" class="forgot-link">
+              Forgot Password?
+            </ion-button>
           </div>
 
         </form>
       </div>
 
-      <!-- Footer note -->
       <p class="footer-note">Secure &amp; Encrypted &nbsp;•&nbsp; Pakistan</p>
 
     </div>

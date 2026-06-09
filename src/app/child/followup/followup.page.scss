@@ -1,5 +1,24 @@
 ion-content {
-  --background: #EEF2F7;
+  --background: var(--vac-surface);
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.25rem;
+  gap: 0.75rem;
+  text-align: center;
+  color: var(--ion-color-danger);
+
+  ion-icon { font-size: 3rem; }
+  p { font-size: 0.9375rem; font-weight: 600; margin: 0; }
 }
 
 .empty-state {
@@ -7,25 +26,24 @@ ion-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 3.75rem 1.25rem;
+  color: var(--ion-color-medium);
+  gap: 0.5rem;
 
-  .empty-icon {
-    font-size: 56px;
-    color: #90A4AE;
-    margin-bottom: 12px;
-  }
+  ion-icon { font-size: 3.5rem; }
 
   .empty-text {
-    font-size: 15px;
-    color: #90A4AE;
+    font-size: 0.9375rem;
+    color: var(--ion-color-medium);
+    margin: 0;
   }
 }
 
 .fu-card {
-  background: #fff;
+  background: var(--vac-card);
   border-radius: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 3px 14px rgba(10, 61, 121, 0.09);
+  margin-bottom: 0.875rem;
+  box-shadow: var(--vac-shadow);
   overflow: hidden;
 }
 
@@ -33,78 +51,81 @@ ion-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #0A3D79, #1E88E5);
-  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--vac-navy), var(--vac-sky));
+  padding: 0.625rem 1rem;
 
   .fu-serial {
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-weight: 700;
     color: rgba(255,255,255,0.85);
   }
 
   .fu-date {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 700;
     color: #fff;
   }
 }
 
 .fu-body {
-  padding: 14px 16px;
+  padding: 0.875rem 1rem;
 }
 
 .fu-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
 
   .fu-label {
-    font-size: 13px;
-    color: #78909C;
+    font-size: 0.8125rem;
+    color: var(--ion-color-medium-tint);
     font-weight: 500;
+    flex-shrink: 0;
   }
 
   .fu-value {
-    font-size: 14px;
-    color: #1A1A2E;
+    font-size: 0.875rem;
+    color: var(--vac-black);
     font-weight: 600;
     text-align: right;
     max-width: 60%;
+    word-break: break-word;
   }
 
   .next-visit {
-    color: #1565C0;
+    color: var(--vac-blue);
   }
 }
 
 .fu-metrics {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-  border-top: 1px solid #EEF2F7;
-  padding-top: 10px;
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+  border-top: 1px solid var(--vac-surface);
+  padding-top: 0.625rem;
 }
 
 .fu-metric {
-  background: #F0F4FA;
+  background: var(--ion-color-light-tint);
   border-radius: 10px;
-  padding: 8px 14px;
+  padding: 0.5rem 0.875rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 64px;
 
   .metric-val {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 700;
-    color: #1565C0;
+    color: var(--vac-blue);
   }
 
   .metric-lbl {
-    font-size: 11px;
-    color: #78909C;
+    font-size: 0.6875rem;
+    color: var(--ion-color-medium-tint);
     margin-top: 2px;
   }
 }

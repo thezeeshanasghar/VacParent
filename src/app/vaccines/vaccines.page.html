@@ -1,25 +1,32 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Vaccines</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
+<ion-content class="ion-padding">
 
   <p class="section-label">Tap a vaccine to learn more</p>
 
-  <div *ngFor="let vaccine of vaccinesData; let i = index" class="vac-row" (click)="sethidden(i)">
+  <div *ngFor="let vaccine of vaccinesData; let i = index"
+       class="vac-row"
+       (click)="sethidden(i)"
+       role="button"
+       [attr.aria-expanded]="!vaccine.ishidden"
+       tabindex="0"
+       (keydown.enter)="sethidden(i)"
+       (keydown.space)="sethidden(i)">
     <div class="vac-header">
-      <div class="vac-icon-wrap">
+      <div class="vac-icon-wrap" aria-hidden="true">
         <ion-icon name="medical-outline"></ion-icon>
       </div>
       <span class="vac-name">{{vaccine.name}}</span>
-      <ion-icon [name]="vaccine.ishidden ? 'chevron-up-outline' : 'chevron-down-outline'" class="vac-chevron"></ion-icon>
+      <ion-icon [name]="vaccine.ishidden ? 'chevron-down-outline' : 'chevron-up-outline'" class="vac-chevron" aria-hidden="true"></ion-icon>
     </div>
-    <div class="vac-desc" [hidden]="vaccine.ishidden">
+    <div class="vac-desc" [hidden]="vaccine.ishidden" aria-hidden="{{vaccine.ishidden}}">
       <p>{{vaccine.description}}</p>
     </div>
   </div>

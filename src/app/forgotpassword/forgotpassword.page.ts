@@ -30,7 +30,8 @@ export class ForgotPasswordPage implements OnInit {
   fatherName: string;
   email: string;
 
-  loading: boolean = false; // Define loading variable
+  isLoading: boolean = false;
+  todayStr = new Date().toISOString().split('T')[0];
 
 
   constructor(
@@ -344,52 +345,36 @@ export class ForgotPasswordPage implements OnInit {
   }
 
   async sendPassword2() {
+    if (this.isLoading) return;
     const formattedDate = moment(this.birthday1).format('DD-MM-YYYY');
 
-    // Consolidate data into a single object
     const data = {
         Name: this.childName,
         FatherName: this.fatherName,
-        DOB: formattedDate,  // Use the formatted date here
+        DOB: formattedDate,
         Email: this.email
     };
-    
-console.log("formattedDate" , formattedDate);
 
-    
-    // Log the data for debugging
-    console.log('Data to be sent:', data);
-
-    const loading = await this.loadingController.create({
-        message: "Loading..."
-    });
-    await loading.present();
+    this.isLoading = true;
 
 
     try {
-
         const res = await this.loginservice.sendPassword2(data).toPromise();
         if (res.IsSuccess) {
-            console.log('Response Data:', res.ResponseData);
-
             const ChildId = res.ResponseData.Id;
-            console.log('Child ID:', ChildId);
-
-            loading.dismiss();
-            this.toastService.create("Successfully added");
-
+            this.toastService.create("Successfully sent");
             if (res.ResponseData.Type === "special") {
                 this.router.navigate([`/members/child/vaccine/${ChildId}`]);
             } else {
                 this.router.navigate(["/members/child"]);
             }
         } else {
-            loading.dismiss();
             this.toastService.create(res.Message, "danger");
         }
     } catch (err) {
-        loading.dismiss();
         this.toastService.create('Error: ' + err.message, 'danger');
+    } finally {
+        this.isLoading = false;
     }
 }
 

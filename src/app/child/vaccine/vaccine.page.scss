@@ -1,22 +1,20 @@
 ion-content {
-  --background: #EEF2F7;
+  --background: var(--vac-surface);
 }
 
-// ── Print button ──────────────────────────────────────────────────────────────
-.print-btn {
-  --color: #ffffff;
-  font-size: 22px;
+.skeleton-wrap {
+  padding: 8px 0;
 }
 
 // ── Child summary ─────────────────────────────────────────────────────────────
 .child-summary {
   display: flex;
-  gap: 14px;
-  background: #ffffff;
+  gap: 0.875rem;
+  background: var(--vac-card);
   border-radius: 20px;
-  padding: 18px 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(10, 61, 121, 0.11);
+  padding: 1.125rem 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--vac-shadow);
 }
 
 .child-avatar {
@@ -38,21 +36,21 @@ ion-content {
 .child-details { flex: 1; min-width: 0; }
 
 .child-name {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: #1A1A2E;
-  margin: 0 0 3px;
+  color: var(--vac-black);
+  margin: 0 0 0.1875rem;
 }
 
 .child-meta {
-  font-size: 13px;
-  color: #546E7A;
-  margin: 0 0 10px;
+  font-size: 0.8125rem;
+  color: var(--ion-color-medium);
+  margin: 0 0 0.625rem;
 }
 
 .vac-stats {
   display: flex;
-  gap: 6px;
+  gap: 0.375rem;
   flex-wrap: wrap;
 }
 
@@ -60,96 +58,75 @@ ion-content {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 20px;
 
-  ion-icon { font-size: 13px; }
+  ion-icon { font-size: 0.8125rem; }
 }
 
-.chip-given  { background: #E8F5E9; color: #2E7D32; }
+.chip-given  { background: #E8F5E9; color: var(--vac-green); }
 .chip-due    { background: #FFF8E1; color: #F57F17; }
-.chip-missed { background: #FFEBEE; color: #B71C1C; }
+.chip-missed { background: #FFEBEE; color: var(--ion-color-danger-shade); }
 
 // ── Schedule card ─────────────────────────────────────────────────────────────
-.vcard-div { margin-bottom: 14px; }
+.vcard-div { margin-bottom: 0.875rem; }
 
 .schedule-card {
-  background: #ffffff;
+  background: var(--vac-card);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 3px 16px rgba(10, 61, 121, 0.09);
+  box-shadow: var(--vac-shadow);
 }
 
 .schedule-card-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  background: linear-gradient(135deg, #0A3D79, #1565C0);
-}
-
-.cal-icon {
-  font-size: 20px;
-  color: rgba(255,255,255,0.85);
+  gap: 0.625rem;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, var(--vac-navy), var(--vac-blue));
 }
 
 .schedule-date {
   flex: 1;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: #ffffff;
 }
 
 .dl-btn {
-  background: rgba(255,255,255,0.18);
-  border: none;
-  border-radius: 10px;
-  padding: 10px 12px;
-  color: #ffffff;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  --color: #ffffff;
+  --padding-start: 8px;
+  --padding-end: 8px;
   min-width: 44px;
   min-height: 44px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-
-  &:active { background: rgba(255,255,255,0.30); }
 }
 
 .schedule-actions {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   flex-wrap: wrap;
-  padding: 12px 14px;
-  background: #F5F8FD;
-  border-bottom: 1px solid #EEF2F7;
+  padding: 0.75rem 0.875rem;
+  background: var(--ion-color-light-tint);
+  border-bottom: 1px solid var(--vac-surface);
 
   ion-button {
-    height: 40px;
-    font-size: 13px;
+    min-height: 40px;
+    font-size: 0.8125rem;
     font-weight: 600;
   }
 }
 
-.home-book-btn {
-  --background: linear-gradient(135deg, #FF4500, #FF6B35);
-  --color: #ffffff;
-  --border-radius: 20px;
-}
-
 // ── Dose list ─────────────────────────────────────────────────────────────────
-.dose-list { padding: 8px 0; }
+.dose-list { padding: 0.5rem 0; }
 
 .dose-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-bottom: 1px solid #F0F4F8;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--vac-surface);
   min-height: 52px;
 
   &:last-child { border-bottom: none; }
@@ -163,10 +140,10 @@ ion-content {
   border-radius: 50%;
 }
 
-.ind-given  { background: #43A047; }
-.ind-epi    { background: #1E88E5; }
+.ind-given  { background: var(--vac-green2); }
+.ind-epi    { background: var(--vac-sky); }
 .ind-due    { background: #FFA000; }
-.ind-missed { background: #E53935; }
+.ind-missed { background: var(--ion-color-danger); }
 
 .dose-body {
   flex: 1;
@@ -177,138 +154,112 @@ ion-content {
 }
 
 .dose-name {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
-  color: #1A1A2E;
+  color: var(--vac-black);
 }
 
 .dose-status {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
-.status-given  { color: #2E7D32; }
-.status-epi    { color: #1565C0; }
+.status-given  { color: var(--vac-green); }
+.status-epi    { color: var(--vac-blue); }
 .status-due    { color: #F57F17; }
-.status-missed { color: #B71C1C; }
+.status-missed { color: var(--ion-color-danger-shade); }
 
 .reschedule-btn {
   --border-radius: 20px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   flex-shrink: 0;
-  height: 40px;
+  min-height: 40px;
   --padding-start: 14px;
   --padding-end: 14px;
 }
 
 // ── Home booking form ─────────────────────────────────────────────────────────
 .booking-card {
-  background: #ffffff;
+  background: var(--vac-card);
   border-radius: 20px;
-  padding: 22px 18px 26px;
-  box-shadow: 0 4px 22px rgba(10, 61, 121, 0.11);
+  padding: 1.375rem 1.125rem 1.625rem;
+  box-shadow: var(--vac-shadow);
 }
 
 .booking-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 18px;
+  gap: 0.5rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: #0A3D79;
-  margin: 0 0 20px;
+  color: var(--vac-navy);
+  margin: 0 0 1.25rem;
 
-  ion-icon { font-size: 22px; color: #FF4500; }
+  ion-icon { font-size: 1.375rem; color: var(--vac-orange); }
 }
 
-.field-group { margin-bottom: 14px; }
+.field-group { margin-bottom: 0.875rem; }
 
 .field-label {
   display: block;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #546E7A;
-  margin-bottom: 5px;
+  color: var(--ion-color-medium);
+  margin-bottom: 0.3125rem;
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
 
 .required-star {
-  color: #E53935;
-  font-size: 14px;
+  color: var(--ion-color-danger);
+  font-size: 0.875rem;
+}
+
+.optional-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ion-color-medium-tint);
 }
 
 .field-wrap {
   display: flex;
   align-items: center;
-  background: #F0F4FB;
-  border: 1.5px solid #D0DCF0;
+  background: var(--ion-color-light-tint);
+  border: 1.5px solid var(--vac-border);
   border-radius: 12px;
   padding: 0 12px;
+  min-height: 52px;
 
   &:focus-within {
-    border-color: #1565C0;
+    border-color: var(--vac-blue);
     background: #F5F8FF;
   }
 }
 
+.field-wrap--tap {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  &:active { background: var(--vac-surface); }
+}
+
+.field-tap-value {
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--vac-black);
+}
+
+.field-chevron {
+  font-size: 1rem;
+  color: var(--ion-color-medium-tint);
+}
+
 .field-icon {
-  font-size: 18px;
-  color: #1565C0;
+  font-size: 1.125rem;
+  color: var(--vac-blue);
   flex-shrink: 0;
   margin-right: 8px;
   &--top { align-self: flex-start; margin-top: 12px; }
-}
-
-// ── Date-picker overlay ───────────────────────────────────────────────────────
-.datepicker-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.datepicker-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 16px;
-  width: 90%;
-  max-width: 360px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
-}
-
-.datepicker-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.datepicker-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #0A3D79;
-}
-
-.datepicker-confirm {
-  --background: #0A3D79;
-  --color: #ffffff;
-  --border-radius: 10px;
-  margin-top: 12px;
-}
-
-.field-wrap--datetime {
-  padding: 4px 12px;
-  ion-datetime {
-    --padding-start: 0;
-    --padding-end: 0;
-    font-size: 15px;
-    flex: 1;
-  }
 }
 
 .field-wrap--textarea {
@@ -318,9 +269,9 @@ ion-content {
   ion-textarea {
     --padding-start: 0;
     --padding-end: 4px;
-    --color: #1A1A2E;
-    --placeholder-color: #90A4AE;
-    font-size: 15px;
+    --color: var(--vac-black);
+    --placeholder-color: var(--ion-color-medium-tint);
+    font-size: 0.9375rem;
     width: 100%;
   }
 }
@@ -328,69 +279,57 @@ ion-content {
 ion-input {
   --padding-start: 0;
   --padding-end: 4px;
-  --color: #1A1A2E;
-  --placeholder-color: #90A4AE;
-  font-size: 15px;
-  height: 44px;
+  --color: var(--vac-black);
+  --placeholder-color: var(--ion-color-medium-tint);
+  font-size: 0.9375rem;
+  min-height: 44px;
 }
 
+// ── Booking footer actions ────────────────────────────────────────────────────
 .booking-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 0.625rem;
+  padding: 8px 16px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
 }
 
 .submit-btn {
-  --background: linear-gradient(135deg, #FF4500, #FF6B35);
+  --background: linear-gradient(135deg, var(--vac-orange), var(--vac-orange2));
   --color: #ffffff;
   --border-radius: 12px;
-  --box-shadow: 0 4px 16px rgba(255, 69, 0, 0.32);
+  --box-shadow: 0 4px 16px rgba(255,69,0,0.32);
   flex: 1;
-  height: 48px;
-  font-size: 15px;
+  min-height: 48px;
+  font-size: 0.9375rem;
   font-weight: 700;
 }
 
-// ── Booking type chooser overlay ──────────────────────────────────────────────
-.type-chooser-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 9999;
+// ── Date picker modal content ─────────────────────────────────────────────────
+.datepicker-header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.type-chooser-card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 28px 24px;
-  width: 86%;
-  max-width: 340px;
-  box-shadow: 0 8px 32px rgba(10, 61, 121, 0.18);
-
-  ion-button {
-    margin-bottom: 12px;
-    --border-radius: 12px;
-    height: 48px;
-    font-weight: 600;
-  }
-}
-
-.chooser-title {
-  font-size: 16px;
+.datepicker-title {
+  font-size: 1rem;
   font-weight: 700;
-  color: #0A3D79;
-  margin: 0 0 20px 0;
-  text-align: center;
+  color: var(--vac-navy);
 }
 
-.optional-label {
-  font-size: 12px;
-  font-weight: 400;
-  color: #888;
+.datepicker-confirm {
+  --background: var(--vac-navy);
+  --color: #ffffff;
+  --border-radius: 10px;
+  margin-top: 12px;
+}
+
+// ── Type chooser modal content ────────────────────────────────────────────────
+.chooser-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--vac-navy);
+  margin: 0 0 1.25rem 0;
+  text-align: center;
 }

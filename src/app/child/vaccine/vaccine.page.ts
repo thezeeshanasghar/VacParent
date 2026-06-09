@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from "@angular/core";
 import { LoadingController } from "@ionic/angular";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { BookingService } from "src/app/services/booking.service";
@@ -27,6 +27,8 @@ const now = new Date();
   styleUrls: ["./vaccine.page.scss"]
 })
 export class VaccinePage {
+  @ViewChild('typeChooserModal') typeChooserModal: any;
+  @ViewChild('datePickerModal') datePickerModal: any;
 
   fg1: FormGroup;
   homeBook = false;
@@ -239,20 +241,18 @@ export class VaccinePage {
   bookNow(vaccines: any[]) {
     if (this.isHomeBookingDoctor) {
       this.pendingBookVaccines = vaccines;
-      this.showTypeChooser = true;
+      if (this.typeChooserModal) { this.typeChooserModal.present(); }
     } else {
       this.setHomeBook(true, 'clinic', vaccines);
     }
   }
 
   chooseBookingType(type: string) {
-    this.showTypeChooser = false;
     this.setHomeBook(true, type, this.pendingBookVaccines);
   }
 
   setHomeBook(value: boolean, type: string = '', vaccines: any[] = []) {
     this.homeBook = value;
-    this.showTypeChooser = false;
     this.bookingType = type;
     if (value && type === 'home' && this.homeCities.length === 0) {
       var doctorId = (this.Child && this.Child.Clinic && this.Child.Clinic.DoctorId) ? this.Child.Clinic.DoctorId : 1;
@@ -413,7 +413,7 @@ export class VaccinePage {
         (err: any) => { this.toastService.create('Could not reschedule. Please try again.', 'danger'); }
       );
     };
-    this.datePickerOpen = true;
+    if (this.datePickerModal) { this.datePickerModal.present(); }
   }
 
   promptBulkReschedule(vaccines: any[]) {
@@ -455,7 +455,6 @@ export class VaccinePage {
   confirmDatePicker() {
     const dateStr = this.pickedDate ? this.pickedDate.split('T')[0] : '';
     if (!dateStr) return;
-    this.datePickerOpen = false;
     if (this._datePickerCallback) {
       this._datePickerCallback(dateStr);
       this._datePickerCallback = null;
