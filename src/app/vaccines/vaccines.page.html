@@ -26,7 +26,7 @@
       <span class="vac-name">{{vaccine.name}}</span>
       <ion-icon [name]="vaccine.ishidden ? 'chevron-down-outline' : 'chevron-up-outline'" class="vac-chevron" aria-hidden="true"></ion-icon>
     </div>
-    <div class="vac-desc" [hidden]="vaccine.ishidden" aria-hidden="{{vaccine.ishidden}}">
+    <div class="vac-desc" [hidden]="vaccine.ishidden" [attr.aria-hidden]="vaccine.ishidden">
       <p>{{vaccine.description}}</p>
     </div>
   </div>
