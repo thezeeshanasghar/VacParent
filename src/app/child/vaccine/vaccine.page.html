@@ -205,12 +205,12 @@
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label">Location Pin <span class="required-star">*</span></label>
+            <label class="field-label">Location Pin <span class="optional-label">(optional)</span></label>
             <ion-button expand="block" fill="outline"
               [color]="fg1.controls['Location'].value ? 'success' : 'tertiary'"
               (click)="shareLocation()">
               <ion-icon slot="start" [name]="fg1.controls['Location'].value ? 'checkmark-circle-outline' : 'location-outline'"></ion-icon>
-              {{fg1.controls['Location'].value ? 'Location Captured ✓' : 'Capture My Location (Required)'}}
+              {{fg1.controls['Location'].value ? 'Location Captured ✓' : 'Capture My Location'}}
             </ion-button>
           </div>
         </ng-container>

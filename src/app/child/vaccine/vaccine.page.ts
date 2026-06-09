@@ -286,10 +286,6 @@ export class VaccinePage {
         this.toastService.create('Address is required for home booking.', 'danger');
         return;
       }
-      if (!this.fg1.controls['Location'].value || !this.fg1.controls['Location'].value.trim()) {
-        this.toastService.create('Location pin is required for home booking. Please capture your location.', 'danger');
-        return;
-      }
     }
     await this.bookingService.addBooking(this.fg1.value).subscribe(
       res => {
