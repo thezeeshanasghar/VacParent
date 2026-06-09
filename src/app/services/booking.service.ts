@@ -42,6 +42,11 @@ export class BookingService extends BaseService {
       .pipe(catchError(this.handleError));
   }
 
+  cancelBooking(id: number): Observable<any> {
+    return this.http.put(`${this.API}booking/${id}/parent-cancel`, {}, this.httpOptions)
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
   getHomeCities(doctorId: number): Observable<any> {
     return this.http.get(`${this.API}homecity/doctor/${doctorId}`, this.httpOptions)
       .pipe(map(this.extractData), catchError(this.handleError));

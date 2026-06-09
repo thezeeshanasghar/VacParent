@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { BookingService } from 'src/app/services/booking.service';
@@ -17,6 +17,7 @@ export class BookingsPage {
   constructor(
     private bookingService: BookingService,
     private loadingController: LoadingController,
+    private alertController: AlertController,
     private storage: Storage,
     private toastService: ToastService
   ) {}
@@ -53,6 +54,33 @@ export class BookingsPage {
     if (status === 'Confirmed') return 'badge-confirmed';
     if (status === 'Cancelled') return 'badge-cancelled';
     return 'badge-pending';
+  }
+
+  async cancelBooking(booking: any) {
+    const alert = await this.alertController.create({
+      header: 'Cancel Booking',
+      message: 'Are you sure you want to cancel this booking?',
+      buttons: [
+        { text: 'No', role: 'cancel' },
+        {
+          text: 'Yes, Cancel',
+          handler: () => {
+            this.bookingService.cancelBooking(booking.Id).subscribe(
+              res => {
+                if (res && res.IsSuccess) {
+                  booking.Status = 'Cancelled';
+                  this.toastService.create('Booking cancelled.');
+                } else {
+                  this.toastService.create((res && res.Message) ? res.Message : 'Could not cancel booking.', 'danger');
+                }
+              },
+              err => { this.toastService.create('Could not cancel booking.', 'danger'); }
+            );
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   openLocation(url: string) {

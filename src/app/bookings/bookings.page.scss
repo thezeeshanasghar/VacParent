@@ -306,3 +306,32 @@ ion-content {
     color: #fff;
   }
 }
+
+.booking-footer {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 9px 0;
+  background: transparent;
+  color: #c62828;
+  border: 1.5px solid #c62828;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  ion-icon { font-size: 15px; }
+
+  &:hover {
+    background: #c62828;
+    color: #fff;
+  }
+}

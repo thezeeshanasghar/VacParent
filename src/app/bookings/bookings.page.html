@@ -93,10 +93,14 @@
         </div>
       </div>
 
-      <div class="booking-footer" *ngIf="b.Location">
-        <button class="btn-location" (click)="openLocation(b.Location)">
+      <div class="booking-footer">
+        <button class="btn-location" *ngIf="b.Location" (click)="openLocation(b.Location)">
           <ion-icon name="location-outline"></ion-icon>
           View Location
+        </button>
+        <button class="btn-cancel" *ngIf="b.Status === 'Pending'" (click)="cancelBooking(b)">
+          <ion-icon name="close-circle-outline"></ion-icon>
+          Cancel Booking
         </button>
       </div>
 
