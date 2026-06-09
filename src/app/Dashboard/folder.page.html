@@ -4,11 +4,21 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <div class="toolbar-inner">
-      <div class="toolbar-brand">
+
+      <!-- Doctor 1: original Vaccine.PK brand -->
+      <div *ngIf="isDoctor1" class="toolbar-brand">
         <ion-icon name="medkit" class="toolbar-logo"></ion-icon>
         <span class="toolbar-title">Vaccine<span class="toolbar-pk">.PK</span></span>
       </div>
-      <span class="toolbar-sub">Vaccination Centre</span>
+      <span *ngIf="isDoctor1" class="toolbar-sub">Vaccination Centre</span>
+
+      <!-- All other doctors: Vaccinationcentre.com brand -->
+      <div *ngIf="!isDoctor1" class="toolbar-brand">
+        <img src="assets/vaccination-centre-logo.png" class="toolbar-logo-img" alt="logo">
+        <span class="toolbar-title toolbar-title-vc">Vaccinationcentre<span class="toolbar-pk">.com</span></span>
+      </div>
+      <span *ngIf="!isDoctor1" class="toolbar-sub toolbar-sub-vc">Your Trusted Vaccination Partner</span>
+
     </div>
     <ion-buttons slot="end">
       <ion-button (click)="goToBookings()" class="bell-btn">

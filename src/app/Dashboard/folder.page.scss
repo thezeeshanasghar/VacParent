@@ -20,6 +20,21 @@ ion-content {
   color: #43A047;
 }
 
+.toolbar-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.toolbar-title-vc {
+  font-size: 18px;
+}
+
+.toolbar-sub-vc {
+  margin-left: 40px;
+}
+
 .toolbar-title {
   font-size: 22px;
   font-weight: 800;

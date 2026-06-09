@@ -48,6 +48,12 @@ export class ChildPage implements OnInit {
         loading.dismiss();
         if (res.IsSuccess) {
           this.childs = res.ResponseData;
+          if (this.childs && this.childs.length > 0) {
+            var first = this.childs[0];
+            if (first && first.Clinic && first.Clinic.DoctorId) {
+              this.nativeStorage.set(environment.DOCTOR_Id, first.Clinic.DoctorId);
+            }
+          }
         } else {
           this.toastService.create(res.Message, 'danger');
         }

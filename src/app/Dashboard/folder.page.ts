@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FolderPage implements OnInit {
   public folder: string;
+  public isDoctor1: boolean = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,6 +30,10 @@ export class FolderPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.storage.get(environment.DOCTOR_Id).then(doctorId => {
+      this.isDoctor1 = doctorId == null || doctorId == 1;
+    });
+
     this.storage.get(environment.USER_Id).then(userId => {
       if (userId) {
         this.bookingService.getParentNotifications(userId).subscribe(
