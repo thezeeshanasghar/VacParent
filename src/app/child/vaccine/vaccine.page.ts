@@ -47,7 +47,7 @@ export class VaccinePage {
   // Date-picker overlay state
   datePickerOpen = false;
   datePickerTitle = 'Select Date';
-  pickedDate: string = '';
+  pickedDate: string = new Date().toISOString().split('T')[0];
   datePickerMin: string = new Date().toISOString().split('T')[0];
   private _datePickerCallback: ((date: string) => void) | null = null;
 
@@ -393,6 +393,7 @@ export class VaccinePage {
 
   promptReschedule(vacId: any) {
     this.datePickerTitle = 'Reschedule';
+    this.pickedDate = new Date().toISOString().split('T')[0];
     this._datePickerCallback = (dateStr: string) => {
       const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
       const payload = { Date: newDate, Id: vacId };
@@ -413,6 +414,7 @@ export class VaccinePage {
 
   promptBulkReschedule(vaccines: any[]) {
     this.datePickerTitle = 'Reschedule All';
+    this.pickedDate = new Date().toISOString().split('T')[0];
     this._datePickerCallback = (dateStr: string) => {
       const pending = vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true);
       let allOk = true;
