@@ -29,7 +29,7 @@
       <ion-datetime
         display-format="DD MMM YYYY"
         picker-format="DD MMMM YYYY"
-        min="2020-01-01"
+        [min]="datePickerMin"
         max="2035-12-31"
         [(ngModel)]="pickedDate">
       </ion-datetime>

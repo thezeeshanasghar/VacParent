@@ -48,6 +48,7 @@ export class VaccinePage {
   datePickerOpen = false;
   datePickerTitle = 'Select Date';
   pickedDate: string = '';
+  datePickerMin: string = new Date().toISOString().split('T')[0];
   private _datePickerCallback: ((date: string) => void) | null = null;
 
   Pneum2Date: any;
@@ -399,12 +400,12 @@ export class VaccinePage {
         (res: any) => {
           if (res.IsSuccess) {
             this.getVaccination();
-            this.toastService.create(res.Message || 'Rescheduled successfully');
+            this.toastService.create('Vaccine rescheduled successfully.');
           } else {
-            this.resheduleAlert(res.Message, payload);
+            this.rescheduleRuleAlert(res.Message, vacId);
           }
         },
-        (err: any) => { this.toastService.create(err, 'danger'); }
+        (err: any) => { this.toastService.create('Could not reschedule. Please try again.', 'danger'); }
       );
     };
     this.datePickerOpen = true;
@@ -413,15 +414,34 @@ export class VaccinePage {
   promptBulkReschedule(vaccines: any[]) {
     this.datePickerTitle = 'Reschedule All';
     this._datePickerCallback = (dateStr: string) => {
-      const newDate = moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY');
-      vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true).forEach(v => {
-        const payload = { Date: newDate, Id: v.Id };
+      const pending = vaccines.filter(v => !v.IsDone && !v.Due2EPI && v.IsSkip != true);
+      let allOk = true;
+      let firstError = '';
+      let firstErrorVacId: any = null;
+      let remaining = pending.length;
+      if (remaining === 0) return;
+      pending.forEach(v => {
+        const payload = { Date: moment(dateStr, 'YYYY-MM-DD').format('DD-MM-YYYY'), Id: v.Id };
         this.vaccineService.updateVaccinationDate(payload, false, false, false).subscribe(
-          (res: any) => { if (res.IsSuccess) this.getVaccination(); },
-          () => {}
+          (res: any) => {
+            if (!res.IsSuccess && allOk) {
+              allOk = false;
+              firstError = res.Message;
+              firstErrorVacId = v.Id;
+            }
+            remaining--;
+            if (remaining === 0) {
+              this.getVaccination();
+              if (allOk) {
+                this.toastService.create('All vaccines rescheduled successfully.');
+              } else {
+                this.rescheduleRuleAlert(firstError, firstErrorVacId);
+              }
+            }
+          },
+          () => { remaining--; }
         );
       });
-      this.toastService.create('All rescheduled successfully');
     };
     this.datePickerOpen = true;
   }
@@ -458,6 +478,36 @@ export class VaccinePage {
 
           }
         }
+      ]
+    });
+    await alert.present();
+  }
+
+  async rescheduleRuleAlert(rawMessage: string, vacId: any) {
+    let friendlyMsg = 'This date is not allowed based on the vaccination schedule rules set by your doctor.';
+    if (rawMessage) {
+      const m = rawMessage.toLowerCase();
+      if (m.indexOf('min age') !== -1 || m.indexOf('minage') !== -1 || m.indexOf('minimum age') !== -1 || m.indexOf('date of birth') !== -1) {
+        friendlyMsg = 'The selected date is too early. This vaccine cannot be given before the child reaches the required minimum age.';
+      } else if (m.indexOf('max age') !== -1 || m.indexOf('maxage') !== -1 || m.indexOf('maximum age') !== -1) {
+        friendlyMsg = 'The selected date is too late. Please contact your doctor — this vaccine should have been given earlier.';
+      } else if (m.indexOf('gap') !== -1 || m.indexOf('previous dose') !== -1 || m.indexOf('mingap') !== -1) {
+        friendlyMsg = 'The selected date is too soon. There must be a minimum waiting period between doses of this vaccine. Please choose a later date.';
+      } else if (m.indexOf('before') !== -1 || m.indexOf('same date') !== -1) {
+        friendlyMsg = 'The selected date must be after the previous dose date. Please choose a later date.';
+      }
+    }
+    const alert = await this.alertController.create({
+      header: 'Date Not Allowed',
+      message: friendlyMsg,
+      buttons: [
+        {
+          text: 'Try Another Date',
+          handler: () => {
+            this.promptReschedule(vacId);
+          }
+        },
+        { text: 'Cancel', role: 'cancel' }
       ]
     });
     await alert.present();
