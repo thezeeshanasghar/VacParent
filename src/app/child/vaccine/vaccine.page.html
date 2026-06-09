@@ -191,10 +191,12 @@
         <!-- Home Booking only fields -->
         <ng-container *ngIf="bookingType === 'home'">
           <div class="field-group">
-            <label class="field-label">City</label>
+            <label class="field-label">City <span class="required-star">*</span></label>
             <div class="field-wrap">
               <ion-icon name="location-outline" class="field-icon"></ion-icon>
-              <ion-input type="text" formControlName="City"></ion-input>
+              <ion-select formControlName="City" placeholder="Select your city" interface="action-sheet">
+                <ion-select-option *ngFor="let c of homeCities" [value]="c">{{c}}</ion-select-option>
+              </ion-select>
             </div>
           </div>
           <div class="field-group">

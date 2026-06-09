@@ -41,4 +41,9 @@ export class BookingService extends BaseService {
     return this.http.put(`${this.API}notification/parent/${userId}/read-all`, {}, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
+
+  getHomeCities(doctorId: number): Observable<any> {
+    return this.http.get(`${this.API}homecity/doctor/${doctorId}`, this.httpOptions)
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
 }

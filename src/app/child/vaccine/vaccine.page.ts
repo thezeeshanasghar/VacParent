@@ -34,6 +34,7 @@ export class VaccinePage {
   isHomeBookingDoctor = false;
   showTypeChooser = false;
   pendingBookVaccines: any[] = [];
+  homeCities: string[] = [];
   groupPickerOpen: any = {};
   itemPickerOpen: any = {};
   given = 0;
@@ -156,6 +157,7 @@ export class VaccinePage {
             this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
             this.isHomeBookingDoctor = this.Child.IsHomeBookingDoctor === true;
+            this.homeCities = [];
             this.fg1.controls['ChildId'].setValue(this.Child.Id);
             this.fg1.controls['ChildName'].setValue(this.Child.Name);
             this.fg1.controls['FatherName'].setValue(this.Child.FatherName);
@@ -251,6 +253,17 @@ export class VaccinePage {
     this.homeBook = value;
     this.showTypeChooser = false;
     this.bookingType = type;
+    if (value && type === 'home' && this.homeCities.length === 0) {
+      var doctorId = (this.Child && this.Child.Clinic && this.Child.Clinic.DoctorId) ? this.Child.Clinic.DoctorId : 1;
+      this.bookingService.getHomeCities(doctorId).subscribe(
+        function(res) {
+          if (res && res.IsSuccess && res.ResponseData) {
+            this.homeCities = res.ResponseData.map(function(c) { return c.CityName; });
+          }
+        }.bind(this),
+        function() {}
+      );
+    }
     if (value) {
       this.fg1.controls['Status'].setValue(type === 'home' ? 'HomeBooked' : 'ClinicBooked');
       var names = vaccines.filter(function(v) { return !v.IsDone && !v.Due2EPI; }).map(function(v) { return v.Dose.Name; }).join(', ');
