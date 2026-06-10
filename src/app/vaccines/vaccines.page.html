@@ -11,7 +11,7 @@
 
   <p class="section-label">Tap a vaccine to learn more</p>
 
-  <div *ngFor="let vaccine of vaccinesData; let i = index"
+  <div *ngFor="let vaccine of vaccinesData; let i = index; trackBy: trackByName"
        class="vac-row"
        (click)="sethidden(i)"
        role="button"

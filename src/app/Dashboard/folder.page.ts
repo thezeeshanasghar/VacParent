@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/services/booking.service';
 import { environment } from 'src/environments/environment';
 
@@ -11,9 +12,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './folder.page.html',
   styleUrls: ['./folder.page.scss'],
 })
-export class FolderPage implements OnInit {
+export class FolderPage implements OnInit, OnDestroy {
   public folder: string;
   public isDoctor1: boolean = true;
+  private notificationsSub: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,7 +38,8 @@ export class FolderPage implements OnInit {
 
     this.storage.get(environment.USER_Id).then(userId => {
       if (userId) {
-        this.bookingService.getParentNotifications(userId).subscribe(
+        if (this.notificationsSub) this.notificationsSub.unsubscribe();
+        this.notificationsSub = this.bookingService.getParentNotifications(userId).subscribe(
           (res: any) => {
             if (res && res.IsSuccess && res.ResponseData) {
               this.bookingService.unreadCount = res.ResponseData.UnreadCount || 0;
@@ -46,6 +49,10 @@ export class FolderPage implements OnInit {
         );
       }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.notificationsSub) this.notificationsSub.unsubscribe();
   }
 
   goToBookings() {

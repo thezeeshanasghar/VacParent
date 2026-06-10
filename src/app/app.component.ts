@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
 import { BookingService } from 'src/app/services/booking.service';
@@ -13,7 +14,7 @@ import { BookingService } from 'src/app/services/booking.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public selectedIndex = 0;
   public unreadCount = 0;
   public appPages = [
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
     }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  private notificationsSub: Subscription;
 
   constructor(
     private platform: Platform,
@@ -71,7 +73,7 @@ export class AppComponent implements OnInit {
     this.storage.get(environment.USER_Id).then(value => {
       if (value) {
         this.loginservice.changeState(true);
-        this.bookingService.getParentNotifications(value).subscribe(
+        this.notificationsSub = this.bookingService.getParentNotifications(value).subscribe(
           function(res) {
             if (res && res.IsSuccess && res.ResponseData) {
               this.bookingService.unreadCount = res.ResponseData.UnreadCount || 0;
@@ -82,6 +84,11 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {
+    if (this.notificationsSub) this.notificationsSub.unsubscribe();
+  }
+
   clearStorage() {
     this.storage.clear();
   }

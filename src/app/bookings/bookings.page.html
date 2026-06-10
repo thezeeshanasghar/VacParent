@@ -60,7 +60,7 @@
       <span>Your appointment requests from the last 30 days will appear here</span>
     </div>
 
-    <div class="booking-row" *ngFor="let b of bookings"
+    <div class="booking-row" *ngFor="let b of bookings; trackBy: trackByBookingId"
          [class.row-confirmed]="b.Status === 'Confirmed'"
          [class.row-cancelled]="b.Status === 'Cancelled'">
 

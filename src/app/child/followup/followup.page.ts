@@ -26,7 +26,7 @@ export class FollowupPage {
     this.loadData();
   }
 
-  loadData() {
+  loadData(onComplete?: () => void) {
     this.isLoading = true;
     this.loadError = false;
     this.scheduleService.getFollowUps(this.childId).subscribe(
@@ -42,17 +42,18 @@ export class FollowupPage {
           this.loadError = true;
           this.toastService.create(res.Message, 'danger');
         }
+        if (onComplete) onComplete();
       },
       err => {
         this.isLoading = false;
         this.loadError = true;
         this.toastService.create(err, 'danger');
+        if (onComplete) onComplete();
       }
     );
   }
 
   doRefresh(event: any) {
-    this.loadData();
-    setTimeout(() => event.target.complete(), 1500);
+    this.loadData(() => event.target.complete());
   }
 }

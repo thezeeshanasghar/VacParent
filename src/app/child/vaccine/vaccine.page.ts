@@ -331,7 +331,7 @@ export class VaccinePage {
         return;
       }
     }
-    await this.bookingService.addBooking(this.fg1.value).subscribe(
+    this.bookingService.addBooking(this.fg1.value).subscribe(
       res => {
         if (res.IsSuccess) {
           this.toastService.create(res.Message);

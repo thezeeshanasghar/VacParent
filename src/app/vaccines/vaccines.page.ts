@@ -74,4 +74,8 @@ export class VaccinesPage implements OnInit {
     this.vaccinesData[index].ishidden = !this.vaccinesData[index].ishidden;
   }
 
+  trackByName(index: number, vaccine: any): string {
+    return vaccine.name;
+  }
+
 }

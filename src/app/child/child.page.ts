@@ -65,6 +65,10 @@ export class ChildPage implements OnInit {
     );
   }
 
+  trackById(index: number, child: any): any {
+    return child.Id;
+  }
+
   calculateAge(birthday) {
     var birthDate = moment(birthday, "DD-MM-YYYY");
     var today = moment();

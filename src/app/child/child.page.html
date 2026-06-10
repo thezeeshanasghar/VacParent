@@ -18,7 +18,7 @@
     <p>No patients found</p>
   </div>
 
-  <div *ngFor="let child of childs"
+  <div *ngFor="let child of childs; trackBy: trackById"
        class="patient-card"
        [ngClass]="child.Gender=='Girl' ? 'card-girl' : 'card-boy'">
 

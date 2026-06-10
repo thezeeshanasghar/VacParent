@@ -13,6 +13,8 @@ import { ToastService } from 'src/app/services/toast.service';
 export class BookingsPage {
   bookings: any[] = [];
   userId: any;
+  confirmedCount = 0;
+  pendingCount = 0;
 
   constructor(
     private bookingService: BookingService,
@@ -35,7 +37,7 @@ export class BookingsPage {
     await loading.present();
     this.bookingService.getByParent(this.userId).subscribe(
       res => {
-        if (res.IsSuccess) this.bookings = res.ResponseData;
+        if (res.IsSuccess) this.setBookings(res.ResponseData);
         loading.dismiss();
       },
       err => { loading.dismiss(); this.toastService.create(err, 'danger'); }
@@ -45,7 +47,7 @@ export class BookingsPage {
   doRefresh(event: any) {
     this.bookingService.getByParent(this.userId).subscribe(
       res => {
-        if (res.IsSuccess) this.bookings = res.ResponseData;
+        if (res.IsSuccess) this.setBookings(res.ResponseData);
         event.target.complete();
       },
       err => {
@@ -55,12 +57,14 @@ export class BookingsPage {
     );
   }
 
-  get confirmedCount(): number {
-    return this.bookings.filter(b => b.Status === 'Confirmed').length;
+  private setBookings(bookings: any[]) {
+    this.bookings = bookings;
+    this.confirmedCount = bookings.filter(b => b.Status === 'Confirmed').length;
+    this.pendingCount = bookings.filter(b => b.Status !== 'Confirmed' && b.Status !== 'Cancelled').length;
   }
 
-  get pendingCount(): number {
-    return this.bookings.filter(b => b.Status !== 'Confirmed' && b.Status !== 'Cancelled').length;
+  trackByBookingId(index: number, b: any): any {
+    return b.Id;
   }
 
   statusBadgeClass(status: string): string {
@@ -82,6 +86,7 @@ export class BookingsPage {
               res => {
                 if (res && res.IsSuccess) {
                   booking.Status = 'Cancelled';
+                  this.setBookings(this.bookings);
                   this.toastService.create('Booking cancelled.');
                 } else {
                   this.toastService.create((res && res.Message) ? res.Message : 'Could not cancel booking.', 'danger');
