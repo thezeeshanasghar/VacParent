@@ -1,28 +1,47 @@
 // Ionic Variables and Theming — Vaccine.PK Brand
 
 :root {
+  // ── New theme tokens (vaccine-redesign mockup) ──────────────────────────
+  --primary:        #1E5EFF;
+  --primary-tint:   #EAF0FF;
+  --bg:             #F6F8FC;
+  --surface:        #FFFFFF;
+  --success:        #22C55E;
+  --success-bg:     #E9FAEF;
+  --warning:        #F59E0B;
+  --warning-bg:     #FEF6E7;
+  --overdue:        #EF4444;
+  --overdue-bg:     #FEE2E2;
+  --text-primary:   #111827;
+  --text-secondary: #6B7280;
+  --border:         #EEF1F6;
+  --radius-card:    16px;
+  --radius-btn:     12px;
+  --radius-chip:    10px;
+  --shadow:         0 4px 16px rgba(17, 24, 39, 0.06);
+
   // Brand palette
-  --vac-navy:    #0A3D79;
-  --vac-blue:    #1565C0;
-  --vac-sky:     #1E88E5;
+  --vac-navy:    #1E5EFF;
+  --vac-blue:    #1E5EFF;
+  --vac-sky:     #5B8BFF;
   --vac-green:   #2E7D32;
   --vac-green2:  #43A047;
   --vac-orange:  #FF4500;
   --vac-orange2: #FF6B35;
   --vac-black:   #1A1A2E;
-  --vac-surface: #EEF2F7;
+  --vac-surface: #F6F8FC;
   --vac-card:    #FFFFFF;
-  --vac-border:  #D0DCF0;
-  --vac-shadow:  0 4px 24px rgba(10, 61, 121, 0.13);
-  --vac-shadow-lg: 0 8px 32px rgba(10, 61, 121, 0.22);
+  --vac-border:  #EEF1F6;
+  --vac-shadow:  0 4px 16px rgba(17, 24, 39, 0.06);
+  --vac-shadow-lg: 0 8px 32px rgba(17, 24, 39, 0.12);
 
   // Ionic primary → brand blue
-  --ion-color-primary:              #1565C0;
-  --ion-color-primary-rgb:          21, 101, 192;
+  --ion-color-primary:              #1E5EFF;
+  --ion-color-primary-rgb:          30, 94, 255;
   --ion-color-primary-contrast:     #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade:        #0A3D79;
-  --ion-color-primary-tint:         #1E88E5;
+  --ion-color-primary-shade:        #1A4FE0;
+  --ion-color-primary-tint:         #5B8BFF;
 
   // Keep legacy custom vars so nothing breaks
   --ion-color-primary-custom:        #1A1A2E;
@@ -88,13 +107,13 @@
   --ion-color-medium-tint:         #78909C;
 
   // light
-  --ion-color-light:              #EEF2F7;
-  --ion-color-light-rgb:          238, 242, 247;
+  --ion-color-light:              #F6F8FC;
+  --ion-color-light-rgb:          246, 248, 252;
   --ion-color-light-contrast:     #1A1A2E;
   --ion-color-light-contrast-rgb: 26, 26, 46;
-  --ion-color-light-shade:        #D0DCF0;
-  --ion-color-light-tint:         #F5F8FD;
+  --ion-color-light-shade:        #EEF1F6;
+  --ion-color-light-tint:         #FFFFFF;
 
-  --ion-background-color: #EEF2F7;
+  --ion-background-color: #F6F8FC;
   --ion-text-color:        #1A1A2E;
 }

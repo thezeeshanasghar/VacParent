@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--vac-surface);
+  --background: var(--bg);
 }
 
 .skeleton-wrap {
@@ -10,11 +10,11 @@ ion-content {
 .child-summary {
   display: flex;
   gap: 0.875rem;
-  background: var(--vac-card);
-  border-radius: 20px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   padding: 1.125rem 1rem;
   margin-bottom: 1.25rem;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
 }
 
 .child-avatar {
@@ -38,7 +38,7 @@ ion-content {
 .child-name {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--vac-black);
+  color: var(--text-primary);
   margin: 0 0 0.1875rem;
 }
 
@@ -66,18 +66,18 @@ ion-content {
   ion-icon { font-size: 0.875rem; }
 }
 
-.chip-given  { background: #E8F5E9; color: var(--vac-green); }
-.chip-due    { background: #FFF8E1; color: #F57F17; }
-.chip-missed { background: #FFEBEE; color: var(--ion-color-danger-shade); }
+.chip-given  { background: var(--success-bg); color: var(--success); }
+.chip-due    { background: var(--warning-bg); color: var(--warning); }
+.chip-missed { background: var(--overdue-bg); color: var(--overdue); }
 
 // ── Schedule card ─────────────────────────────────────────────────────────────
 .vcard-div { margin-bottom: 0.875rem; }
 
 .schedule-card {
-  background: var(--vac-card);
-  border-radius: 18px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   overflow: hidden;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
 }
 
 .schedule-card-header {
@@ -85,18 +85,19 @@ ion-content {
   align-items: center;
   gap: 0.625rem;
   padding: 0.875rem 1rem;
-  background: linear-gradient(135deg, var(--vac-navy), var(--vac-blue));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
 .schedule-date {
   flex: 1;
   font-size: 0.9375rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .dl-btn {
-  --color: #ffffff;
+  --color: var(--primary);
   --padding-start: 8px;
   --padding-end: 8px;
   min-width: 44px;
@@ -108,8 +109,8 @@ ion-content {
   gap: 0.625rem;
   flex-wrap: wrap;
   padding: 0.875rem 1rem;
-  background: var(--ion-color-light-tint);
-  border-bottom: 1px solid var(--vac-surface);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
 
   ion-button {
     min-height: 40px;
@@ -127,7 +128,7 @@ ion-content {
   align-items: flex-start;
   gap: 0.875rem;
   padding: 0.875rem 1rem;
-  border-bottom: 1px solid var(--vac-surface);
+  border-bottom: 1px solid var(--border);
   min-height: 52px;
 
   &:last-child { border-bottom: none; }
@@ -151,10 +152,10 @@ ion-content {
   margin-top: 3px;
 }
 
-.ind-given  { background: var(--vac-green2); }
-.ind-epi    { background: var(--vac-sky); }
-.ind-due    { background: #FFA000; }
-.ind-missed { background: var(--ion-color-danger); }
+.ind-given  { background: var(--success); }
+.ind-epi    { background: var(--primary); }
+.ind-due    { background: var(--warning); }
+.ind-missed { background: var(--overdue); }
 
 .dose-body {
   flex: 1 1 0;
@@ -167,7 +168,7 @@ ion-content {
 .dose-name {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--vac-black);
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
@@ -177,10 +178,10 @@ ion-content {
   line-height: 1.4;
 }
 
-.status-given  { color: var(--vac-green); }
-.status-epi    { color: var(--vac-blue); }
-.status-due    { color: #F57F17; }
-.status-missed { color: var(--ion-color-danger-shade); }
+.status-given  { color: var(--success); }
+.status-epi    { color: var(--primary); }
+.status-due    { color: var(--warning); }
+.status-missed { color: var(--overdue); }
 
 .reschedule-btn {
   --border-radius: 20px;
@@ -192,12 +193,28 @@ ion-content {
   --padding-end: 14px;
 }
 
+.booknow-btn {
+  --background: #E8EFFF;
+  --background-activated: #D2E0FF;
+  --background-hover: #D2E0FF;
+  --color: #2347C9;
+  --border-radius: 20px;
+  --box-shadow: none;
+  border: 1.5px solid #D2E0FF;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  min-height: 40px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+}
+
 // ── Home booking form ─────────────────────────────────────────────────────────
 .booking-card {
-  background: var(--vac-card);
-  border-radius: 20px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   padding: 1.375rem 1.125rem 1.625rem;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
 }
 
 .booking-title {
@@ -206,7 +223,7 @@ ion-content {
   gap: 0.5rem;
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--vac-navy);
+  color: var(--text-primary);
   margin: 0 0 1.25rem;
 
   ion-icon { font-size: 1.375rem; color: var(--vac-orange); }
@@ -238,15 +255,15 @@ ion-content {
 .field-wrap {
   display: flex;
   align-items: center;
-  background: var(--ion-color-light-tint);
-  border: 1.5px solid var(--vac-border);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
   padding: 0 12px;
   min-height: 52px;
 
   &:focus-within {
-    border-color: var(--vac-blue);
-    background: #F5F8FF;
+    border-color: var(--primary);
+    background: var(--primary-tint);
   }
 }
 
@@ -259,7 +276,7 @@ ion-content {
 .field-tap-value {
   flex: 1;
   font-size: 0.9375rem;
-  color: var(--vac-black);
+  color: var(--text-primary);
 }
 
 .field-chevron {
@@ -269,7 +286,7 @@ ion-content {
 
 .field-icon {
   font-size: 1.125rem;
-  color: var(--vac-blue);
+  color: var(--primary);
   flex-shrink: 0;
   margin-right: 8px;
   &--top { align-self: flex-start; margin-top: 12px; }
@@ -282,7 +299,7 @@ ion-content {
   ion-textarea {
     --padding-start: 0;
     --padding-end: 4px;
-    --color: var(--vac-black);
+    --color: var(--text-primary);
     --placeholder-color: var(--ion-color-medium-tint);
     font-size: 0.9375rem;
     width: 100%;
@@ -292,7 +309,7 @@ ion-content {
 ion-input {
   --padding-start: 0;
   --padding-end: 4px;
-  --color: var(--vac-black);
+  --color: var(--text-primary);
   --placeholder-color: var(--ion-color-medium-tint);
   font-size: 0.9375rem;
   min-height: 44px;
@@ -309,7 +326,7 @@ ion-input {
 .submit-btn {
   --background: linear-gradient(135deg, var(--vac-orange), var(--vac-orange2));
   --color: #ffffff;
-  --border-radius: 12px;
+  --border-radius: var(--radius-btn);
   --box-shadow: 0 4px 16px rgba(255,69,0,0.32);
   flex: 1;
   min-height: 48px;
@@ -328,13 +345,13 @@ ion-input {
 .datepicker-title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--vac-navy);
+  color: var(--text-primary);
 }
 
 .datepicker-confirm {
-  --background: var(--vac-navy);
+  --background: var(--primary);
   --color: #ffffff;
-  --border-radius: 10px;
+  --border-radius: var(--radius-btn);
   margin-top: 12px;
 }
 
@@ -342,7 +359,7 @@ ion-input {
 .chooser-title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--vac-navy);
+  color: var(--text-primary);
   margin: 0 0 1.25rem 0;
   text-align: center;
 }

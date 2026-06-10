@@ -1,0 +1,214 @@
+:root {
+  --primary: #1E5EFF;
+  --primary-tint: #EAF0FF;
+  --bg: #F6F8FC;
+  --surface: #FFFFFF;
+  --success: #22C55E;
+  --success-bg: #E9FAEF;
+  --warning: #F59E0B;
+  --warning-bg: #FEF6E7;
+  --overdue: #EF4444;
+  --overdue-bg: #FEE2E2;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border: #EEF1F6;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-chip: 10px;
+  --shadow: 0 4px 16px rgba(17, 24, 39, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, "SF Pro Text", "Inter", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+/* Phone frame */
+.device {
+  width: 390px;
+  max-width: 100%;
+  background: var(--bg);
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(17, 24, 39, 0.18);
+  border: 8px solid #1A1A2E;
+}
+
+.screen {
+  height: 844px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen::-webkit-scrollbar { display: none; }
+
+/* Status bar */
+.statusbar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg);
+}
+
+/* Flat header (toolbar) */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.toolbar .back {
+  color: var(--primary);
+  font-size: 22px;
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.toolbar .title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Page header (no toolbar, e.g. tab root) */
+.page-header {
+  padding: 4px 20px 16px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.content {
+  padding: 16px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content.tight { gap: 14px; }
+
+/* Generic card */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+/* Section header */
+.section-header {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Chips */
+.chip {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-chip);
+  padding: 6px 12px;
+}
+
+/* Buttons */
+.btn-primary {
+  height: 46px;
+  border-radius: var(--radius-btn);
+  background: #E8EFFF;
+  color: #2347C9;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1.5px solid #D2E0FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-orange {
+  height: 46px;
+  border-radius: var(--radius-btn);
+  background: linear-gradient(135deg, #FF4500, #FF7A33);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 3px 12px rgba(255,69,0,0.30);
+}
+
+.btn-outline {
+  height: 46px;
+  border-radius: var(--radius-btn);
+  background: var(--surface);
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  border: 1.5px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Badges / pills */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge.blue   { background: var(--primary-tint); color: var(--primary); }
+.badge.green  { background: var(--success-bg); color: #15803D; }
+.badge.orange { background: var(--warning-bg); color: #B45309; }
+.badge.red    { background: var(--overdue-bg); color: var(--overdue); }
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+  gap: 8px;
+}
+
+.empty-state .icon { font-size: 48px; }
+.empty-state .title { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
+.empty-state .sub { font-size: 13px; }

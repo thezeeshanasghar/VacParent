@@ -16,27 +16,27 @@ ion-content {
 
 // ── Global toolbar ──────────────────────────────────────────────────────────
 ion-toolbar {
-  --background: linear-gradient(135deg, var(--vac-navy) 0%, var(--vac-blue) 100%);
-  --color: #ffffff;
+  --background: var(--surface);
+  --color: var(--text-primary);
   --border-width: 0;
-  box-shadow: var(--vac-shadow);
+  border-bottom: 1px solid var(--border);
 }
 
 ion-title {
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 700;
   letter-spacing: 0.3px;
 }
 
 ion-back-button {
-  --color: #ffffff;
+  --color: var(--primary);
 }
 
 // ── Global card ──────────────────────────────────────────────────────────────
 ion-card {
-  border-radius: 16px;
-  box-shadow: var(--vac-shadow);
-  background: var(--vac-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  background: var(--surface);
   margin: 12px 0;
 }
 
@@ -46,17 +46,18 @@ ion-card-header {
 
 // ── Global button ────────────────────────────────────────────────────────────
 ion-button {
-  --border-radius: 10px;
-  --box-shadow: 0 3px 12px rgba(255, 69, 0, 0.3);
+  --border-radius: var(--radius-btn);
+  --box-shadow: none;
   font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: none;
 }
 
 ion-button[color="primary"],
-ion-button:not([fill="outline"]):not([fill="clear"]):not([color]) {
+ion-button:not([fill="outline"]):not([fill="clear"]):not([color]):not(.login-btn):not(.fp-btn) {
   --background: linear-gradient(135deg, var(--vac-orange) 0%, var(--vac-orange2) 100%);
   --background-activated: var(--vac-orange);
+  --box-shadow: 0 3px 12px rgba(255, 69, 0, 0.3);
   --color: #ffffff;
 }
 
@@ -64,15 +65,10 @@ ion-button:not([fill="outline"]):not([fill="clear"]):not([color]) {
 ion-item {
   --border-radius: 10px;
   --background: #ffffff;
-  --border-color: var(--vac-border);
+  --border-color: var(--border);
   margin-bottom: 10px;
 }
 
 ion-item.item-has-focus {
-  --border-color: var(--vac-blue);
-}
-
-// ── Legacy header class ───────────────────────────────────────────────────────
-.themeheader {
-  --background: linear-gradient(135deg, var(--vac-navy), var(--vac-blue));
+  --border-color: var(--primary);
 }

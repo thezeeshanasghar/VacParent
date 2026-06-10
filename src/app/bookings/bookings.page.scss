@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--vac-surface);
+  --background: var(--bg);
 }
 
 .bookings-page {
@@ -12,12 +12,12 @@ ion-content {
 .page-title {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--vac-navy);
+  color: var(--text-primary);
   margin: 0 0 0.25rem;
 }
 .page-subtitle {
   font-size: 0.8125rem;
-  color: var(--ion-color-medium-tint);
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -34,22 +34,23 @@ ion-content {
 }
 
 .summary-card {
-  background: var(--vac-card);
-  border-radius: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   padding: 0.875rem;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+  border: 1.5px solid transparent;
 
   &.orange-card {
-    background: #FFF8F4;
-    border: 1.5px solid #FFCCBC;
+    background: var(--warning-bg);
+    border-color: #FBE3B5;
   }
 
   &.green-card {
-    background: #F4FBF4;
-    border: 1.5px solid #C8E6C9;
+    background: var(--success-bg);
+    border-color: #C8E6C9;
   }
 }
 
@@ -64,9 +65,9 @@ ion-content {
 
   ion-icon { font-size: 1.25rem; }
 
-  &.blue-icon   { background: #E3F0FF; ion-icon { color: var(--vac-blue); } }
-  &.orange-icon { background: #FFE8DC; ion-icon { color: #E65100; } }
-  &.green-icon  { background: #E6F4E6; ion-icon { color: var(--vac-green); } }
+  &.blue-icon   { background: var(--primary-tint); ion-icon { color: var(--primary); } }
+  &.orange-icon { background: #FBE3B5; ion-icon { color: #B45309; } }
+  &.green-icon  { background: #C8E6C9; ion-icon { color: #2E7D32; } }
 }
 
 .card-body { flex: 1; min-width: 0; }
@@ -74,7 +75,7 @@ ion-content {
 .card-label {
   font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--ion-color-medium-tint);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 3px;
@@ -86,18 +87,18 @@ ion-content {
   margin-bottom: 2px;
   line-height: 1.1;
 
-  &.blue   { color: var(--vac-blue); }
-  &.orange { color: #E65100; }
-  &.green  { color: var(--vac-green); }
+  &.blue   { color: var(--primary); }
+  &.orange { color: #B45309; }
+  &.green  { color: #2E7D32; }
 }
 
 .card-sub {
   font-size: 0.625rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   line-height: 1.3;
 }
 
-.warn-text { color: #E65100 !important; }
+.warn-text { color: #B45309 !important; }
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
 .bookings-empty {
@@ -107,7 +108,7 @@ ion-content {
   justify-content: center;
   padding: 3.75rem 1.25rem;
   gap: 0.625rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   text-align: center;
 
   ion-icon { font-size: 3rem; }
@@ -115,7 +116,7 @@ ion-content {
   p {
     font-size: 0.9375rem;
     font-weight: 700;
-    color: var(--ion-color-medium);
+    color: var(--text-secondary);
     margin: 0;
   }
 
@@ -124,15 +125,15 @@ ion-content {
 
 // ─── Booking Row ──────────────────────────────────────────────────────────────
 .booking-row {
-  background: var(--vac-card);
-  border-radius: 16px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   margin-bottom: 0.875rem;
   overflow: hidden;
-  box-shadow: var(--vac-shadow);
-  border-left: 4px solid var(--ion-color-medium-tint);
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--border);
 
-  &.row-confirmed { border-left-color: var(--vac-green); }
-  &.row-cancelled { border-left-color: var(--ion-color-danger); }
+  &.row-confirmed { border-left-color: var(--success); }
+  &.row-cancelled { border-left-color: var(--overdue); }
 }
 
 .booking-top {
@@ -152,7 +153,7 @@ ion-content {
 
 .booking-date {
   font-size: 0.6875rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -168,11 +169,11 @@ ion-content {
 
   ion-icon { font-size: 0.75rem; }
 
-  &.badge-home    { background: #FFF3E0; color: #E65100; }
-  &.badge-clinic  { background: #E3F2FD; color: var(--vac-blue); }
-  &.badge-confirmed { background: #E8F5E9; color: var(--vac-green); }
-  &.badge-pending   { background: #FFF3E0; color: #E65100; }
-  &.badge-cancelled { background: #FEECEC; color: var(--ion-color-danger); }
+  &.badge-home    { background: var(--warning-bg); color: #B45309; }
+  &.badge-clinic  { background: var(--primary-tint); color: var(--primary); }
+  &.badge-confirmed { background: var(--success-bg); color: var(--success); }
+  &.badge-pending   { background: var(--warning-bg); color: #B45309; }
+  &.badge-cancelled { background: var(--overdue-bg); color: var(--overdue); }
 }
 
 .booking-body {
@@ -182,13 +183,13 @@ ion-content {
 .booking-child {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--vac-black);
+  color: var(--text-primary);
   margin-bottom: 2px;
 }
 
 .booking-vaccines {
   font-size: 0.8125rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
 }
 
@@ -197,12 +198,12 @@ ion-content {
   align-items: flex-start;
   gap: 0.375rem;
   font-size: 0.75rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
 
   .meta-icon {
     font-size: 0.875rem;
-    color: var(--ion-color-medium);
+    color: var(--text-secondary);
     margin-top: 1px;
     flex-shrink: 0;
   }
@@ -212,13 +213,13 @@ ion-content {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  background: var(--ion-color-light-tint);
-  border-radius: 10px;
+  background: var(--bg);
+  border-radius: var(--radius-chip);
   padding: 0.625rem 0.75rem;
 
   .note-icon {
     font-size: 1rem;
-    color: var(--vac-blue);
+    color: var(--primary);
     margin-top: 1px;
     flex-shrink: 0;
   }
@@ -227,7 +228,7 @@ ion-content {
 .note-label {
   font-size: 0.625rem;
   font-weight: 700;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 2px;
@@ -235,14 +236,14 @@ ion-content {
 
 .note-text {
   font-size: 0.8125rem;
-  color: var(--vac-black);
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
 .booking-footer {
-  border-top: 1px solid var(--vac-surface);
+  border-top: 1px solid var(--border);
   padding: 0.625rem 0.75rem 0.75rem;
-  background: var(--ion-color-light-tint);
+  background: var(--bg);
   display: flex;
   gap: 0.5rem;
 

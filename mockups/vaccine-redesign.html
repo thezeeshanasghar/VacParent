@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaccination Schedule — Redesign Mockup</title>
+<style>
+  :root {
+    --primary: #1E5EFF;
+    --primary-tint: #EAF0FF;
+    --bg: #F6F8FC;
+    --surface: #FFFFFF;
+    --success: #22C55E;
+    --success-bg: #E9FAEF;
+    --warning: #F59E0B;
+    --warning-bg: #FEF6E7;
+    --overdue: #EF4444;
+    --overdue-bg: #FEE2E2;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --border: #EEF1F6;
+    --radius-card: 16px;
+    --radius-btn: 12px;
+    --radius-chip: 10px;
+    --shadow: 0 4px 16px rgba(17, 24, 39, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "SF Pro Text", "Inter", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+  }
+
+  /* Phone frame */
+  .device {
+    width: 390px;
+    max-width: 100%;
+    background: var(--bg);
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(17, 24, 39, 0.18);
+    border: 8px solid #1A1A2E;
+  }
+
+  .screen {
+    height: 844px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .screen::-webkit-scrollbar { display: none; }
+
+  /* Status bar */
+  .statusbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg);
+  }
+
+  /* Header */
+  .page-header {
+    padding: 4px 20px 16px;
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+
+  .print-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary);
+    font-size: 18px;
+  }
+
+  .content {
+    padding: 0 20px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Patient summary card */
+  .patient-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .patient-card .print-btn {
+    margin-left: auto;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1E5EFF 0%, #5B8BFF 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .patient-info { flex: 1; min-width: 0; }
+
+  .patient-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .patient-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* Status overview */
+  .status-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .status-tile {
+    flex: 1;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    padding: 14px 12px;
+    text-align: left;
+    border: 1.5px solid transparent;
+  }
+
+  .status-value {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .status-label {
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .status-tile.completed {
+    background: var(--success-bg);
+    border-color: #C8E6C9;
+  }
+  .status-tile.completed .status-value,
+  .status-tile.completed .status-label { color: #2E7D32; }
+
+  .status-tile.due {
+    background: var(--warning-bg);
+    border-color: #FBE3B5;
+  }
+  .status-tile.due .status-value,
+  .status-tile.due .status-label { color: #B45309; }
+
+  .status-tile.overdue {
+    background: var(--overdue-bg);
+    border-color: #F8C9C9;
+  }
+  .status-tile.overdue .status-value,
+  .status-tile.overdue .status-label { color: #B91C1C; }
+
+  /* Section header */
+  .section-header {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Group card */
+  .group-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .group-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .group-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .group-dot.overdue { background: var(--overdue); }
+  .group-dot.due { background: var(--warning); }
+  .group-dot.completed { background: var(--success); }
+
+  .group-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .group-status-pill {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .group-status-pill.overdue { color: var(--overdue); background: var(--overdue-bg); }
+  .group-status-pill.due { color: #B45309; background: var(--warning-bg); }
+  .group-status-pill.completed { color: #15803D; background: var(--success-bg); }
+
+  /* Vaccine chips */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-chip);
+    padding: 6px 12px;
+  }
+
+  /* Actions */
+  .group-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    height: 46px;
+    border-radius: var(--radius-btn);
+    background: #E8EFFF;
+    color: #2347C9;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1.5px solid #D2E0FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Completed group variant */
+  .group-card.completed-group {
+    opacity: 0.92;
+  }
+
+  .completed-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* Help section */
+  .help-card {
+    background: var(--primary-tint);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .help-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .help-text-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .help-text-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●●● 5G 100%</span>
+      </div>
+
+      <div class="page-header">
+        <div class="page-title">Vaccination Schedule</div>
+      </div>
+
+      <div class="content">
+
+        <!-- 1. Patient summary card -->
+        <div class="patient-card">
+          <div class="avatar">AH</div>
+          <div class="patient-info">
+            <div class="patient-name">Ahmed Hassan</div>
+            <div class="patient-meta">Date of birth: 12 Jan 2025</div>
+          </div>
+          <button class="print-btn" aria-label="Download schedule PDF">🖨️</button>
+        </div>
+
+        <!-- 2. Status overview -->
+        <div class="status-row">
+          <div class="status-tile completed">
+            <div class="status-value">8</div>
+            <div class="status-label">Completed</div>
+          </div>
+          <div class="status-tile due">
+            <div class="status-value">3</div>
+            <div class="status-label">Due soon</div>
+          </div>
+          <div class="status-tile overdue">
+            <div class="status-value">2</div>
+            <div class="status-label">Overdue</div>
+          </div>
+        </div>
+
+        <!-- 3. Grouped vaccine timeline -->
+        <div>
+          <div class="section-header" style="margin-bottom: 12px;">Upcoming &amp; Pending</div>
+          <div class="timeline">
+
+            <!-- Overdue group -->
+            <div class="group-card">
+              <div class="group-header">
+                <div class="group-title-wrap">
+                  <span class="group-dot overdue"></span>
+                  <span class="group-title">12-Feb-2025 &mdash; 2 vaccines</span>
+                </div>
+                <span class="group-status-pill overdue">Overdue</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip">Rotavirus &middot; Dose 1</span>
+                <span class="chip">OPV &middot; IPV &middot; HBV &middot; DPT &middot; Hib &middot; Dose 1</span>
+              </div>
+              <div class="group-actions">
+                <button class="btn-primary">Book Visit</button>
+              </div>
+            </div>
+
+            <!-- Due soon group -->
+            <div class="group-card">
+              <div class="group-header">
+                <div class="group-title-wrap">
+                  <span class="group-dot due"></span>
+                  <span class="group-title">18-Jul-2026 &mdash; 1 vaccine</span>
+                </div>
+                <span class="group-status-pill due">Due soon</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip">Pneumococcal (PCV) &middot; Dose 3</span>
+              </div>
+              <div class="group-actions">
+                <button class="btn-primary">Book Visit</button>
+              </div>
+            </div>
+
+            <!-- Due soon group 2 -->
+            <div class="group-card">
+              <div class="group-header">
+                <div class="group-title-wrap">
+                  <span class="group-dot due"></span>
+                  <span class="group-title">02-Sep-2026 &mdash; 2 vaccines</span>
+                </div>
+                <span class="group-status-pill due">Due soon</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip">Hexaxim &middot; Dose 4</span>
+                <span class="chip">OPV &middot; Booster</span>
+              </div>
+              <div class="group-actions">
+                <button class="btn-primary">Book Visit</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Completed section -->
+        <div>
+          <div class="section-header" style="margin-bottom: 12px;">Recently Completed</div>
+          <div class="timeline">
+            <div class="group-card completed-group">
+              <div class="group-header">
+                <div class="group-title-wrap">
+                  <span class="group-dot completed"></span>
+                  <span class="group-title">20-Dec-2025 &mdash; 3 vaccines</span>
+                </div>
+                <span class="group-status-pill completed">Completed</span>
+              </div>
+              <div class="chip-row">
+                <span class="chip">Hexaxim &middot; Dose 3</span>
+                <span class="chip">PCV &middot; Dose 2</span>
+                <span class="chip">Rotavirus &middot; Dose 2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Support / help -->
+        <div class="help-card">
+          <div class="help-icon">💬</div>
+          <div>
+            <div class="help-text-title">Questions about this schedule?</div>
+            <div class="help-text-sub">Message your child's doctor anytime</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

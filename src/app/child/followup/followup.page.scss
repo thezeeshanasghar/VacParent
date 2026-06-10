@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--vac-surface);
+  --background: var(--bg);
 }
 
 .loading-state {
@@ -27,23 +27,23 @@ ion-content {
   align-items: center;
   justify-content: center;
   padding: 3.75rem 1.25rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   gap: 0.5rem;
 
   ion-icon { font-size: 3.5rem; }
 
   .empty-text {
     font-size: 0.9375rem;
-    color: var(--ion-color-medium);
+    color: var(--text-secondary);
     margin: 0;
   }
 }
 
 .fu-card {
-  background: var(--vac-card);
-  border-radius: 16px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   margin-bottom: 0.875rem;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -51,19 +51,20 @@ ion-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, var(--vac-navy), var(--vac-sky));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   padding: 0.625rem 1rem;
 
   .fu-serial {
     font-size: 0.8125rem;
     font-weight: 700;
-    color: rgba(255,255,255,0.85);
+    color: var(--text-secondary);
   }
 
   .fu-date {
     font-size: 0.875rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
   }
 }
 
@@ -80,14 +81,14 @@ ion-content {
 
   .fu-label {
     font-size: 0.8125rem;
-    color: var(--ion-color-medium-tint);
+    color: var(--text-secondary);
     font-weight: 500;
     flex-shrink: 0;
   }
 
   .fu-value {
     font-size: 0.875rem;
-    color: var(--vac-black);
+    color: var(--text-primary);
     font-weight: 600;
     text-align: right;
     max-width: 60%;
@@ -95,7 +96,7 @@ ion-content {
   }
 
   .next-visit {
-    color: var(--vac-blue);
+    color: var(--primary);
   }
 }
 
@@ -104,13 +105,13 @@ ion-content {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.625rem;
-  border-top: 1px solid var(--vac-surface);
+  border-top: 1px solid var(--border);
   padding-top: 0.625rem;
 }
 
 .fu-metric {
-  background: var(--ion-color-light-tint);
-  border-radius: 10px;
+  background: var(--bg);
+  border-radius: var(--radius-chip);
   padding: 0.5rem 0.875rem;
   display: flex;
   flex-direction: column;
@@ -120,12 +121,12 @@ ion-content {
   .metric-val {
     font-size: 0.875rem;
     font-weight: 700;
-    color: var(--vac-blue);
+    color: var(--primary);
   }
 
   .metric-lbl {
     font-size: 0.6875rem;
-    color: var(--ion-color-medium-tint);
+    color: var(--text-secondary);
     margin-top: 2px;
   }
 }

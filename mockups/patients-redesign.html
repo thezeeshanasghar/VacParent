@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Children — Redesign Mockup</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .patient-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-left: 5px solid transparent;
+  }
+  .card-boy  { border-left-color: var(--primary); }
+  .card-girl { border-left-color: #E91E8C; }
+
+  .patient-header {
+    display: flex;
+    align-items: center;
+    padding: 18px 16px 14px;
+    gap: 16px;
+  }
+
+  .avatar-wrap {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 26px;
+  }
+  .avatar-boy  { background: var(--primary-tint); }
+  .avatar-girl { background: linear-gradient(135deg, #AD1457, #F06292); }
+  .avatar-girl .emoji { filter: brightness(0) invert(1); }
+
+  .patient-info { flex: 1; min-width: 0; }
+
+  .patient-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .patient-age {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .gender-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .badge-boy  { background: var(--primary-tint); color: var(--primary); }
+  .badge-girl { background: #FCE4F0; color: #AD1457; }
+
+  .patient-footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 16px 14px;
+    background: var(--bg);
+    display: flex;
+    gap: 10px;
+  }
+
+  .patient-footer button { flex: 1; }
+</style>
+</head>
+<body>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●●● 5G 100%</span>
+      </div>
+
+      <div class="page-header">
+        <div class="page-title">My Children</div>
+        <div class="page-subtitle">Manage vaccination records for your kids</div>
+      </div>
+
+      <div class="content tight">
+
+        <!-- Boy patient -->
+        <div class="patient-card card-boy">
+          <div class="patient-header">
+            <div class="avatar-wrap avatar-boy">👦</div>
+            <div class="patient-info">
+              <div class="patient-name">Ahmed Hassan</div>
+              <div class="patient-age">Date of birth: 12 Jan 2025</div>
+              <span class="gender-badge badge-boy">♂ Boy</span>
+            </div>
+          </div>
+          <div class="patient-footer">
+            <button class="btn-orange">💉 Vaccines</button>
+            <button class="btn-primary">📋 Follow-up</button>
+          </div>
+        </div>
+
+        <!-- Girl patient -->
+        <div class="patient-card card-girl">
+          <div class="patient-header">
+            <div class="avatar-wrap avatar-girl">👧</div>
+            <div class="patient-info">
+              <div class="patient-name">Ayesha Hassan</div>
+              <div class="patient-age">Date of birth: 03 Aug 2022</div>
+              <span class="gender-badge badge-girl">♀ Girl</span>
+            </div>
+          </div>
+          <div class="patient-footer">
+            <button class="btn-orange">💉 Vaccines</button>
+            <button class="btn-primary">📋 Follow-up</button>
+          </div>
+        </div>
+
+        <!-- Add child card -->
+        <div class="card" style="display:flex; align-items:center; justify-content:center; gap:8px; color: var(--primary); font-weight:600; font-size:15px; cursor:pointer;">
+          ➕ Add a Child
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

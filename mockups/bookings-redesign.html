@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Bookings — Redesign Mockup</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .summary-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .summary-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    padding: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1.5px solid transparent;
+  }
+  .summary-card.orange-card { background: var(--warning-bg); border-color: #FBE3B5; }
+  .summary-card.green-card  { background: var(--success-bg); border-color: #C8E6C9; }
+
+  .card-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .blue-icon   { background: var(--primary-tint); }
+  .orange-icon { background: #FBE3B5; }
+  .green-icon  { background: #C8E6C9; }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+  }
+  .card-amount {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 2px;
+    line-height: 1.1;
+  }
+  .card-amount.blue   { color: var(--primary); }
+  .card-amount.orange { color: #B45309; }
+  .card-amount.green  { color: #2E7D32; }
+  .card-sub { font-size: 10px; color: var(--text-secondary); line-height: 1.3; }
+
+  /* Booking row */
+  .booking-row {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-left: 4px solid var(--border);
+  }
+  .row-confirmed { border-left-color: var(--success); }
+  .row-cancelled { border-left-color: var(--overdue); }
+
+  .booking-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px 0;
+  }
+  .booking-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .booking-date { font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+
+  .booking-body { padding: 10px 16px 14px; }
+  .booking-child { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .booking-vaccines { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+
+  .booking-meta {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .booking-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: var(--bg);
+    border-radius: var(--radius-chip);
+    padding: 10px 12px;
+  }
+  .note-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
+  }
+  .note-text { font-size: 13px; color: var(--text-primary); line-height: 1.4; }
+
+  .booking-footer {
+    border-top: 1px solid var(--border);
+    padding: 10px 12px 12px;
+    background: var(--bg);
+    display: flex;
+    gap: 8px;
+  }
+  .booking-footer button { flex: 1; height: 40px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●●● 5G 100%</span>
+      </div>
+
+      <div class="page-header">
+        <div class="page-title">My Bookings</div>
+        <div class="page-subtitle">Track your scheduled vaccination visits</div>
+      </div>
+
+      <div class="content tight">
+
+        <!-- Summary cards -->
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="card-icon-wrap blue-icon">📅</div>
+            <div>
+              <div class="card-label">Total</div>
+              <div class="card-amount blue">5</div>
+              <div class="card-sub">All time bookings</div>
+            </div>
+          </div>
+          <div class="summary-card orange-card">
+            <div class="card-icon-wrap orange-icon">⏳</div>
+            <div>
+              <div class="card-label">Pending</div>
+              <div class="card-amount orange">2</div>
+              <div class="card-sub">Awaiting confirmation</div>
+            </div>
+          </div>
+          <div class="summary-card green-card">
+            <div class="card-icon-wrap green-icon">✅</div>
+            <div>
+              <div class="card-label">Confirmed</div>
+              <div class="card-amount green">2</div>
+              <div class="card-sub">Upcoming visits</div>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="card-icon-wrap blue-icon">🏠</div>
+            <div>
+              <div class="card-label">Home Visits</div>
+              <div class="card-amount blue">1</div>
+              <div class="card-sub">Scheduled at home</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirmed booking -->
+        <div class="booking-row row-confirmed">
+          <div class="booking-top">
+            <div class="booking-badges">
+              <span class="badge blue">🏥 Clinic</span>
+              <span class="badge green">✅ Confirmed</span>
+            </div>
+            <span class="booking-date">Booked 02 Jun 2026</span>
+          </div>
+          <div class="booking-body">
+            <div class="booking-child">Ahmed Hassan</div>
+            <div class="booking-vaccines">Rotavirus · Dose 1, Pentavalent · Dose 1</div>
+            <div class="booking-meta">📍 City Clinic — Wed, 18 Jul 2026, 10:30 AM</div>
+            <div class="booking-note">
+              <span>📝</span>
+              <div>
+                <div class="note-label">Note from clinic</div>
+                <div class="note-text">Please bring the vaccination card and arrive 10 minutes early.</div>
+              </div>
+            </div>
+          </div>
+          <div class="booking-footer">
+            <button class="btn-outline">Reschedule</button>
+            <button class="btn-primary">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Pending home visit -->
+        <div class="booking-row">
+          <div class="booking-top">
+            <div class="booking-badges">
+              <span class="badge orange">🏠 Home Visit</span>
+              <span class="badge orange">⏳ Pending</span>
+            </div>
+            <span class="booking-date">Booked 05 Jun 2026</span>
+          </div>
+          <div class="booking-body">
+            <div class="booking-child">Ayesha Hassan</div>
+            <div class="booking-vaccines">Pneumococcal (PCV) · Dose 3</div>
+            <div class="booking-meta">📍 Home — Sat, 02 Sep 2026, 4:00 PM</div>
+          </div>
+          <div class="booking-footer">
+            <button class="btn-outline">Reschedule</button>
+            <button class="btn-primary">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Cancelled booking -->
+        <div class="booking-row row-cancelled">
+          <div class="booking-top">
+            <div class="booking-badges">
+              <span class="badge blue">🏥 Clinic</span>
+              <span class="badge red">❌ Cancelled</span>
+            </div>
+            <span class="booking-date">Booked 28 May 2026</span>
+          </div>
+          <div class="booking-body">
+            <div class="booking-child">Ahmed Hassan</div>
+            <div class="booking-vaccines">Hexaxim · Dose 4</div>
+            <div class="booking-meta">📍 City Clinic — Mon, 09 Jun 2026, 11:00 AM</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaccines Info — Redesign Mockup</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .toolbar { margin-bottom: 4px; }
+
+  .section-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 4px 0 2px;
+  }
+
+  .vac-row {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .vac-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 14px;
+    gap: 12px;
+    min-height: 60px;
+  }
+
+  .vac-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--primary-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+    color: var(--primary);
+  }
+
+  .vac-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .vac-chevron {
+    font-size: 18px;
+    color: var(--primary);
+  }
+
+  .vac-desc {
+    border-top: 1px solid var(--border);
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .vac-desc p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●●● 5G 100%</span>
+      </div>
+
+      <div class="toolbar">
+        <span class="back">←</span>
+        <span class="title">Vaccines</span>
+      </div>
+
+      <div class="content tight">
+
+        <p class="section-label">Tap a vaccine to learn more</p>
+
+        <!-- Expanded -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">BCG (Bacillus Calmette-Guérin)</span>
+            <span class="vac-chevron">⌃</span>
+          </div>
+          <div class="vac-desc">
+            <p>Protects against severe forms of tuberculosis (TB) in children, including TB meningitis. Given as a single dose shortly after birth.</p>
+          </div>
+        </div>
+
+        <!-- Collapsed -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">Pentavalent (DPT-HepB-Hib)</span>
+            <span class="vac-chevron">⌄</span>
+          </div>
+        </div>
+
+        <!-- Collapsed -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">Oral Polio Vaccine (OPV)</span>
+            <span class="vac-chevron">⌄</span>
+          </div>
+        </div>
+
+        <!-- Collapsed -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">Pneumococcal Conjugate (PCV)</span>
+            <span class="vac-chevron">⌄</span>
+          </div>
+        </div>
+
+        <!-- Collapsed -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">Measles &amp; Rubella (MR)</span>
+            <span class="vac-chevron">⌄</span>
+          </div>
+        </div>
+
+        <!-- Collapsed -->
+        <div class="vac-row">
+          <div class="vac-header">
+            <div class="vac-icon-wrap">💉</div>
+            <span class="vac-name">Rotavirus</span>
+            <span class="vac-chevron">⌄</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

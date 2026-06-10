@@ -97,11 +97,11 @@
         </div>
 
         <div class="schedule-actions" *ngIf="!group._allDone">
-          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
+          <ion-button fill="outline" color="primary" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <ion-button size="small" shape="round" color="primary" (click)="bookNow(group.items)">
+          <ion-button size="small" shape="round" (click)="bookNow(group.items)" class="booknow-btn">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Book Now
           </ion-button>
@@ -135,7 +135,7 @@
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
                 Reschedule
               </ion-button>
-              <ion-button fill="solid" color="tertiary" size="small" shape="round"
+              <ion-button fill="solid" size="small" shape="round"
                 (click)="bookNow([v])" class="booknow-btn">
                 <ion-icon slot="start" name="add-circle-outline"></ion-icon>
                 Book Now

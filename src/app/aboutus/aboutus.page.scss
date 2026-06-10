@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--vac-surface);
+  --background: var(--bg);
 }
 
 .about-hero {
@@ -12,23 +12,22 @@ ion-content {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--vac-green2), var(--vac-sky));
+  background: var(--primary-tint);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 0.875rem;
-  box-shadow: 0 6px 24px rgba(67,160,71,0.40);
 }
 
 .about-logo-icon {
   font-size: 2.375rem;
-  color: #ffffff;
+  color: var(--primary);
 }
 
 .about-brand {
   font-size: 1.875rem;
   font-weight: 800;
-  color: var(--vac-navy);
+  color: var(--text-primary);
   margin: 0 0 0.375rem;
 }
 
@@ -36,7 +35,7 @@ ion-content {
 
 .about-tagline {
   font-size: 0.875rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
 }
@@ -44,11 +43,11 @@ ion-content {
 .feature-card {
   display: flex;
   gap: 1rem;
-  background: var(--vac-card);
-  border-radius: 18px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   padding: 1.25rem 1rem;
   margin-bottom: 0.875rem;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
   align-items: flex-start;
 }
 
@@ -63,26 +62,25 @@ ion-content {
 
   ion-icon {
     font-size: 1.5rem;
-    color: #ffffff;
   }
 }
 
-.icon-blue   { background: linear-gradient(135deg, var(--vac-navy), var(--vac-sky)); }
-.icon-green  { background: linear-gradient(135deg, var(--vac-green), var(--vac-green2)); }
-.icon-orange { background: linear-gradient(135deg, var(--vac-orange), var(--vac-orange2)); }
+.icon-blue   { background: var(--primary-tint); ion-icon { color: var(--primary); } }
+.icon-green  { background: var(--success-bg); ion-icon { color: var(--success); } }
+.icon-orange { background: linear-gradient(135deg, var(--vac-orange), var(--vac-orange2)); ion-icon { color: #ffffff; } }
 
 .feature-body { flex: 1; min-width: 0; }
 
 .feature-title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--vac-black);
+  color: var(--text-primary);
   margin: 0 0 0.375rem;
 }
 
 .feature-desc {
   font-size: 0.875rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
 }

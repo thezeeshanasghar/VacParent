@@ -1,25 +1,25 @@
 ion-content {
-  --background: var(--vac-surface);
+  --background: var(--bg);
 }
 
 .section-label {
   font-size: 0.8125rem;
-  color: var(--ion-color-medium);
+  color: var(--text-secondary);
   margin: 0.25rem 0 0.875rem;
   letter-spacing: 0.2px;
 }
 
 .vac-row {
-  background: var(--vac-card);
-  border-radius: 16px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
   margin-bottom: 0.75rem;
   overflow: hidden;
-  box-shadow: var(--vac-shadow);
+  box-shadow: var(--shadow);
   cursor: pointer;
   transition: box-shadow 0.15s;
   -webkit-tap-highlight-color: transparent;
 
-  &:active { box-shadow: 0 1px 6px rgba(10,61,121,0.07); }
+  &:active { box-shadow: 0 1px 6px rgba(17,24,39,0.07); }
 }
 
 .vac-header {
@@ -34,7 +34,7 @@ ion-content {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--vac-navy), var(--vac-sky));
+  background: var(--primary-tint);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@ ion-content {
 
   ion-icon {
     font-size: 1.25rem;
-    color: #ffffff;
+    color: var(--primary);
   }
 }
 
@@ -50,23 +50,23 @@ ion-content {
   flex: 1;
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--vac-black);
+  color: var(--text-primary);
 }
 
 .vac-chevron {
   font-size: 1.125rem;
-  color: var(--vac-blue);
+  color: var(--primary);
   flex-shrink: 0;
 }
 
 .vac-desc {
-  border-top: 1px solid var(--vac-surface);
+  border-top: 1px solid var(--border);
   padding: 0.875rem 1rem;
-  background: var(--ion-color-light-tint);
+  background: var(--bg);
 
   p {
     font-size: 0.875rem;
-    color: var(--ion-color-medium);
+    color: var(--text-secondary);
     line-height: 1.6;
     margin: 0;
   }

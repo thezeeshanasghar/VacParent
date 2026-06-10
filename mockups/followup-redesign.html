@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Follow-up Visits — Redesign Mockup</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .toolbar { margin-bottom: 4px; }
+
+  .fu-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .fu-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+  }
+  .fu-serial { font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+  .fu-date   { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+
+  .fu-body { padding: 14px 16px; }
+
+  .fu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+  .fu-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; flex-shrink: 0; }
+  .fu-value { font-size: 14px; color: var(--text-primary); font-weight: 600; text-align: right; }
+  .next-visit { color: var(--primary); }
+
+  .fu-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .fu-metric {
+    background: var(--bg);
+    border-radius: var(--radius-chip);
+    padding: 8px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 64px;
+  }
+  .metric-val { font-size: 14px; font-weight: 700; color: var(--primary); }
+  .metric-lbl { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+  <div class="device">
+    <div class="screen">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●●●● 5G 100%</span>
+      </div>
+
+      <div class="toolbar">
+        <span class="back">←</span>
+        <span class="title">Follow-up Visits</span>
+      </div>
+
+      <div class="content tight">
+
+        <!-- Visit 1 -->
+        <div class="fu-card">
+          <div class="fu-card-header">
+            <span class="fu-serial">Visit #3</span>
+            <span class="fu-date">15 May 2026</span>
+          </div>
+          <div class="fu-body">
+            <div class="fu-row">
+              <span class="fu-label">Reason / Disease</span>
+              <span class="fu-value">Routine Checkup</span>
+            </div>
+            <div class="fu-row">
+              <span class="fu-label">Next Visit</span>
+              <span class="fu-value next-visit">18 Jul 2026</span>
+            </div>
+            <div class="fu-metrics">
+              <div class="fu-metric">
+                <span class="metric-val">7.2 kg</span>
+                <span class="metric-lbl">Weight</span>
+              </div>
+              <div class="fu-metric">
+                <span class="metric-val">68 cm</span>
+                <span class="metric-lbl">Height</span>
+              </div>
+              <div class="fu-metric">
+                <span class="metric-val">43 cm</span>
+                <span class="metric-lbl">OFC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visit 2 -->
+        <div class="fu-card">
+          <div class="fu-card-header">
+            <span class="fu-serial">Visit #2</span>
+            <span class="fu-date">20 Mar 2026</span>
+          </div>
+          <div class="fu-body">
+            <div class="fu-row">
+              <span class="fu-label">Reason / Disease</span>
+              <span class="fu-value">Mild Fever</span>
+            </div>
+            <div class="fu-row">
+              <span class="fu-label">Next Visit</span>
+              <span class="fu-value next-visit">15 May 2026</span>
+            </div>
+            <div class="fu-metrics">
+              <div class="fu-metric">
+                <span class="metric-val">6.5 kg</span>
+                <span class="metric-lbl">Weight</span>
+              </div>
+              <div class="fu-metric">
+                <span class="metric-val">64 cm</span>
+                <span class="metric-lbl">Height</span>
+              </div>
+              <div class="fu-metric">
+                <span class="metric-val">98°F</span>
+                <span class="metric-lbl">Temp</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visit 1 -->
+        <div class="fu-card">
+          <div class="fu-card-header">
+            <span class="fu-serial">Visit #1</span>
+            <span class="fu-date">12 Jan 2026</span>
+          </div>
+          <div class="fu-body">
+            <div class="fu-row">
+              <span class="fu-label">Reason / Disease</span>
+              <span class="fu-value">Newborn Checkup</span>
+            </div>
+            <div class="fu-row">
+              <span class="fu-label">Next Visit</span>
+              <span class="fu-value next-visit">20 Mar 2026</span>
+            </div>
+            <div class="fu-metrics">
+              <div class="fu-metric">
+                <span class="metric-val">5.8 kg</span>
+                <span class="metric-lbl">Weight</span>
+              </div>
+              <div class="fu-metric">
+                <span class="metric-val">59 cm</span>
+                <span class="metric-lbl">Height</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
