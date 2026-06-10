@@ -123,6 +123,7 @@ ion-content {
 
 .dose-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.875rem;
   padding: 0.875rem 1rem;
@@ -133,6 +134,15 @@ ion-content {
 }
 
 .dose-left { flex-shrink: 0; }
+
+.dose-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
 
 .dose-indicator {
   width: 12px;
@@ -146,8 +156,8 @@ ion-content {
 .ind-missed { background: var(--ion-color-danger); }
 
 .dose-body {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 0;
+  min-width: 120px;
   display: flex;
   flex-direction: column;
   gap: 2px;
