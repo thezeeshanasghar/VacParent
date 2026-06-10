@@ -140,6 +140,10 @@ export class VaccinePage {
     }
     return true;
   }
+
+  groupAllActionable(items: any[]): boolean {
+    return items.every(d => !d.IsDone && !d.Due2EPI && d.IsSkip != true);
+  }
   async loadGoogleSheet() {
   }
 

@@ -136,7 +136,7 @@
                 Disease Year: {{v.DiseaseYear}}
               </span>
             </div>
-            <div class="dose-actions" *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true">
+            <div class="dose-actions" *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true && !groupAllActionable(item.value)">
               <ion-button fill="outline" color="primary" size="small" shape="round"
                 (click)="promptReschedule(v.Id)" class="reschedule-btn">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>

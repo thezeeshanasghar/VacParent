@@ -57,13 +57,13 @@ ion-content {
 .stat-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 0.6875rem;
+  gap: 5px;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 5px 11px;
   border-radius: 20px;
 
-  ion-icon { font-size: 0.8125rem; }
+  ion-icon { font-size: 0.875rem; }
 }
 
 .chip-given  { background: #E8F5E9; color: var(--vac-green); }
@@ -107,7 +107,7 @@ ion-content {
   display: flex;
   gap: 0.625rem;
   flex-wrap: wrap;
-  padding: 0.75rem 0.875rem;
+  padding: 0.875rem 1rem;
   background: var(--ion-color-light-tint);
   border-bottom: 1px solid var(--vac-surface);
 
@@ -124,7 +124,7 @@ ion-content {
 .dose-item {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.875rem;
   padding: 0.875rem 1rem;
   border-bottom: 1px solid var(--vac-surface);
@@ -148,6 +148,7 @@ ion-content {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  margin-top: 3px;
 }
 
 .ind-given  { background: var(--vac-green2); }
@@ -160,18 +161,20 @@ ion-content {
   min-width: 120px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .dose-name {
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--vac-black);
+  line-height: 1.4;
 }
 
 .dose-status {
   font-size: 0.75rem;
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .status-given  { color: var(--vac-green); }
