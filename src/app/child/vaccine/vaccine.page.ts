@@ -132,18 +132,6 @@ export class VaccinePage {
   }
 
 
-  checkVaccineIsDon(data): boolean {
-    for (let i = 0; i < data.length; i++) {
-      if (!data[i].IsDone) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  groupAllActionable(items: any[]): boolean {
-    return items.every(d => !d.IsDone && !d.Due2EPI && d.IsSkip != true);
-  }
   async loadGoogleSheet() {
   }
 
@@ -211,10 +199,36 @@ export class VaccinePage {
 
               //  console.log(this.today); console.log(date1);
 
+              // Precomputed display state (avoids re-evaluating on every change-detection cycle)
+              const isMissed = !doc.IsDone && !doc.Due2EPI && this.today >= date1;
+              doc._isMissed = isMissed;
+              doc._isDue = !doc.IsDone && !doc.Due2EPI && !isMissed;
+              doc._isActionable = !doc.IsDone && !doc.Due2EPI;
+              doc._indicatorClass = doc.IsDone && !doc.Due2EPI && !doc.IsDisease ? 'ind-given'
+                : doc.Due2EPI ? 'ind-epi'
+                : isMissed ? 'ind-missed'
+                : 'ind-due';
+              doc._statusKey = doc.Due2EPI ? 'epi'
+                : (doc.IsDone && doc.IsDisease) ? 'disease'
+                : doc.IsDone ? 'given'
+                : isMissed ? 'missed'
+                : 'due';
+
             });
             //console.log(this.due);
 
-            this.dataGrouping = this.groupBy(this.vaccine, "Date");
+            const grouped = this.groupBy(this.vaccine, "Date");
+            this.dataGrouping = Object.keys(grouped).map(date => {
+              const items = grouped[date];
+              return {
+                date,
+                items,
+                _allDone: items.every(d => d.IsDone),
+                _allActionable: items.every(d => !d.IsDone && !d.Due2EPI),
+                _hasInvoice: items.some(d => d.IsDone && d.GivenDate),
+                _invoiceDate: (items.find(d => d.IsDone && d.GivenDate) || {} as any).Date || ''
+              };
+            }).sort((a, b) => a.date.localeCompare(b.date));
             loading.dismiss();
           } else {
             loading.dismiss();
@@ -240,6 +254,14 @@ export class VaccinePage {
       },
       {}
     );
+  }
+
+  trackByGroupDate(index: number, group: any): string {
+    return group.date;
+  }
+
+  trackByDoseId(index: number, dose: any): any {
+    return dose.Id;
   }
 
   bookNow(vaccines: any[]) {
@@ -361,15 +383,6 @@ export class VaccinePage {
     this.downloader.download(request)
       .then((location: string) => console.log('File downloaded at:' + location))
       .catch((error: any) => console.error(error));
-  }
-
-  checkForMissed(input) {
-    let today1 = moment(this.today).format("YYYY-MM-DD");
-    if (today1 > input) {
-      return true;
-    }
-    else
-      return false;
   }
 
   async updateDate($event, vacId: any) {
@@ -572,14 +585,6 @@ export class VaccinePage {
     }
   }
 
-  groupHasInvoice(vaccines: any[]): boolean {
-    return vaccines.some(v => v.IsDone && v.GivenDate);
-  }
-
-  invoiceDateForGroup(vaccines: any[]): string {
-    const v = vaccines.find(x => x.IsDone && x.GivenDate);
-    return v ? v.Date : '';
-  }
 }
 
 // https://stackoverflow.com/questions/14446511/most-efficient-method-to-groupby-on-a-array-of-objects

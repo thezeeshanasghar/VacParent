@@ -84,59 +84,52 @@
       </div>
     </div>
 
-    <div class="vcard-div" *ngFor="let item of dataGrouping | keyvalue; let i=index">
+    <div class="vcard-div" *ngFor="let group of dataGrouping; trackBy: trackByGroupDate">
       <div class="schedule-card">
 
         <div class="schedule-card-header">
-          <span class="schedule-date">{{item.key | date}}</span>
-          <ion-button *ngIf="groupHasInvoice(item.value)" fill="clear" class="dl-btn"
-                      (click)="triggerDownload(invoiceDateForGroup(item.value))"
+          <span class="schedule-date">{{group.date | date}}</span>
+          <ion-button *ngIf="group._hasInvoice" fill="clear" class="dl-btn"
+                      (click)="triggerDownload(group._invoiceDate)"
                       aria-label="Download invoice">
             <ion-icon slot="icon-only" name="receipt-outline"></ion-icon>
           </ion-button>
         </div>
 
-        <div class="schedule-actions" *ngIf="!checkVaccineIsDon(item.value)">
-          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="promptBulkReschedule(item.value)">
+        <div class="schedule-actions" *ngIf="!group._allDone">
+          <ion-button color="tertiary" fill="outline" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Reschedule All
           </ion-button>
-          <ion-button size="small" shape="round" color="primary" (click)="bookNow(item.value)">
+          <ion-button size="small" shape="round" color="primary" (click)="bookNow(group.items)">
             <ion-icon slot="start" name="calendar-outline"></ion-icon>
             Book Now
           </ion-button>
         </div>
 
         <div class="dose-list">
-          <div class="dose-item" *ngFor="let v of item.value">
+          <div class="dose-item" *ngFor="let v of group.items; trackBy: trackByDoseId">
             <div class="dose-left">
-              <div class="dose-indicator"
-                   aria-hidden="true"
-                   [ngClass]="{
-                     'ind-given':  v.IsDone && !v.Due2EPI && !v.IsDisease,
-                     'ind-epi':    v.Due2EPI,
-                     'ind-due':    !v.IsDone && !v.Due2EPI && !checkForMissed(v.Date) && v.IsSkip!=true,
-                     'ind-missed': !v.IsDone && !v.Due2EPI && checkForMissed(v.Date) && v.IsSkip!=true
-                   }">
+              <div class="dose-indicator" aria-hidden="true" [ngClass]="v._indicatorClass">
               </div>
             </div>
             <div class="dose-body">
               <span class="dose-name">{{v.Dose.Name}}</span>
-              <span *ngIf="v.Due2EPI==true" class="dose-status status-epi">EPI Programme</span>
-              <span *ngIf="v.IsDone==true && !v.Due2EPI && (!v.IsDisease)" class="dose-status status-given">
+              <span *ngIf="v._statusKey === 'epi'" class="dose-status status-epi">EPI Programme</span>
+              <span *ngIf="v._statusKey === 'given'" class="dose-status status-given">
                 Given on {{v.GivenDate | date}}
               </span>
-              <span *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true && !checkForMissed(v.Date)" class="dose-status status-due">
+              <span *ngIf="v._statusKey === 'due'" class="dose-status status-due">
                 Due on {{v.Date | date}}
               </span>
-              <span *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true && checkForMissed(v.Date)" class="dose-status status-missed">
+              <span *ngIf="v._statusKey === 'missed'" class="dose-status status-missed">
                 Missed on {{v.Date | date}}
               </span>
-              <span *ngIf="v.IsDone && v.Due2EPI==false && v.IsDisease==true" class="dose-status status-given">
+              <span *ngIf="v._statusKey === 'disease'" class="dose-status status-given">
                 Disease Year: {{v.DiseaseYear}}
               </span>
             </div>
-            <div class="dose-actions" *ngIf="!v.IsDone && !v.Due2EPI && v.IsSkip!=true && !groupAllActionable(item.value)">
+            <div class="dose-actions" *ngIf="v._isActionable && !group._allActionable">
               <ion-button fill="outline" color="primary" size="small" shape="round"
                 (click)="promptReschedule(v.Id)" class="reschedule-btn">
                 <ion-icon slot="start" name="calendar-outline"></ion-icon>
