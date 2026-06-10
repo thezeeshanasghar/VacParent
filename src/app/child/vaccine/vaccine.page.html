@@ -89,7 +89,7 @@
               <span class="group-dot" [ngClass]="group._groupStatus"></span>
               <span class="group-title">{{group.date | date:'dd-MMM-yyyy'}} &mdash; {{group.items.length}} {{group.items.length === 1 ? 'vaccine' : 'vaccines'}}</span>
             </div>
-            <span class="group-status-pill" [ngClass]="group._groupStatus">{{group._groupStatus === 'overdue' ? 'Overdue' : 'Due soon'}}</span>
+            <span class="group-status-pill" [ngClass]="group._groupStatus">{{group._groupStatus === 'overdue' ? 'Overdue' : group._groupStatus === 'due' ? 'Due soon' : 'Upcoming'}}</span>
           </div>
           <div class="chip-row">
             <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{v.Dose.Name}}</span>

@@ -173,6 +173,7 @@ ion-content {
 .group-dot.overdue   { background: var(--overdue); }
 .group-dot.due       { background: var(--warning); }
 .group-dot.completed { background: var(--success); }
+.group-dot.upcoming  { background: var(--text-secondary); }
 
 .group-title {
   font-size: 0.9375rem;
@@ -194,6 +195,7 @@ ion-content {
 .group-status-pill.overdue   { color: var(--overdue); background: var(--overdue-bg); }
 .group-status-pill.due       { color: #B45309; background: var(--warning-bg); }
 .group-status-pill.completed { color: #15803D; background: var(--success-bg); }
+.group-status-pill.upcoming  { color: var(--text-secondary); background: var(--bg); }
 
 // ── Vaccine chips ─────────────────────────────────────────────────────────────────
 .chip-row {

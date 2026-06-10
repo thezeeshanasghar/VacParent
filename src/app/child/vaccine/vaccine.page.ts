@@ -219,13 +219,15 @@ export class VaccinePage {
               const items = grouped[date];
               const allDone = items.every(d => d.IsDone);
               const anyMissed = items.some(d => d._isMissed);
+              const dueSoonMs = 7 * 24 * 60 * 60 * 1000;
+              const isDueSoon = !anyMissed && (Date.parse(date) - this.today) <= dueSoonMs;
               return {
                 date,
                 items,
                 _allDone: allDone,
                 _hasInvoice: items.some(d => d.IsDone && d.GivenDate),
                 _invoiceDate: (items.find(d => d.IsDone && d.GivenDate) || {} as any).Date || '',
-                _groupStatus: allDone ? 'completed' : anyMissed ? 'overdue' : 'due'
+                _groupStatus: allDone ? 'completed' : anyMissed ? 'overdue' : isDueSoon ? 'due' : 'upcoming'
               };
             }).sort((a, b) => a.date.localeCompare(b.date));
 
