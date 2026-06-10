@@ -6,11 +6,6 @@
     </ion-buttons>
     <ion-title *ngIf="!homeBook">Vaccinations</ion-title>
     <ion-title *ngIf="homeBook">{{bookingType === 'home' ? 'Home Booking' : 'Clinic Booking'}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button *ngIf="!homeBook" (click)="printdata()" aria-label="Download PDF">
-        <ion-icon slot="icon-only" name="print-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -52,93 +47,94 @@
   <!-- ── Vaccination view ──────────────────────────────────────────────── -->
   <div *ngIf="!homeBook">
 
-    <div class="child-summary" *ngIf="Child">
-      <div class="child-avatar"
-           [style.background]="Child.Gender=='Girl'
-             ? 'linear-gradient(135deg, #AD1457, #F06292)'
-             : 'linear-gradient(135deg, var(--vac-navy), var(--vac-sky))'">
-        <img [src]="Child.Gender=='Girl' ? '../../assets/female.png' : '../../assets/male.png'" class="summary-img" alt="">
+    <div class="page-header">
+      <div class="page-title">Vaccination Schedule</div>
+    </div>
+
+    <!-- 1. Patient summary card -->
+    <div class="patient-card" *ngIf="Child">
+      <div class="avatar">{{childInitials}}</div>
+      <div class="patient-info">
+        <div class="patient-name">{{Child.Name}}</div>
+        <div class="patient-meta">Date of birth: {{dobFormatted}}</div>
       </div>
-      <div class="child-details">
-        <h2 class="child-name">{{Child.Name}}</h2>
-        <p class="child-meta">{{age}} &bull; {{Child.Gender}}</p>
-        <div class="vac-stats">
-          <div class="stat-chip chip-given">
-            <ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
-            <span>{{given}} Given</span>
-          </div>
-          <div class="stat-chip chip-due">
-            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-            <span>{{due}} Due</span>
-          </div>
-          <div class="stat-chip chip-missed">
-            <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
-            <span>{{missed}} Missed</span>
-          </div>
-        </div>
+      <button class="print-btn" (click)="printdata()" aria-label="Download schedule PDF">
+        <ion-icon name="print-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- 2. Status overview -->
+    <div class="status-row">
+      <div class="status-tile completed">
+        <div class="status-value">{{given}}</div>
+        <div class="status-label">Completed</div>
+      </div>
+      <div class="status-tile due">
+        <div class="status-value">{{due}}</div>
+        <div class="status-label">Due soon</div>
+      </div>
+      <div class="status-tile overdue">
+        <div class="status-value">{{missed}}</div>
+        <div class="status-label">Overdue</div>
       </div>
     </div>
 
-    <div class="vcard-div" *ngFor="let group of dataGrouping; trackBy: trackByGroupDate">
-      <div class="schedule-card">
-
-        <div class="schedule-card-header">
-          <span class="schedule-date">{{group.date | date}}</span>
-          <ion-button *ngIf="group._hasInvoice" fill="clear" class="dl-btn"
-                      (click)="triggerDownload(group._invoiceDate)"
-                      aria-label="Download invoice">
-            <ion-icon slot="icon-only" name="receipt-outline"></ion-icon>
-          </ion-button>
-        </div>
-
-        <div class="schedule-actions" *ngIf="!group._allDone">
-          <ion-button fill="outline" color="primary" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
-            <ion-icon slot="start" name="calendar-outline"></ion-icon>
-            Reschedule All
-          </ion-button>
-          <ion-button size="small" shape="round" (click)="bookNow(group.items)" class="booknow-btn">
-            <ion-icon slot="start" name="calendar-outline"></ion-icon>
-            Book Now
-          </ion-button>
-        </div>
-
-        <div class="dose-list">
-          <div class="dose-item" *ngFor="let v of group.items; trackBy: trackByDoseId">
-            <div class="dose-left">
-              <div class="dose-indicator" aria-hidden="true" [ngClass]="v._indicatorClass">
-              </div>
+    <!-- 3. Upcoming & pending groups -->
+    <ng-container *ngIf="pendingGroups.length">
+      <div class="section-header">Upcoming &amp; Pending</div>
+      <div class="timeline">
+        <div class="group-card" *ngFor="let group of pendingGroups; trackBy: trackByGroupDate">
+          <div class="group-header">
+            <div class="group-title-wrap">
+              <span class="group-dot" [ngClass]="group._groupStatus"></span>
+              <span class="group-title">{{group.date | date:'dd-MMM-yyyy'}} &mdash; {{group.items.length}} {{group.items.length === 1 ? 'vaccine' : 'vaccines'}}</span>
             </div>
-            <div class="dose-body">
-              <span class="dose-name">{{v.Dose.Name}}</span>
-              <span *ngIf="v._statusKey === 'epi'" class="dose-status status-epi">EPI Programme</span>
-              <span *ngIf="v._statusKey === 'given'" class="dose-status status-given">
-                Given on {{v.GivenDate | date}}
-              </span>
-              <span *ngIf="v._statusKey === 'due'" class="dose-status status-due">
-                Due on {{v.Date | date}}
-              </span>
-              <span *ngIf="v._statusKey === 'missed'" class="dose-status status-missed">
-                Missed on {{v.Date | date}}
-              </span>
-              <span *ngIf="v._statusKey === 'disease'" class="dose-status status-given">
-                Disease Year: {{v.DiseaseYear}}
-              </span>
-            </div>
-            <div class="dose-actions" *ngIf="v._isActionable && !group._allActionable">
-              <ion-button fill="outline" color="primary" size="small" shape="round"
-                (click)="promptReschedule(v.Id)" class="reschedule-btn">
-                <ion-icon slot="start" name="calendar-outline"></ion-icon>
-                Reschedule
-              </ion-button>
-              <ion-button fill="solid" size="small" shape="round"
-                (click)="bookNow([v])" class="booknow-btn">
-                <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-                Book Now
-              </ion-button>
-            </div>
+            <span class="group-status-pill" [ngClass]="group._groupStatus">{{group._groupStatus === 'overdue' ? 'Overdue' : 'Due soon'}}</span>
+          </div>
+          <div class="chip-row">
+            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{v.Dose.Name}}</span>
+          </div>
+          <div class="group-actions">
+            <ion-button fill="outline" color="primary" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
+              <ion-icon slot="start" name="calendar-outline"></ion-icon>
+              Reschedule
+            </ion-button>
+            <button class="btn-primary" (click)="bookNow(group.items)">Book Visit</button>
           </div>
         </div>
+      </div>
+    </ng-container>
 
+    <!-- 4. Recently completed groups -->
+    <ng-container *ngIf="completedGroups.length">
+      <div class="section-header">Recently Completed</div>
+      <div class="timeline">
+        <div class="group-card completed-group" *ngFor="let group of completedGroups; trackBy: trackByGroupDate">
+          <div class="group-header">
+            <div class="group-title-wrap">
+              <span class="group-dot completed"></span>
+              <span class="group-title">{{group.date | date:'dd-MMM-yyyy'}} &mdash; {{group.items.length}} {{group.items.length === 1 ? 'vaccine' : 'vaccines'}}</span>
+            </div>
+            <span class="group-status-pill completed">Completed</span>
+          </div>
+          <div class="chip-row">
+            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{v.Dose.Name}}</span>
+          </div>
+          <ion-button *ngIf="group._hasInvoice" fill="outline" color="primary" size="small" shape="round"
+                      (click)="triggerDownload(group._invoiceDate)">
+            <ion-icon slot="start" name="receipt-outline"></ion-icon>
+            Download Invoice
+          </ion-button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- 5. Support / help -->
+    <div class="help-card">
+      <div class="help-icon">💬</div>
+      <div>
+        <div class="help-text-title">Questions about this schedule?</div>
+        <div class="help-text-sub">Message your child's doctor anytime</div>
       </div>
     </div>
   </div>

@@ -41,7 +41,11 @@ export class VaccinePage {
   missed = 0;
   vaccine: any[] = [];
   dataGrouping: any[] = [];
+  pendingGroups: any[] = [];
+  completedGroups: any[] = [];
   childId: any;
+  dobFormatted = '';
+  childInitials = '';
 
   // Date-picker overlay state
   datePickerOpen = false;
@@ -148,6 +152,13 @@ export class VaccinePage {
             //original code
             this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
             this.Child = (this.vaccine[0].Child);
+            this.dobFormatted = moment(this.Child.DOB, "DD-MM-YYYY").format("DD MMM YYYY");
+            this.childInitials = (this.Child.Name || '')
+              .split(' ')
+              .filter(p => p.length > 0)
+              .slice(0, 2)
+              .map(p => p[0].toUpperCase())
+              .join('');
             this.isHomeBookingDoctor = this.Child.IsHomeBookingDoctor === true;
             this.homeCities = [];
             this.fg1.controls['ChildId'].setValue(this.Child.Id);
@@ -199,17 +210,6 @@ export class VaccinePage {
               // Precomputed display state (avoids re-evaluating on every change-detection cycle)
               const isMissed = !doc.IsDone && !doc.Due2EPI && this.today >= date1;
               doc._isMissed = isMissed;
-              doc._isDue = !doc.IsDone && !doc.Due2EPI && !isMissed;
-              doc._isActionable = !doc.IsDone && !doc.Due2EPI;
-              doc._indicatorClass = doc.IsDone && !doc.Due2EPI && !doc.IsDisease ? 'ind-given'
-                : doc.Due2EPI ? 'ind-epi'
-                : isMissed ? 'ind-missed'
-                : 'ind-due';
-              doc._statusKey = doc.Due2EPI ? 'epi'
-                : (doc.IsDone && doc.IsDisease) ? 'disease'
-                : doc.IsDone ? 'given'
-                : isMissed ? 'missed'
-                : 'due';
 
             });
             //console.log(this.due);
@@ -217,15 +217,21 @@ export class VaccinePage {
             const grouped = this.groupBy(this.vaccine, "Date");
             this.dataGrouping = Object.keys(grouped).map(date => {
               const items = grouped[date];
+              const allDone = items.every(d => d.IsDone);
+              const anyMissed = items.some(d => d._isMissed);
               return {
                 date,
                 items,
-                _allDone: items.every(d => d.IsDone),
-                _allActionable: items.every(d => !d.IsDone && !d.Due2EPI),
+                _allDone: allDone,
                 _hasInvoice: items.some(d => d.IsDone && d.GivenDate),
-                _invoiceDate: (items.find(d => d.IsDone && d.GivenDate) || {} as any).Date || ''
+                _invoiceDate: (items.find(d => d.IsDone && d.GivenDate) || {} as any).Date || '',
+                _groupStatus: allDone ? 'completed' : anyMissed ? 'overdue' : 'due'
               };
             }).sort((a, b) => a.date.localeCompare(b.date));
+
+            this.pendingGroups = this.dataGrouping.filter(g => !g._allDone);
+            this.completedGroups = this.dataGrouping.filter(g => g._allDone);
+
             loading.dismiss();
           } else {
             loading.dismiss();
