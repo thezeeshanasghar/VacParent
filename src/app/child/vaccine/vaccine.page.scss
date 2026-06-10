@@ -334,7 +334,26 @@ ion-input {
   font-weight: 700;
 }
 
-// ── Date picker modal content ─────────────────────────────────────────────────
+// ── Date picker overlay ────────────────────────────────────────────────────────
+.datepicker-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.datepicker-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: var(--shadow);
+}
+
 .datepicker-header {
   display: flex;
   align-items: center;
@@ -355,7 +374,33 @@ ion-input {
   margin-top: 12px;
 }
 
-// ── Type chooser modal content ────────────────────────────────────────────────
+// ── Booking type chooser overlay ────────────────────────────────────────────────
+.type-chooser-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-chooser-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  width: 86%;
+  max-width: 340px;
+  box-shadow: var(--shadow);
+
+  ion-button {
+    margin-bottom: 12px;
+    --border-radius: var(--radius-btn);
+    height: 48px;
+    font-weight: 600;
+  }
+}
+
 .chooser-title {
   font-size: 1rem;
   font-weight: 700;

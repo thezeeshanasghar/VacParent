@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { LoadingController } from "@ionic/angular";
 import { ScheduleService } from "src/app/services/schedule.service";
 import { BookingService } from "src/app/services/booking.service";
@@ -27,9 +27,6 @@ const now = new Date();
   styleUrls: ["./vaccine.page.scss"]
 })
 export class VaccinePage {
-  @ViewChild('typeChooserModal') typeChooserModal: any;
-  @ViewChild('datePickerModal') datePickerModal: any;
-
   fg1: FormGroup;
   homeBook = false;
   bookingType: string = '';
@@ -267,13 +264,14 @@ export class VaccinePage {
   bookNow(vaccines: any[]) {
     if (this.isHomeBookingDoctor) {
       this.pendingBookVaccines = vaccines;
-      if (this.typeChooserModal) { this.typeChooserModal.present(); }
+      this.showTypeChooser = true;
     } else {
       this.setHomeBook(true, 'clinic', vaccines);
     }
   }
 
   chooseBookingType(type: string) {
+    this.showTypeChooser = false;
     this.setHomeBook(true, type, this.pendingBookVaccines);
   }
 
@@ -430,7 +428,7 @@ export class VaccinePage {
         (err: any) => { this.toastService.create('Could not reschedule. Please try again.', 'danger'); }
       );
     };
-    if (this.datePickerModal) { this.datePickerModal.present(); }
+    this.datePickerOpen = true;
   }
 
   promptBulkReschedule(vaccines: any[]) {
@@ -469,9 +467,20 @@ export class VaccinePage {
     this.datePickerOpen = true;
   }
 
+  promptPreferredDate() {
+    this.datePickerTitle = 'Preferred Date';
+    const current = this.fg1.get('PreferredDate').value;
+    this.pickedDate = current ? moment(current, 'YYYY-MM-DD').toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+    this._datePickerCallback = (dateStr: string) => {
+      this.fg1.get('PreferredDate').setValue(moment(dateStr, 'YYYY-MM-DD').format('YYYY-MM-DD'));
+    };
+    this.datePickerOpen = true;
+  }
+
   confirmDatePicker() {
     const dateStr = this.pickedDate ? this.pickedDate.split('T')[0] : '';
     if (!dateStr) return;
+    this.datePickerOpen = false;
     if (this._datePickerCallback) {
       this._datePickerCallback(dateStr);
       this._datePickerCallback = null;
