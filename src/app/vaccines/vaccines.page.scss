@@ -9,65 +9,182 @@ ion-content {
   letter-spacing: 0.2px;
 }
 
-.vac-row {
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.vaccine-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.vaccine-tile {
   background: var(--surface);
   border-radius: var(--radius-card);
-  margin-bottom: 0.75rem;
-  overflow: hidden;
   box-shadow: var(--shadow);
+  padding: 1.1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
   cursor: pointer;
-  transition: box-shadow 0.15s;
   -webkit-tap-highlight-color: transparent;
+  transition: box-shadow 0.15s;
 
   &:active { box-shadow: 0 1px 6px rgba(17,24,39,0.07); }
+
+  .tile-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), #2dd36f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 1.25rem;
+      color: #fff;
+    }
+  }
+
+  .tile-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-primary);
+  }
 }
 
-.vac-header {
-  display: flex;
-  align-items: center;
-  padding: 1rem 0.875rem;
-  gap: 0.75rem;
-  min-height: 60px;
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+
+  ion-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
 }
 
-.vac-icon-wrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--primary-tint);
+// ---- Detail overlay (gradient header modal) ----
+.vaccine-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
+}
+
+.vaccine-detail-card {
+  background: var(--surface);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.detail-header {
+  background: linear-gradient(135deg, var(--primary), #2dd36f);
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-shrink: 0;
 
-  ion-icon {
-    font-size: 1.25rem;
-    color: var(--primary);
+  .detail-header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.5rem;
+      color: #fff;
+    }
+  }
+
+  .detail-header-text {
+    flex: 1;
+    min-width: 0;
+
+    h2 {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 2px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.78rem;
+      margin: 0;
+    }
+  }
+
+  .detail-close-btn {
+    --padding-start: 4px;
+    --padding-end: 4px;
+    flex-shrink: 0;
   }
 }
 
-.vac-name {
+.detail-body {
+  padding: 16px;
+  overflow-y: auto;
   flex: 1;
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--text-primary);
 }
 
-.vac-chevron {
-  font-size: 1.125rem;
-  color: var(--primary);
-  flex-shrink: 0;
-}
+.detail-section {
+  margin-bottom: 18px;
 
-.vac-desc {
-  border-top: 1px solid var(--border);
-  padding: 0.875rem 1rem;
-  background: var(--bg);
-
-  p {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin: 0;
+  .section-heading {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0 0 8px;
   }
+
+  .section-content {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+
+    ::ng-deep ul {
+      padding-left: 20px;
+      margin: 6px 0;
+    }
+
+    ::ng-deep p {
+      margin: 0 0 8px;
+    }
+  }
+}
+
+.detail-footer {
+  padding: 12px 16px 16px;
+  flex-shrink: 0;
 }
