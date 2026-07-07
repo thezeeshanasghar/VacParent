@@ -4,256 +4,273 @@
       <ion-back-button *ngIf="!homeBook" defaultHref="/child"></ion-back-button>
       <ion-back-button *ngIf="homeBook" defaultHref="/child" (click)="setHomeBook(false, '')"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="!homeBook">Vaccinations</ion-title>
-    <ion-title *ngIf="homeBook">{{bookingType === 'home' ? 'Home Booking' : 'Clinic Booking'}}</ion-title>
+    <ion-title *ngIf="!homeBook">{{ Child ? Child.Name + "'s schedule" : 'Schedule' }}</ion-title>
+    <ion-title *ngIf="homeBook">{{ bookingType === 'home' ? 'Home visit' : 'Clinic visit' }}</ion-title>
+    <ion-buttons slot="end" *ngIf="!homeBook">
+      <button class="tb-action" (click)="printdata()" aria-label="Download schedule PDF">
+        <ion-icon name="print-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="vaccine; else loadingTpl">
+<ion-content *ngIf="vaccine; else loadingTpl">
 
-  <!-- ── Inline date-picker overlay (Ionic 5 compatible) ──────────────── -->
-  <div *ngIf="datePickerOpen" class="datepicker-overlay" (click)="datePickerOpen = false">
-    <div class="datepicker-card" (click)="$event.stopPropagation()">
-      <div class="datepicker-header">
-        <span class="datepicker-title">{{ datePickerTitle }}</span>
-        <ion-button fill="clear" size="small" (click)="datePickerOpen = false">Cancel</ion-button>
+  <!-- ═══ Schedule view (2a) ═══════════════════════════════════════════════ -->
+  <div *ngIf="!homeBook" class="sched-wrap">
+
+    <!-- Progress summary -->
+    <div class="summary-card" *ngIf="Child">
+      <div class="summary-head">
+        <span class="summary-title">Immunization progress</span>
+        <span class="summary-pct">{{ progressPct }}%</span>
       </div>
-      <ion-datetime
-        display-format="DD MMM YYYY"
-        picker-format="DD MMMM YYYY"
-        [min]="datePickerMin"
-        max="2035-12-31"
-        [(ngModel)]="pickedDate">
-      </ion-datetime>
-      <ion-button expand="block" class="datepicker-confirm" (click)="confirmDatePicker()">Confirm</ion-button>
-    </div>
-  </div>
-
-  <!-- ── Booking type chooser overlay (Home vs Clinic) ─────────────────── -->
-  <div *ngIf="showTypeChooser" class="type-chooser-overlay" (click)="showTypeChooser = false">
-    <div class="type-chooser-card" (click)="$event.stopPropagation()">
-      <h4 class="chooser-title">How would you like to book?</h4>
-      <ion-button expand="block" color="primary" (click)="chooseBookingType('home')">
-        <ion-icon slot="start" name="home-outline"></ion-icon>
-        Home Visit
-      </ion-button>
-      <ion-button expand="block" fill="outline" color="primary" (click)="chooseBookingType('clinic')">
-        <ion-icon slot="start" name="business-outline"></ion-icon>
-        Clinic Visit
-      </ion-button>
-    </div>
-  </div>
-
-  <!-- ── Vaccination view ──────────────────────────────────────────────── -->
-  <div *ngIf="!homeBook">
-
-    <div class="page-header">
-      <div class="page-title">Vaccination Schedule</div>
-    </div>
-
-    <!-- 1. Patient summary card -->
-    <div class="patient-card" *ngIf="Child">
-      <div class="avatar">{{childInitials}}</div>
-      <div class="patient-info">
-        <div class="patient-name">{{Child.Name}}</div>
-        <div class="patient-meta">Date of birth: {{dobFormatted}}</div>
+      <div class="summary-track">
+        <div class="summary-fill" [style.width.%]="progressPct"></div>
       </div>
-      <button class="print-btn" (click)="printdata()" aria-label="Download schedule PDF">
-        <span class="print-emoji">🖨️</span>
-      </button>
-    </div>
-
-    <!-- 2. Status overview -->
-    <div class="status-row">
-      <div class="status-tile completed">
-        <div class="status-value">{{given}}</div>
-        <div class="status-label">Completed</div>
-      </div>
-      <div class="status-tile due">
-        <div class="status-value">{{due}}</div>
-        <div class="status-label">Due soon</div>
-      </div>
-      <div class="status-tile overdue">
-        <div class="status-value">{{missed}}</div>
-        <div class="status-label">Overdue</div>
+      <div class="summary-stats">
+        <div class="stat completed">
+          <div class="stat-num">{{ given }}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat due">
+          <div class="stat-num">{{ due }}</div>
+          <div class="stat-label">Due soon</div>
+        </div>
+        <div class="stat upcoming">
+          <div class="stat-num">{{ upcomingCount }}</div>
+          <div class="stat-label">Upcoming</div>
+        </div>
       </div>
     </div>
 
-    <!-- 3. Upcoming & pending groups -->
-    <ng-container *ngIf="pendingGroups.length">
-      <div class="section-header">Upcoming &amp; Pending</div>
-      <div class="timeline">
-        <div class="group-card" *ngFor="let group of pendingGroups; trackBy: trackByGroupDate">
-          <div class="group-header">
-            <div class="group-title-wrap">
-              <span class="group-dot" [ngClass]="group._groupStatus"></span>
-              <span class="group-title">{{group.date | date:'dd-MMM-yyyy'}} &mdash; {{group.items.length}} {{group.items.length === 1 ? 'vaccine' : 'vaccines'}}</span>
-            </div>
-            <span class="group-status-pill" [ngClass]="group._groupStatus">{{group._groupStatus === 'overdue' ? 'Overdue' : group._groupStatus === 'due' ? 'Due soon' : 'Upcoming'}}</span>
+    <!-- Segmented control -->
+    <div class="segmented">
+      <button class="seg" [class.active]="activeTab === 'upcoming'" (click)="activeTab = 'upcoming'">Upcoming</button>
+      <button class="seg" [class.active]="activeTab === 'completed'" (click)="activeTab = 'completed'">Completed</button>
+    </div>
+
+    <!-- ── Upcoming timeline ────────────────────────────────────────────── -->
+    <div class="timeline" *ngIf="activeTab === 'upcoming'">
+      <div class="empty-tab" *ngIf="!pendingGroups.length">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <p>No upcoming doses — all caught up!</p>
+      </div>
+
+      <div class="tl-item" *ngFor="let group of pendingGroups; trackBy: trackByGroupDate">
+        <div class="tl-rail">
+          <span class="tl-dot" [ngClass]="group._groupStatus"></span>
+        </div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <span class="tl-date">{{ group.date | date:'EEE, dd MMM' }}</span>
+            <span class="vp-pill" [ngClass]="group._groupStatus">
+              {{ group._groupStatus === 'overdue' ? 'Overdue' :
+                 group._groupStatus === 'due' ? 'Due soon' : 'Upcoming' }}
+            </span>
           </div>
           <div class="chip-row">
-            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{v.Dose.Name}}</span>
+            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{ v.Dose.Name }}</span>
           </div>
-          <div class="group-actions">
-            <ion-button fill="outline" color="primary" size="small" shape="round" (click)="promptBulkReschedule(group.items)">
-              <ion-icon slot="start" name="calendar-outline"></ion-icon>
-              Reschedule
-            </ion-button>
-            <button class="btn-primary" (click)="bookNow(group.items)">Book Visit</button>
+          <div class="tl-actions">
+            <button class="vp-btn-primary vp-btn-block" (click)="bookNow(group.items)">
+              <ion-icon name="calendar-outline"></ion-icon> Book visit
+            </button>
+            <button class="vp-btn-outline vp-btn-block" (click)="promptBulkReschedule(group.items)">
+              <ion-icon name="time-outline"></ion-icon> Reschedule
+            </button>
           </div>
         </div>
       </div>
-    </ng-container>
+    </div>
 
-    <!-- 4. Recently completed groups -->
-    <ng-container *ngIf="completedGroups.length">
-      <div class="section-header">Recently Completed</div>
-      <div class="timeline">
-        <div class="group-card completed-group" *ngFor="let group of completedGroups; trackBy: trackByGroupDate">
-          <div class="group-header">
-            <div class="group-title-wrap">
-              <span class="group-dot completed"></span>
-              <span class="group-title">{{group.date | date:'dd-MMM-yyyy'}} &mdash; {{group.items.length}} {{group.items.length === 1 ? 'vaccine' : 'vaccines'}}</span>
-            </div>
-            <span class="group-status-pill completed">Completed</span>
+    <!-- ── Completed timeline ───────────────────────────────────────────── -->
+    <div class="timeline" *ngIf="activeTab === 'completed'">
+      <div class="empty-tab" *ngIf="!completedGroups.length">
+        <ion-icon name="time-outline"></ion-icon>
+        <p>No completed doses yet</p>
+      </div>
+
+      <div class="tl-item" *ngFor="let group of completedGroups; trackBy: trackByGroupDate">
+        <div class="tl-rail">
+          <span class="tl-dot completed"></span>
+        </div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <span class="tl-date">{{ group.date | date:'EEE, dd MMM yyyy' }}</span>
+            <span class="vp-pill done"><ion-icon name="checkmark-circle"></ion-icon> Done</span>
           </div>
           <div class="chip-row">
-            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{v.Dose.Name}}</span>
+            <span class="chip" *ngFor="let v of group.items; trackBy: trackByDoseId">{{ v.Dose.Name }}</span>
           </div>
-          <ion-button *ngIf="group._hasInvoice" fill="outline" color="primary" size="small" shape="round"
-                      (click)="triggerDownload(group._invoiceDate)">
-            <ion-icon slot="start" name="receipt-outline"></ion-icon>
-            Download Invoice
-          </ion-button>
+          <a class="dl-link" *ngIf="group._hasInvoice" (click)="triggerDownload(group._invoiceDate)">
+            <ion-icon name="download-outline"></ion-icon> Download invoice
+          </a>
         </div>
       </div>
-    </ng-container>
+    </div>
 
-    <!-- 5. Support / help -->
+    <!-- Help card -->
     <div class="help-card">
-      <div class="help-icon">💬</div>
-      <div>
-        <div class="help-text-title">Questions about this schedule?</div>
-        <div class="help-text-sub">Message your child's doctor anytime</div>
+      <div class="help-icon"><ion-icon name="chatbubbles"></ion-icon></div>
+      <div class="help-text">
+        <div class="help-title">Questions about a dose?</div>
+        <div class="help-sub">Message {{ Child ? Child.Name : 'your child' }}'s doctor</div>
       </div>
+      <ion-icon name="chevron-forward" class="help-chev"></ion-icon>
     </div>
   </div>
 
-  <!-- ── Home booking form ────────────────────────────────────────────── -->
-  <div *ngIf="homeBook">
-    <div class="booking-card">
-      <h3 class="booking-title">
-        <ion-icon [name]="bookingType === 'home' ? 'home-outline' : 'business-outline'" aria-hidden="true"></ion-icon>
-        {{bookingType === 'home' ? 'Home Vaccination Booking' : 'Clinic Visit Booking'}}
-      </h3>
-      <form [formGroup]="fg1">
-        <div class="field-group">
-          <p class="field-label">Patient Name</p>
-          <div class="field-wrap">
-            <ion-icon name="person-outline" class="field-icon" aria-hidden="true"></ion-icon>
-            <ion-input type="text" formControlName="ChildName" readonly></ion-input>
-          </div>
+  <!-- ═══ Home / clinic booking form (3b) ══════════════════════════════════ -->
+  <div *ngIf="homeBook" class="book-wrap">
+    <form [formGroup]="fg1">
+
+      <!-- Read-only summary -->
+      <div class="for-card">
+        <div class="for-eyebrow">FOR</div>
+        <div class="for-name">{{ fg1.get('ChildName').value }} · {{ fg1.get('Vaccines').value }}</div>
+        <div class="for-pills">
+          <span class="for-pill">Parent: {{ fg1.get('FatherName').value }}</span>
+          <span class="for-pill">{{ fg1.get('Phone').value }}</span>
         </div>
-        <div class="field-group">
-          <p class="field-label">Father's Name</p>
-          <div class="field-wrap">
-            <ion-icon name="people-outline" class="field-icon" aria-hidden="true"></ion-icon>
-            <ion-input type="text" formControlName="FatherName" readonly></ion-input>
-          </div>
-        </div>
-        <div class="field-group">
-          <p class="field-label">Mobile Number</p>
-          <div class="field-wrap">
-            <ion-icon name="call-outline" class="field-icon" aria-hidden="true"></ion-icon>
-            <ion-input type="tel" formControlName="Phone" readonly></ion-input>
-          </div>
-        </div>
-        <div class="field-group">
-          <p class="field-label">Vaccines</p>
-          <div class="field-wrap">
-            <ion-icon name="medkit-outline" class="field-icon" aria-hidden="true"></ion-icon>
-            <ion-input type="text" formControlName="Vaccines" readonly></ion-input>
+      </div>
+
+      <ng-container *ngIf="bookingType === 'home'">
+        <!-- City -->
+        <div class="field">
+          <label class="field-label">City</label>
+          <div class="select-row">
+            <ion-select formControlName="City" placeholder="Select your city" interface="action-sheet" class="bare-select">
+              <ion-select-option *ngFor="let c of homeCities" [value]="c">{{ c }}</ion-select-option>
+            </ion-select>
+            <ion-icon name="chevron-down" class="select-chev"></ion-icon>
           </div>
         </div>
 
-        <ng-container *ngIf="bookingType === 'home'">
-          <div class="field-group">
-            <p class="field-label">City <span class="required-star">*</span></p>
-            <div class="field-wrap">
-              <ion-icon name="location-outline" class="field-icon" aria-hidden="true"></ion-icon>
-              <ion-select formControlName="City" placeholder="Select your city" interface="action-sheet">
-                <ion-select-option *ngFor="let c of homeCities" [value]="c">{{c}}</ion-select-option>
-              </ion-select>
+        <!-- Address -->
+        <div class="field">
+          <label class="field-label">Home address</label>
+          <div class="input-box input-box--area">
+            <ion-textarea formControlName="Address" placeholder="Enter your full address"
+                          rows="3" auto-grow="false" autocomplete="street-address"></ion-textarea>
+          </div>
+        </div>
+
+        <!-- Precise location -->
+        <div class="field">
+          <label class="field-label">Precise location</label>
+          <div class="loc-captured" *ngIf="fg1.controls['Location'].value">
+            <div class="loc-pin"><ion-icon name="location"></ion-icon></div>
+            <div class="loc-text">
+              <div class="loc-title">Location captured</div>
+              <div class="loc-coords">{{ capturedCoords }}</div>
             </div>
+            <a class="loc-redo" (click)="shareLocation()">Redo</a>
           </div>
-          <div class="field-group">
-            <p class="field-label">Address <span class="required-star">*</span></p>
-            <div class="field-wrap">
-              <ion-icon name="home-outline" class="field-icon" aria-hidden="true"></ion-icon>
-              <ion-input type="text" formControlName="Address"
-                         placeholder="Enter your full address"
-                         autocomplete="street-address"></ion-input>
-            </div>
-          </div>
-          <div class="field-group">
-            <p class="field-label">Location Pin <span class="optional-label">(optional)</span></p>
-            <ion-button expand="block" fill="outline"
-              [color]="fg1.controls['Location'].value ? 'success' : 'tertiary'"
-              (click)="shareLocation()">
-              <ion-icon slot="start" [name]="fg1.controls['Location'].value ? 'checkmark-circle-outline' : 'location-outline'"></ion-icon>
-              {{fg1.controls['Location'].value ? 'Location Captured' : 'Capture My Location'}}
-            </ion-button>
-          </div>
-        </ng-container>
-
-        <div class="field-group">
-          <p class="field-label">Preferred Date</p>
-          <div class="field-wrap field-wrap--tap" (click)="promptPreferredDate()">
-            <ion-icon name="calendar-outline" class="field-icon" aria-hidden="true"></ion-icon>
-            <span class="field-tap-value">{{ fg1.get('PreferredDate').value || 'Select date' }}</span>
-            <ion-icon name="chevron-forward-outline" class="field-chevron" aria-hidden="true"></ion-icon>
-          </div>
+          <button type="button" class="vp-btn-outline vp-btn-block" *ngIf="!fg1.controls['Location'].value"
+                  (click)="shareLocation()">
+            <ion-icon name="locate-outline"></ion-icon> Capture my location
+          </button>
         </div>
+      </ng-container>
 
-        <div class="field-group">
-          <p class="field-label">Special Requirements / Comments</p>
-          <div class="field-wrap field-wrap--textarea">
-            <ion-icon name="chatbox-ellipses-outline" class="field-icon field-icon--top" aria-hidden="true"></ion-icon>
-            <ion-textarea formControlName="Comments"
-                          placeholder="Any special requirements, allergies, or notes..."
-                          rows="3"
-                          auto-grow="false">
-            </ion-textarea>
-          </div>
+      <!-- Preferred date -->
+      <div class="field">
+        <label class="field-label">Preferred date</label>
+        <div class="date-row" (click)="promptPreferredDate()">
+          <ion-icon name="calendar-outline" class="date-icon"></ion-icon>
+          <span class="date-value">{{ preferredDateLabel() }}</span>
+          <ion-icon name="chevron-forward" class="date-chev"></ion-icon>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <!-- Comments -->
+      <div class="field">
+        <label class="field-label">Notes <span class="opt">(optional)</span></label>
+        <div class="input-box input-box--area">
+          <ion-textarea formControlName="Comments" placeholder="Allergies, special requirements…"
+                        rows="3" auto-grow="false"></ion-textarea>
+        </div>
+      </div>
+    </form>
   </div>
 
 </ion-content>
 
 <ng-template #loadingTpl>
-  <ion-content class="ion-padding">
-    <div class="skeleton-wrap">
-      <ion-skeleton-text animated style="width: 60%; height: 24px; border-radius: 8px;"></ion-skeleton-text>
-      <ion-skeleton-text animated style="width: 100%; height: 80px; border-radius: 12px; margin-top: 16px;"></ion-skeleton-text>
-      <ion-skeleton-text animated style="width: 100%; height: 120px; border-radius: 12px; margin-top: 12px;"></ion-skeleton-text>
-      <ion-skeleton-text animated style="width: 100%; height: 120px; border-radius: 12px; margin-top: 12px;"></ion-skeleton-text>
+  <ion-content>
+    <div class="sched-wrap">
+      <ion-skeleton-text animated style="width: 60%; height: 22px; border-radius: 8px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 130px; border-radius: 20px; margin-top: 16px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 44px; border-radius: 12px; margin-top: 14px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 140px; border-radius: 20px; margin-top: 14px;"></ion-skeleton-text>
     </div>
   </ion-content>
 </ng-template>
 
-<!-- Booking submit footer -->
+<!-- Booking submit footer (3b) -->
 <ion-footer *ngIf="homeBook">
-  <ion-toolbar>
-    <div class="booking-actions">
-      <ion-button class="submit-btn" (click)="submitBooking()">
-        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
-        Submit Booking
-      </ion-button>
-      <ion-button fill="outline" color="medium" (click)="setHomeBook(false, '')">
-        Cancel
-      </ion-button>
-    </div>
+  <ion-toolbar class="book-footer">
+    <button class="vp-btn-primary vp-btn-block footer-btn" (click)="submitBooking()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      {{ bookingType === 'home' ? 'Confirm home visit' : 'Confirm clinic visit' }}
+    </button>
   </ion-toolbar>
 </ion-footer>
+
+<!-- ═══ 3a — Booking type sheet ════════════════════════════════════════════ -->
+<app-bottom-sheet [isOpen]="showTypeChooser" (dismissed)="showTypeChooser = false">
+  <h3 class="sheet-title">How would you like to book?</h3>
+  <p class="sheet-context">{{ bookingContext() }}</p>
+
+  <div class="choice" [class.selected]="bookingTypeChoice === 'home'" (click)="bookingTypeChoice = 'home'">
+    <div class="choice-icon home"><ion-icon name="home"></ion-icon></div>
+    <div class="choice-text">
+      <div class="choice-title">Home visit</div>
+      <div class="choice-sub">A nurse comes to you</div>
+    </div>
+    <ion-icon class="choice-check" [name]="bookingTypeChoice === 'home' ? 'checkmark-circle' : 'ellipse-outline'"></ion-icon>
+  </div>
+
+  <div class="choice" [class.selected]="bookingTypeChoice === 'clinic'" (click)="bookingTypeChoice = 'clinic'">
+    <div class="choice-icon clinic"><ion-icon name="medkit"></ion-icon></div>
+    <div class="choice-text">
+      <div class="choice-title">Clinic visit</div>
+      <div class="choice-sub">Visit {{ clinicName }}</div>
+    </div>
+    <ion-icon class="choice-check" [name]="bookingTypeChoice === 'clinic' ? 'checkmark-circle' : 'ellipse-outline'"></ion-icon>
+  </div>
+
+  <button class="vp-btn-primary vp-btn-block sheet-cta" (click)="confirmBookingType()">Continue</button>
+</app-bottom-sheet>
+
+<!-- ═══ 3c — Date picker sheet ═════════════════════════════════════════════ -->
+<app-bottom-sheet [isOpen]="datePickerOpen" (dismissed)="datePickerOpen = false">
+  <div class="cal-head">
+    <button class="cal-nav" (click)="calPrev()"><ion-icon name="chevron-back"></ion-icon></button>
+    <span class="cal-month">{{ calMonthLabel() }}</span>
+    <button class="cal-nav active" (click)="calNext()"><ion-icon name="chevron-forward"></ion-icon></button>
+  </div>
+
+  <div class="cal-weekdays">
+    <span *ngFor="let w of weekdayLabels">{{ w }}</span>
+  </div>
+
+  <div class="cal-grid">
+    <ng-container *ngFor="let week of calWeeks">
+      <button class="cal-day"
+              *ngFor="let d of week"
+              [class.out]="!d.inMonth"
+              [class.disabled]="d.disabled"
+              [class.selected]="d.selected"
+              [disabled]="d.disabled"
+              (click)="selectCalDay(d)">
+        {{ d.day }}
+      </button>
+    </ng-container>
+  </div>
+
+  <button class="vp-btn-primary vp-btn-block sheet-cta" (click)="confirmDatePicker()">
+    Select {{ selectedDateLabel() }}
+  </button>
+</app-bottom-sheet>

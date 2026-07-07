@@ -1,213 +1,233 @@
-ion-content {
-  --background: var(--vac-surface);
+ion-content { --background: var(--bg); }
+
+.dash-wrap {
+  padding: calc(env(safe-area-inset-top) + 8px) 20px 28px;
 }
 
-// ── Toolbar branding ──────────────────────────────────────────────────────────
-.toolbar-inner {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 16px 12px;
-}
-
-.toolbar-brand {
+/* ── Brand row ─────────────────────────────────────────────────────────────── */
+.brand-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.toolbar-logo {
-  font-size: 1.625rem;
-  color: var(--vac-green2);
+.menu-btn {
+  --color: var(--ink);
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-right: 2px;
+  font-size: 22px;
 }
 
-.toolbar-logo-img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 6px;
-}
-
-.toolbar-title-vc {
-  font-size: 1.125rem;
-}
-
-.toolbar-sub-vc {
-  margin-left: 40px;
-}
-
-.toolbar-title {
-  font-size: 1.375rem;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.3px;
-}
-
-.toolbar-pk {
-  color: var(--vac-orange2);
-}
-
-.toolbar-sub {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.70);
-  margin-left: 34px;
-  margin-top: 1px;
-  letter-spacing: 0.4px;
-}
-
-// ── Dashboard body ────────────────────────────────────────────────────────────
-.dash-wrap {
-  padding: 1.5rem 1rem 2rem;
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
-}
-
-.dash-greeting {
-  margin-bottom: 1.5rem;
-}
-
-.dash-hello {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--vac-navy);
-  margin: 0 0 0.25rem;
-}
-
-.dash-tagline {
-  font-size: 0.875rem;
-  color: var(--ion-color-medium);
-  margin: 0;
-}
-
-// ── Grid ──────────────────────────────────────────────────────────────────────
-.dash-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-
-  @media (max-width: 340px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-// ── Cards ─────────────────────────────────────────────────────────────────────
-.dash-card {
-  position: relative;
-  border-radius: 16px;
-  padding: 1.125rem 1rem;
+.brand {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  overflow: hidden;
-  background: var(--vac-card);
-  box-shadow: var(--vac-shadow);
-  border: 1.5px solid transparent;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  min-height: 110px;
-
-  &:active {
-    transform: scale(0.97);
-    box-shadow: 0 1px 6px rgba(10,61,121,0.06);
-  }
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
 }
 
-.dash-card-icon {
-  width: 44px;
-  height: 44px;
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-primary);
+
+  ion-icon { color: #fff; font-size: 19px; }
+}
+
+.brand-logo-img { width: 34px; height: 34px; border-radius: 10px; object-fit: contain; }
+
+.brand-word {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand-dot { color: var(--brand-green); }
+
+.bell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  ion-icon { font-size: 20px; color: var(--primary); }
+}
+.bell-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--status-danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg);
+}
+
+/* ── Greeting ──────────────────────────────────────────────────────────────── */
+.greeting { margin-bottom: 18px; }
+.greet-line { margin: 0; font-size: 15px; font-weight: 700; color: var(--text-secondary); }
+.greet-name { margin: 2px 0 0; font-size: 27px; font-weight: 900; color: var(--ink); letter-spacing: -0.6px; }
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, var(--primary), var(--brand-blue-2));
+  border-radius: 22px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: var(--shadow-hero);
+  margin-bottom: 26px;
+  cursor: pointer;
+}
+.hero--calm { cursor: default; }
+.hero--skeleton { background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  margin-bottom: 14px;
+  ion-icon { font-size: 14px; }
+}
+
+.hero-body { display: flex; align-items: center; gap: 13px; }
+.hero-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.hero-text { min-width: 0; }
+.hero-title { font-size: 19px; font-weight: 900; letter-spacing: -0.3px; }
+.hero-meta { font-size: 14px; font-weight: 700; opacity: 0.9; margin-top: 3px; }
+
+.hero-btn {
+  width: 100%;
+  margin-top: 16px;
+  border: none;
+  background: #fff;
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 15px;
+  border-radius: 13px;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  ion-icon { font-size: 18px; }
+}
+
+/* ── Section head ──────────────────────────────────────────────────────────── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-title { font-size: 15px; font-weight: 900; color: var(--ink); }
+.section-link { font-size: 14px; font-weight: 800; color: var(--primary); cursor: pointer; }
+
+/* ── Children row ──────────────────────────────────────────────────────────── */
+.kids-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; }
+.kid-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+.kid-avatar {
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.75rem;
-
-  ion-icon { font-size: 1.5rem; }
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  &.girl { background: var(--primary-tint); color: var(--primary); }
+  &.boy  { background: var(--status-done-bg); color: var(--status-done); }
+}
+.kid-name { font-size: 15px; font-weight: 900; color: var(--ink); }
+.kid-age { font-size: 12px; font-weight: 700; color: var(--text-muted); margin: 2px 0 10px; }
+.kid-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  &.ok  { background: var(--status-done-bg); color: var(--status-done-ink); }
+  &.due { background: var(--status-due-bg);  color: var(--status-due-ink);  }
 }
 
-.dash-card-label {
-  font-size: 0.875rem;
-  font-weight: 700;
-  margin-bottom: 0.1875rem;
-  letter-spacing: 0.1px;
+/* ── Quick actions ─────────────────────────────────────────────────────────── */
+.quick-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.quick { display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; }
+.quick-icon {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ion-icon { font-size: 23px; color: var(--primary); }
 }
-
-.dash-card-sub {
-  font-size: 0.6875rem;
-  color: var(--ion-color-medium-tint);
-}
-
-.dash-card-arrow {
+.quick-badge {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
-  font-size: 1rem;
-  opacity: 0.35;
-}
-
-// ── Individual card colours ───────────────────────────────────────────────────
-.card-patients {
-  background: #E3F0FF; border-color: #BBDEFB;
-  .dash-card-icon { background: #C9E2FB; ion-icon { color: var(--vac-blue); } }
-  .dash-card-label { color: var(--vac-blue); }
-  .dash-card-arrow { color: var(--vac-blue); }
-}
-
-.card-vaccines {
-  background: #E8F5E9; border-color: #C8E6C9;
-  .dash-card-icon { background: #C3E6C4; ion-icon { color: var(--vac-green); } }
-  .dash-card-label { color: var(--vac-green); }
-  .dash-card-arrow { color: var(--vac-green); }
-}
-
-.card-about {
-  background: #FFF3E0; border-color: #FFCC80;
-  .dash-card-icon { background: #FFE0B2; ion-icon { color: #E65100; } }
-  .dash-card-label { color: #E65100; }
-  .dash-card-arrow { color: #E65100; }
-}
-
-.card-bookings {
-  background: #F3E5F5; border-color: #E1BEE7;
-  .dash-card-icon { background: #E1BEE7; ion-icon { color: #7B1FA2; } }
-  .dash-card-label { color: #7B1FA2; }
-  .dash-card-arrow { color: #7B1FA2; }
-}
-
-.card-logout {
-  background: #E8EEF6; border-color: #C5D3E8;
-  .dash-card-icon { background: #D0DCED; ion-icon { color: var(--vac-navy); } }
-  .dash-card-label { color: var(--vac-navy); }
-  .dash-card-arrow { color: var(--vac-navy); }
-}
-
-.card-notif-badge {
-  position: absolute;
-  top: 12px;
-  right: 36px;
-  font-size: 0.625rem;
+  top: -5px;
+  right: -5px;
   min-width: 18px;
   height: 18px;
-  border-radius: 9px;
   padding: 0 5px;
+  border-radius: 999px;
+  background: var(--status-danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg);
 }
-
-// ── Bell icon ──────────────────────────────────────────────────────────────────
-.bell-btn {
-  position: relative;
-  --color: #ffffff;
-  font-size: 1.375rem;
-  margin-right: 4px;
-  min-width: 44px;
-  min-height: 44px;
-}
-
-.bell-badge {
-  position: absolute;
-  top: 4px;
-  right: 2px;
-  font-size: 0.5625rem;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  padding: 0 4px;
-  pointer-events: none;
-}
+.quick-label { font-size: 11px; font-weight: 800; color: var(--text-secondary); }

@@ -1,0 +1,15 @@
+<div class="sheet-scrim" [class.open]="isOpen" (click)="onScrim()"></div>
+
+<div class="sheet" [class.open]="isOpen" [class.scroll]="scroll"
+     [style.transform]="isOpen ? 'translateY(' + dragOffset + 'px)' : null">
+  <div class="sheet-handle-hit"
+       (touchstart)="onHandleStart($event)"
+       (touchmove)="onHandleMove($event)"
+       (touchend)="onHandleEnd()"
+       (mousedown)="onHandleStart($event)">
+    <span class="sheet-handle"></span>
+  </div>
+  <div class="sheet-body">
+    <ng-content></ng-content>
+  </div>
+</div>

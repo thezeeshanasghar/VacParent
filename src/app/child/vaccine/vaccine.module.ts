@@ -9,6 +9,7 @@ import { VaccinePage } from './vaccine.page';
 
 import { Downloader} from '@ionic-native/downloader/ngx';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-  
+    SharedModule,
     RouterModule.forChild(routes),
   ],
   declarations: [VaccinePage],

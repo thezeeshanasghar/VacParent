@@ -1,485 +1,336 @@
-ion-content {
-  --background: var(--bg);
-}
+ion-content { --background: var(--bg); }
 
-.skeleton-wrap {
-  padding: 8px 0;
-}
-
-// ── Page header ──────────────────────────────────────────────────────────────
-.page-header {
-  padding: 0.25rem 0 0.5rem;
-}
-
-.page-title {
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  color: var(--text-primary);
-}
-
-.print-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-btn);
-  background: var(--bg);
+.tb-action {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  color: var(--primary);
-  font-size: 1.125rem;
-  margin-left: auto;
+  margin-right: 8px;
+  cursor: pointer;
+  ion-icon { font-size: 19px; color: var(--primary); }
 }
 
-.print-emoji {
-  font-size: 1.125rem;
-  line-height: 1;
-}
+.sched-wrap { padding: 16px 20px 28px; }
+.book-wrap  { padding: 16px 20px 24px; }
 
-// ── Patient summary card ───────────────────────────────────────────────────────
-.patient-card {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
+/* ── Progress summary card ─────────────────────────────────────────────────── */
+.summary-card {
   background: var(--surface);
-  border-radius: var(--radius-card);
-  padding: 1rem;
-  margin-bottom: 1.25rem;
-  box-shadow: var(--shadow);
-}
-
-.avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #1E5EFF 0%, #5B8BFF 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.patient-info { flex: 1; min-width: 0; }
-
-.patient-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.patient-meta {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  margin-top: 2px;
-}
-
-// ── Status overview ─────────────────────────────────────────────────────────────
-.status-row {
-  display: flex;
-  gap: 0.625rem;
-  margin-bottom: 1.25rem;
-}
-
-.status-tile {
-  flex: 1;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
-  padding: 0.875rem 0.75rem;
-  text-align: left;
-  border: 1.5px solid transparent;
-}
-
-.status-value {
-  font-size: 1.375rem;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.status-label {
-  font-size: 0.75rem;
-  margin-top: 4px;
-  font-weight: 600;
-}
-
-.status-tile.completed {
-  background: var(--success-bg);
-  border-color: #C8E6C9;
-  .status-value, .status-label { color: #2E7D32; }
-}
-
-.status-tile.due {
-  background: var(--warning-bg);
-  border-color: #FBE3B5;
-  .status-value, .status-label { color: #B45309; }
-}
-
-.status-tile.overdue {
-  background: var(--overdue-bg);
-  border-color: #F8C9C9;
-  .status-value, .status-label { color: #B91C1C; }
-}
-
-// ── Section header ───────────────────────────────────────────────────────────────
-.section-header {
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  margin-bottom: 1.25rem;
-}
-
-// ── Group card ────────────────────────────────────────────────────────────────────
-.group-card {
-  background: var(--surface);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.group-card.completed-group {
-  opacity: 0.92;
-}
-
-.group-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.group-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.group-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.group-dot.overdue   { background: var(--overdue); }
-.group-dot.due       { background: var(--warning); }
-.group-dot.completed { background: var(--success); }
-.group-dot.upcoming  { background: var(--text-secondary); }
-
-.group-title {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.group-status-pill {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 10px;
+  border: 1px solid var(--border);
   border-radius: 20px;
-  flex-shrink: 0;
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 18px;
 }
+.summary-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.summary-title { font-size: 14px; font-weight: 900; color: var(--ink); }
+.summary-pct { font-size: 14px; font-weight: 900; color: var(--primary); }
+.summary-track { height: 9px; border-radius: 999px; background: var(--track); overflow: hidden; }
+.summary-fill { height: 100%; border-radius: 999px; background: var(--primary); transition: width 0.4s ease; }
+.summary-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.stat { border-radius: 14px; padding: 12px 8px; text-align: center; }
+.stat-num { font-size: 20px; font-weight: 900; }
+.stat-label { font-size: 11px; font-weight: 800; margin-top: 2px; }
+.stat.completed { background: var(--status-done-bg); .stat-num, .stat-label { color: var(--status-done); } }
+.stat.due       { background: var(--status-due-bg);  .stat-num, .stat-label { color: var(--status-due); } }
+.stat.upcoming  { background: var(--status-upcoming-bg); .stat-num, .stat-label { color: var(--status-upcoming); } }
 
-.group-status-pill.overdue   { color: var(--overdue); background: var(--overdue-bg); }
-.group-status-pill.due       { color: #B45309; background: var(--warning-bg); }
-.group-status-pill.completed { color: #15803D; background: var(--success-bg); }
-.group-status-pill.upcoming  { color: var(--text-secondary); background: var(--bg); }
-
-// ── Vaccine chips ─────────────────────────────────────────────────────────────────
-.chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+/* ── Segmented control ─────────────────────────────────────────────────────── */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--track);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 18px;
 }
-
-.chip {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-chip);
-  padding: 6px 12px;
-}
-
-// ── Group actions ────────────────────────────────────────────────────────────────
-.group-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 2px;
-
-  ion-button {
-    --border-radius: var(--radius-btn);
-    margin: 0;
-    min-height: 44px;
-    font-size: 0.875rem;
-    font-weight: 600;
+.seg {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  padding: 9px;
+  border-radius: 9px;
+  cursor: pointer;
+  &.active {
+    background: #fff;
+    color: var(--ink);
+    font-weight: 900;
+    box-shadow: 0 2px 6px rgba(14, 44, 58, 0.08);
   }
 }
 
-.btn-primary {
-  width: 100%;
-  height: 46px;
-  border-radius: var(--radius-btn);
-  background: #E8EFFF;
-  color: #2347C9;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  border: 1.5px solid #D2E0FF;
+/* ── Timeline ──────────────────────────────────────────────────────────────── */
+.timeline { position: relative; }
+.tl-item { display: flex; gap: 14px; position: relative; }
+.tl-rail {
+  width: 14px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    bottom: -8px;
+    width: 2px;
+    background: var(--chip-border);
+  }
+}
+.tl-item:last-child .tl-rail::before { display: none; }
+.tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  margin-top: 4px;
+  z-index: 1;
+  &.completed { background: var(--status-done); box-shadow: 0 0 0 4px var(--status-done-bg); }
+  &.due       { background: var(--status-due);  box-shadow: 0 0 0 4px var(--status-due-bg); }
+  &.overdue   { background: var(--status-danger); box-shadow: 0 0 0 4px var(--status-danger-bg); }
+  &.upcoming  { background: var(--status-upcoming); box-shadow: 0 0 0 4px var(--status-upcoming-bg); }
+}
+
+.tl-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 14px;
+  min-width: 0;
+}
+.tl-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.tl-date { font-size: 13px; font-weight: 900; color: var(--ink); }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--chip-text);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.tl-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.dl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--primary);
+  cursor: pointer;
+  ion-icon { font-size: 16px; }
+}
+
+.empty-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  color: var(--text-muted);
+  ion-icon { font-size: 44px; margin-bottom: 12px; color: var(--divider-strong); }
+  p { font-weight: 700; margin: 0; }
+}
+
+/* ── Help card ─────────────────────────────────────────────────────────────── */
+.help-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: var(--primary-tint);
+  border-radius: 18px;
+  padding: 16px;
+  margin-top: 18px;
+  cursor: pointer;
+}
+.help-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  flex-shrink: 0;
+  ion-icon { color: #fff; font-size: 20px; }
+}
+.help-text { flex: 1; }
+.help-title { font-size: 14px; font-weight: 900; color: var(--ink); }
+.help-sub { font-size: 12px; font-weight: 700; color: var(--primary-ink); margin-top: 2px; }
+.help-chev { color: var(--primary); font-size: 18px; }
+
+/* ── Booking form (3b) ─────────────────────────────────────────────────────── */
+.for-card {
+  background: var(--primary-tint);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+.for-eyebrow { font-size: 12px; font-weight: 900; letter-spacing: 1px; color: var(--primary-ink); }
+.for-name { font-size: 15px; font-weight: 900; color: var(--ink); margin: 6px 0 10px; }
+.for-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.for-pill {
+  background: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary-ink);
+  padding: 5px 12px;
 }
 
-// ── Help card ─────────────────────────────────────────────────────────────────────
-.help-card {
-  background: var(--primary-tint);
-  border-radius: var(--radius-card);
-  padding: 1rem;
+.field { margin-bottom: 16px; }
+.field-label { display: block; font-size: 13px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
+.field-label .opt { font-weight: 700; color: var(--text-muted); }
+
+.input-box {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 4px 12px;
+  ion-input, ion-textarea { --padding-start: 0; font-weight: 700; color: var(--ink); }
+}
+.input-box--area { padding: 8px 12px; }
+
+.select-row {
+  position: relative;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
 }
+.bare-select { flex: 1; --padding-start: 12px; font-weight: 700; }
+.select-chev { position: absolute; right: 14px; color: var(--text-muted); font-size: 18px; pointer-events: none; }
 
-.help-icon {
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px;
+  cursor: pointer;
+}
+.date-icon { font-size: 20px; color: var(--primary); }
+.date-value { flex: 1; font-size: 15px; font-weight: 800; color: var(--ink); }
+.date-chev { color: var(--text-muted); font-size: 18px; }
+
+/* Location captured card */
+.loc-captured {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--status-done-bg);
+  border: 1.5px solid var(--status-done-border);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.loc-pin {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--status-done);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { color: #fff; font-size: 20px; }
+}
+.loc-text { flex: 1; min-width: 0; }
+.loc-title { font-size: 14px; font-weight: 900; color: var(--status-done-ink); }
+.loc-coords { font-size: 12px; font-weight: 700; color: var(--status-done-ink); opacity: 0.85; margin-top: 2px; }
+.loc-redo { font-size: 14px; font-weight: 900; color: var(--primary); cursor: pointer; }
+
+.book-footer { --background: var(--surface); --border-width: 0; border-top: 1px solid var(--border); padding: 8px 20px calc(8px + env(safe-area-inset-bottom)); }
+.footer-btn { padding: 15px; font-size: 16px; }
+
+/* ── Sheets shared bits ────────────────────────────────────────────────────── */
+.sheet-title { font-size: 21px; font-weight: 900; color: var(--ink); margin: 0 0 4px; letter-spacing: -0.3px; }
+.sheet-context { font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 0 0 18px; }
+.sheet-cta { margin-top: 20px; padding: 15px; font-size: 16px; }
+
+/* Booking type choices (3a) */
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  &.selected {
+    border: 2px solid var(--primary);
+    box-shadow: 0 6px 18px rgba(0, 108, 168, 0.12);
+  }
+}
+.choice-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 24px; }
+  &.home   { background: var(--primary-tint); ion-icon { color: var(--primary); } }
+  &.clinic { background: var(--status-upcoming-bg); ion-icon { color: var(--text-secondary); } }
+}
+.choice.selected .choice-icon.clinic { background: var(--primary-tint); ion-icon { color: var(--primary); } }
+.choice-text { flex: 1; min-width: 0; }
+.choice-title { font-size: 16px; font-weight: 900; color: var(--ink); }
+.choice-sub { font-size: 13px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+.choice-check { font-size: 24px; color: var(--divider-strong); }
+.choice.selected .choice-check { color: var(--primary); }
+
+/* Calendar (3c) */
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 16px; }
+.cal-month { font-size: 18px; font-weight: 900; color: var(--ink); }
+.cal-nav {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: var(--surface);
+  border: none;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.125rem;
-  flex-shrink: 0;
-}
-
-.help-text-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.help-text-sub {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 1px;
-}
-
-// ── Home booking form ─────────────────────────────────────────────────────────
-.booking-card {
-  background: var(--surface);
-  border-radius: var(--radius-card);
-  padding: 1.375rem 1.125rem 1.625rem;
-  box-shadow: var(--shadow);
-}
-
-.booking-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 1.25rem;
-
-  ion-icon { font-size: 1.375rem; color: var(--vac-orange); }
-}
-
-.field-group { margin-bottom: 0.875rem; }
-
-.field-label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ion-color-medium);
-  margin-bottom: 0.3125rem;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
-
-.required-star {
-  color: var(--ion-color-danger);
-  font-size: 0.875rem;
-}
-
-.optional-label {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--ion-color-medium-tint);
-}
-
-.field-wrap {
-  display: flex;
-  align-items: center;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 0 12px;
-  min-height: 52px;
-
-  &:focus-within {
-    border-color: var(--primary);
-    background: var(--primary-tint);
-  }
-}
-
-.field-wrap--tap {
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  &:active { background: var(--vac-surface); }
+  ion-icon { font-size: 20px; color: var(--text-muted); }
+  &.active ion-icon { color: var(--primary); }
 }
-
-.field-tap-value {
-  flex: 1;
-  font-size: 0.9375rem;
-  color: var(--text-primary);
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+  span { text-align: center; font-size: 11px; font-weight: 900; color: var(--text-muted); }
 }
-
-.field-chevron {
-  font-size: 1rem;
-  color: var(--ion-color-medium-tint);
-}
-
-.field-icon {
-  font-size: 1.125rem;
-  color: var(--primary);
-  flex-shrink: 0;
-  margin-right: 8px;
-  &--top { align-self: flex-start; margin-top: 12px; }
-}
-
-.field-wrap--textarea {
-  align-items: flex-start;
-  padding: 4px 12px;
-
-  ion-textarea {
-    --padding-start: 0;
-    --padding-end: 4px;
-    --color: var(--text-primary);
-    --placeholder-color: var(--ion-color-medium-tint);
-    font-size: 0.9375rem;
-    width: 100%;
-  }
-}
-
-ion-input {
-  --padding-start: 0;
-  --padding-end: 4px;
-  --color: var(--text-primary);
-  --placeholder-color: var(--ion-color-medium-tint);
-  font-size: 0.9375rem;
-  min-height: 44px;
-}
-
-// ── Booking footer actions ────────────────────────────────────────────────────
-.booking-actions {
-  display: flex;
-  gap: 0.625rem;
-  padding: 8px 16px;
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
-}
-
-.submit-btn {
-  --background: linear-gradient(135deg, var(--vac-orange), var(--vac-orange2));
-  --color: #ffffff;
-  --border-radius: var(--radius-btn);
-  --box-shadow: 0 4px 16px rgba(255,69,0,0.32);
-  flex: 1;
-  min-height: 48px;
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-// ── Date picker overlay ────────────────────────────────────────────────────────
-.datepicker-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.datepicker-card {
-  background: var(--surface);
-  border-radius: var(--radius-card);
-  padding: 16px;
-  width: 90%;
-  max-width: 360px;
-  box-shadow: var(--shadow);
-}
-
-.datepicker-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.datepicker-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.datepicker-confirm {
-  --background: var(--primary);
-  --color: #ffffff;
-  --border-radius: var(--radius-btn);
-  margin-top: 12px;
-}
-
-// ── Booking type chooser overlay ────────────────────────────────────────────────
-.type-chooser-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.type-chooser-card {
-  background: var(--surface);
-  border-radius: var(--radius-card);
-  padding: 28px 24px;
-  width: 86%;
-  max-width: 340px;
-  box-shadow: var(--shadow);
-
-  ion-button {
-    margin-bottom: 12px;
-    --border-radius: var(--radius-btn);
-    height: 48px;
-    font-weight: 600;
-  }
-}
-
-.chooser-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 1.25rem 0;
-  text-align: center;
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.cal-day {
+  aspect-ratio: 1;
+  min-height: 42px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  border-radius: 12px;
+  cursor: pointer;
+  &.out { color: #AFC0C8; }
+  &.disabled { color: var(--divider-strong); cursor: not-allowed; }
+  &.selected { background: var(--primary); color: #fff; }
 }

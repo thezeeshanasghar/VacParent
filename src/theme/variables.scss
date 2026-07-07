@@ -1,119 +1,150 @@
 // Ionic Variables and Theming — Vaccine.PK Brand
+// ── VacParent Refresh design tokens ──────────────────────────────────────────
+// One action color (brand blue #006CA8, from the logo droplet). Green (#57B952,
+// from the logo syringe) is a brand accent only. Neutrals are a cool teal-ink
+// harmonized to the brand blue.
 
 :root {
-  // ── New theme tokens (vaccine-redesign mockup) ──────────────────────────
-  --primary:        #1E5EFF;
-  --primary-tint:   #EAF0FF;
-  --bg:             #F6F8FC;
-  --surface:        #FFFFFF;
-  --success:        #22C55E;
-  --success-bg:     #E9FAEF;
-  --warning:        #F59E0B;
-  --warning-bg:     #FEF6E7;
-  --overdue:        #EF4444;
-  --overdue-bg:     #FEE2E2;
-  --text-primary:   #111827;
-  --text-secondary: #6B7280;
-  --border:         #EEF1F6;
-  --radius-card:    16px;
-  --radius-btn:     12px;
-  --radius-chip:    10px;
-  --shadow:         0 4px 16px rgba(17, 24, 39, 0.06);
+  // ── Brand ──────────────────────────────────────────────────────────────────
+  --primary:        #006CA8;   // the ONLY action color
+  --primary-dark:   #005A8C;   // hover / pressed
+  --primary-tint:   #E1EFF6;   // blue wash (help card, "for" summary, avatar bg, quick-action icon bg)
+  --primary-border: #CFE4F0;   // outline-button border
+  --primary-ink:    #2E6E8C;   // text on blue-tint surfaces
+  --brand-green:    #57B952;   // .pk wordmark dot, "next dose" eyebrow on dark
+  --brand-blue-2:   #0A85C7;   // lower stop of the blue hero gradient
 
-  // Brand palette
-  --vac-navy:    #1E5EFF;
-  --vac-blue:    #1E5EFF;
-  --vac-sky:     #5B8BFF;
-  --vac-green:   #2E7D32;
-  --vac-green2:  #43A047;
-  --vac-orange:  #FF4500;
-  --vac-orange2: #FF6B35;
-  --vac-black:   #1A1A2E;
-  --vac-surface: #F6F8FC;
-  --vac-card:    #FFFFFF;
-  --vac-border:  #EEF1F6;
-  --vac-shadow:  0 4px 16px rgba(17, 24, 39, 0.06);
-  --vac-shadow-lg: 0 8px 32px rgba(17, 24, 39, 0.12);
+  // ── Status (traffic-light) ─────────────────────────────────────────────────
+  --status-done:        #3F9B3D;
+  --status-done-bg:     #E8F5E5;
+  --status-done-ink:    #2F7A2A;
+  --status-done-border: #CDE9C6;
+  --status-due:         #E08A00;
+  --status-due-bg:      #FBEFD6;
+  --status-due-ink:     #8A6410;
+  --status-danger:      #E23D3D;
+  --status-danger-bg:   #FBE3E3;
+  --status-upcoming:    #7C8B93;
+  --status-upcoming-bg: #EDF1F3;
 
-  // Ionic primary → brand blue
-  --ion-color-primary:              #1E5EFF;
-  --ion-color-primary-rgb:          30, 94, 255;
+  // ── Neutrals (cool teal-ink) ────────────────────────────────────────────────
+  --bg:              #F1F5F7;
+  --surface:         #FFFFFF;
+  --ink:             #0E2C3A;
+  --text-secondary:  #5E7480;
+  --text-muted:      #8598A1;
+  --border:          #E4EBEF;
+  --chip-bg:         #EEF3F5;
+  --chip-border:     #DCE6EA;
+  --chip-text:       #33505C;
+  --track:           #E6EDF0;
+  --divider-strong:  #C4D2D9;
+
+  // ── Radius / shadow ─────────────────────────────────────────────────────────
+  --radius-card:  20px;
+  --radius-btn:   14px;
+  --radius-input: 14px;
+  --radius-chip:  999px;
+  --shadow-card:      0 6px 20px rgba(14, 44, 58, 0.05);
+  --shadow-primary:   0 6px 16px rgba(0, 108, 168, 0.28);
+  --shadow-hero:      0 12px 28px rgba(0, 108, 168, 0.32);
+  --shadow-sheet:     0 -10px 40px rgba(14, 44, 58, 0.2);
+
+  // ── Legacy aliases kept so older SCSS keeps compiling ───────────────────────
+  --success:        #3F9B3D;
+  --success-bg:     #E8F5E5;
+  --warning:        #E08A00;
+  --warning-bg:     #FBEFD6;
+  --overdue:        #E23D3D;
+  --overdue-bg:     #FBE3E3;
+  --text-primary:   #0E2C3A;
+  --shadow:         0 6px 20px rgba(14, 44, 58, 0.05);
+  --vac-navy:       #006CA8;
+  --vac-blue:       #006CA8;
+  --vac-green:      #57B952;
+  --vac-green2:     #57B952;
+  --vac-orange:     #006CA8;   // legacy "orange" now resolves to brand blue
+  --vac-orange2:    #0A85C7;
+  --vac-black:      #0E2C3A;
+  --vac-surface:    #F1F5F7;
+  --vac-card:       #FFFFFF;
+  --vac-border:     #E4EBEF;
+  --vac-shadow:     0 6px 20px rgba(14, 44, 58, 0.05);
+  --vac-shadow-lg:  0 12px 28px rgba(0, 108, 168, 0.18);
+
+  // ── Ionic primary → brand blue ──────────────────────────────────────────────
+  --ion-color-primary:              #006CA8;
+  --ion-color-primary-rgb:          0, 108, 168;
   --ion-color-primary-contrast:     #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade:        #1A4FE0;
-  --ion-color-primary-tint:         #5B8BFF;
+  --ion-color-primary-shade:        #005A8C;
+  --ion-color-primary-tint:         #1A7CB3;
 
-  // Keep legacy custom vars so nothing breaks
-  --ion-color-primary-custom:        #1A1A2E;
-  --ion-color-primary-custom2:       #1E88E5;
-  --ion-color-primary-custom3:       #FF4500;
-  --ion-color-primary-custombutton1: #FF4500;
-  --ion-color-primary-custombutton2: #FF6B35;
-
-  // secondary → lava orange
-  --ion-color-secondary:              #FF4500;
-  --ion-color-secondary-rgb:          255, 69, 0;
+  // secondary → brand green (accent)
+  --ion-color-secondary:              #57B952;
+  --ion-color-secondary-rgb:          87, 185, 82;
   --ion-color-secondary-contrast:     #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade:        #CC3700;
-  --ion-color-secondary-tint:         #FF6B35;
+  --ion-color-secondary-shade:        #4CA347;
+  --ion-color-secondary-tint:         #68C063;
 
-  // tertiary → green
-  --ion-color-tertiary:              #43A047;
-  --ion-color-tertiary-rgb:          67, 160, 71;
+  // tertiary → brand green
+  --ion-color-tertiary:              #57B952;
+  --ion-color-tertiary-rgb:          87, 185, 82;
   --ion-color-tertiary-contrast:     #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade:        #2E7D32;
-  --ion-color-tertiary-tint:         #66BB6A;
+  --ion-color-tertiary-shade:        #4CA347;
+  --ion-color-tertiary-tint:         #68C063;
 
   // success
-  --ion-color-success:              #43A047;
-  --ion-color-success-rgb:          67, 160, 71;
+  --ion-color-success:              #3F9B3D;
+  --ion-color-success-rgb:          63, 155, 61;
   --ion-color-success-contrast:     #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade:        #2E7D32;
-  --ion-color-success-tint:         #66BB6A;
+  --ion-color-success-shade:        #378836;
+  --ion-color-success-tint:         #52A550;
 
   // warning
-  --ion-color-warning:              #FFA000;
-  --ion-color-warning-rgb:          255, 160, 0;
-  --ion-color-warning-contrast:     #000000;
-  --ion-color-warning-contrast-rgb: 0, 0, 0;
-  --ion-color-warning-shade:        #CC8000;
-  --ion-color-warning-tint:         #FFCA28;
+  --ion-color-warning:              #E08A00;
+  --ion-color-warning-rgb:          224, 138, 0;
+  --ion-color-warning-contrast:     #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade:        #C57900;
+  --ion-color-warning-tint:         #E3961A;
 
   // danger
-  --ion-color-danger:              #E53935;
-  --ion-color-danger-rgb:          229, 57, 53;
+  --ion-color-danger:              #E23D3D;
+  --ion-color-danger-rgb:          226, 61, 61;
   --ion-color-danger-contrast:     #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade:        #B71C1C;
-  --ion-color-danger-tint:         #EF5350;
+  --ion-color-danger-shade:        #C73636;
+  --ion-color-danger-tint:         #E55050;
 
-  // dark
-  --ion-color-dark:              #1A1A2E;
-  --ion-color-dark-rgb:          26, 26, 46;
+  // dark / medium / light
+  --ion-color-dark:              #0E2C3A;
+  --ion-color-dark-rgb:          14, 44, 58;
   --ion-color-dark-contrast:     #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-dark-shade:        #0D0D1A;
-  --ion-color-dark-tint:         #2E2E4E;
+  --ion-color-dark-shade:        #0C2732;
+  --ion-color-dark-tint:         #26414E;
 
-  // medium
-  --ion-color-medium:              #546E7A;
-  --ion-color-medium-rgb:          84, 110, 122;
+  --ion-color-medium:              #5E7480;
+  --ion-color-medium-rgb:          94, 116, 128;
   --ion-color-medium-contrast:     #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade:        #37474F;
-  --ion-color-medium-tint:         #78909C;
+  --ion-color-medium-shade:        #536671;
+  --ion-color-medium-tint:         #6E828D;
 
-  // light
-  --ion-color-light:              #F6F8FC;
-  --ion-color-light-rgb:          246, 248, 252;
-  --ion-color-light-contrast:     #1A1A2E;
-  --ion-color-light-contrast-rgb: 26, 26, 46;
-  --ion-color-light-shade:        #EEF1F6;
-  --ion-color-light-tint:         #FFFFFF;
+  --ion-color-light:              #F1F5F7;
+  --ion-color-light-rgb:          241, 245, 247;
+  --ion-color-light-contrast:     #0E2C3A;
+  --ion-color-light-contrast-rgb: 14, 44, 58;
+  --ion-color-light-shade:        #D4D8DA;
+  --ion-color-light-tint:         #F2F6F8;
 
-  --ion-background-color: #F6F8FC;
-  --ion-text-color:        #1A1A2E;
+  --ion-background-color: #F1F5F7;
+  --ion-text-color:       #0E2C3A;
+
+  // App font
+  --ion-font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }

@@ -44,13 +44,22 @@ ion-menu.md ion-list#labels-list ion-list-header {
 }
 
 ion-menu.md ion-item {
-  --padding-start: 10px;
-  --padding-end: 10px;
-  border-radius: 4px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  border-radius: 12px;
+}
+
+ion-menu ion-list#inbox-list ion-list-header {
+  font-weight: 900;
+  color: var(--ink);
+}
+
+ion-menu ion-item ion-label {
+  font-weight: 800 !important;
 }
 
 ion-menu.md ion-item.selected {
-  --background: rgba(var(--ion-color-primary-rgb), 0.14);
+  --background: var(--primary-tint);
 }
 
 ion-menu.md ion-item.selected ion-icon {
