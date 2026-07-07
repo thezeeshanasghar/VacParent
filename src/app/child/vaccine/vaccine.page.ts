@@ -39,6 +39,9 @@ export class VaccinePage {
   given = 0;
   due = 0;
   missed = 0;
+  upcomingCount = 0;
+  progressPct = 0;
+  activeTab: 'upcoming' | 'completed' = 'upcoming';
   vaccine: any[] = [];
   dataGrouping: any[] = [];
   pendingGroups: any[] = [];
@@ -46,6 +49,11 @@ export class VaccinePage {
   childId: any;
   dobFormatted = '';
   childInitials = '';
+
+  // ── Calendar sheet (3c) state ─────────────────────────────────────────────
+  calCursor: moment.Moment = moment();
+  calWeeks: any[][] = [];
+  weekdayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   // Date-picker overlay state
   datePickerOpen = false;
@@ -234,6 +242,13 @@ export class VaccinePage {
             this.pendingGroups = this.dataGrouping.filter(g => !g._allDone);
             this.completedGroups = this.dataGrouping.filter(g => g._allDone);
 
+            // Summary metrics for the progress card.
+            // Completed = given; Due soon = due (within 7-day window);
+            // Upcoming = every other not-yet-given dose (folds in overdue).
+            const total = this.vaccine.length;
+            this.progressPct = total ? Math.round((this.given / total) * 100) : 0;
+            this.upcomingCount = Math.max(0, total - this.given - this.due);
+
             loading.dismiss();
           } else {
             loading.dismiss();
@@ -281,6 +296,29 @@ export class VaccinePage {
   chooseBookingType(type: string) {
     this.showTypeChooser = false;
     this.setHomeBook(true, type, this.pendingBookVaccines);
+  }
+
+  bookingTypeChoice: string = 'home';
+
+  /** "MMR · 2nd dose for Zainab" style context line for the booking sheets. */
+  bookingContext(list: any[] = this.pendingBookVaccines): string {
+    const names = (list || [])
+      .filter(v => !v.IsDone && !v.Due2EPI)
+      .map(v => v.Dose && v.Dose.Name)
+      .filter(Boolean);
+    const label = names.length > 1 ? `${names.length} vaccines` : (names[0] || 'Vaccine');
+    const child = this.Child ? this.Child.Name : '';
+    return child ? `${label} for ${child}` : label;
+  }
+
+  confirmBookingType() {
+    this.chooseBookingType(this.bookingTypeChoice);
+  }
+
+  /** Clinic display name, best-effort from the child's clinic record. */
+  get clinicName(): string {
+    if (this.Child && this.Child.Clinic && this.Child.Clinic.Name) return this.Child.Clinic.Name;
+    return 'the clinic';
   }
 
   setHomeBook(value: boolean, type: string = '', vaccines: any[] = []) {
@@ -436,7 +474,7 @@ export class VaccinePage {
         (err: any) => { this.toastService.create('Could not reschedule. Please try again.', 'danger'); }
       );
     };
-    this.datePickerOpen = true;
+    this.openCalendar();
   }
 
   promptBulkReschedule(vaccines: any[]) {
@@ -472,7 +510,7 @@ export class VaccinePage {
         );
       });
     };
-    this.datePickerOpen = true;
+    this.openCalendar();
   }
 
   promptPreferredDate() {
@@ -482,7 +520,13 @@ export class VaccinePage {
     this._datePickerCallback = (dateStr: string) => {
       this.fg1.get('PreferredDate').setValue(moment(dateStr, 'YYYY-MM-DD').format('YYYY-MM-DD'));
     };
-    this.datePickerOpen = true;
+    this.openCalendar();
+  }
+
+  /** Human label for the preferred-date field row (3b). */
+  preferredDateLabel(): string {
+    const v = this.fg1 && this.fg1.get('PreferredDate') ? this.fg1.get('PreferredDate').value : '';
+    return v ? moment(v, 'YYYY-MM-DD').format('ddd, DD MMM YYYY') : 'Select date';
   }
 
   confirmDatePicker() {
@@ -493,6 +537,74 @@ export class VaccinePage {
       this._datePickerCallback(dateStr);
       this._datePickerCallback = null;
     }
+  }
+
+  // ── Calendar sheet (3c) ────────────────────────────────────────────────────
+  private openCalendar() {
+    const picked = this.pickedDate ? moment(this.pickedDate.split('T')[0], 'YYYY-MM-DD') : moment();
+    this.calCursor = picked.clone().startOf('month');
+    this.buildCalendar();
+    this.datePickerOpen = true;
+  }
+
+  buildCalendar() {
+    const start = this.calCursor.clone().startOf('month').startOf('week');
+    const end = this.calCursor.clone().endOf('month').endOf('week');
+    const minDay = moment(this.datePickerMin, 'YYYY-MM-DD').startOf('day');
+    const selected = this.pickedDate ? this.pickedDate.split('T')[0] : '';
+    const weeks: any[][] = [];
+    let cursor = start.clone();
+    while (cursor.isSameOrBefore(end)) {
+      const week: any[] = [];
+      for (let i = 0; i < 7; i++) {
+        const iso = cursor.format('YYYY-MM-DD');
+        week.push({
+          iso,
+          day: cursor.date(),
+          inMonth: cursor.month() === this.calCursor.month(),
+          disabled: cursor.isBefore(minDay),
+          selected: iso === selected
+        });
+        cursor.add(1, 'day');
+      }
+      weeks.push(week);
+    }
+    this.calWeeks = weeks;
+  }
+
+  calMonthLabel(): string {
+    return this.calCursor.format('MMMM YYYY');
+  }
+
+  calPrev() {
+    const minMonth = moment(this.datePickerMin, 'YYYY-MM-DD').startOf('month');
+    if (this.calCursor.clone().subtract(1, 'month').isBefore(minMonth)) return;
+    this.calCursor = this.calCursor.clone().subtract(1, 'month');
+    this.buildCalendar();
+  }
+
+  calNext() {
+    this.calCursor = this.calCursor.clone().add(1, 'month');
+    this.buildCalendar();
+  }
+
+  selectCalDay(day: any) {
+    if (day.disabled) return;
+    this.pickedDate = day.iso;
+    this.buildCalendar();
+  }
+
+  selectedDateLabel(): string {
+    const d = this.pickedDate ? this.pickedDate.split('T')[0] : '';
+    return d ? moment(d, 'YYYY-MM-DD').format('ddd, DD MMM') : '';
+  }
+
+  /** Lat,lng extracted from the captured maps URL (for the "captured" card). */
+  get capturedCoords(): string {
+    const loc = this.fg1 && this.fg1.controls['Location'] ? this.fg1.controls['Location'].value : '';
+    if (!loc) return '';
+    const m = /q=([\-0-9.]+),([\-0-9.]+)/.exec(loc);
+    return m ? `${parseFloat(m[1]).toFixed(4)}, ${parseFloat(m[2]).toFixed(4)}` : '';
   }
 
   datepick() {

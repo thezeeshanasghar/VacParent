@@ -1,94 +1,101 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <div class="toolbar-inner">
-
-      <!-- Doctor 1: original Vaccine.PK brand -->
-      <div *ngIf="isDoctor1" class="toolbar-brand">
-        <ion-icon name="medkit" class="toolbar-logo"></ion-icon>
-        <span class="toolbar-title">Vaccine<span class="toolbar-pk">.PK</span></span>
-      </div>
-      <span *ngIf="isDoctor1" class="toolbar-sub">Vaccination Centre</span>
-
-      <!-- All other doctors: Vaccinationcentre.com brand -->
-      <div *ngIf="!isDoctor1" class="toolbar-brand">
-        <img src="assets/vaccination-centre-logo.png" class="toolbar-logo-img" alt="logo">
-        <span class="toolbar-title toolbar-title-vc">Vaccinationcentre<span class="toolbar-pk">.com</span></span>
-      </div>
-      <span *ngIf="!isDoctor1" class="toolbar-sub toolbar-sub-vc">Your Trusted Vaccination Partner</span>
-
-    </div>
-    <ion-buttons slot="end">
-      <ion-button (click)="goToBookings()" class="bell-btn" aria-label="My Bookings">
-        <ion-icon name="notifications-outline" slot="icon-only" aria-hidden="true"></ion-icon>
-        <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" class="bell-badge">
-          {{bookingService.unreadCount}}
-        </ion-badge>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <div class="dash-wrap">
 
-    <div class="dash-greeting">
-      <p class="dash-hello">Welcome back</p>
-      <p class="dash-tagline">What would you like to do today?</p>
+    <!-- Brand row -->
+    <div class="brand-row">
+      <ion-menu-button class="menu-btn"></ion-menu-button>
+
+      <div class="brand" *ngIf="isDoctor1">
+        <div class="brand-logo"><ion-icon name="medkit"></ion-icon></div>
+        <span class="brand-word">Vaccine<span class="brand-dot">.pk</span></span>
+      </div>
+      <div class="brand" *ngIf="!isDoctor1">
+        <img src="assets/vaccination-centre-logo.png" class="brand-logo-img" alt="logo" />
+        <span class="brand-word">Vaccinationcentre<span class="brand-dot">.com</span></span>
+      </div>
+
+      <button class="bell" (click)="goToBookings()" aria-label="My bookings">
+        <ion-icon name="notifications"></ion-icon>
+        <span class="bell-badge" *ngIf="bookingService.unreadCount > 0">{{ bookingService.unreadCount }}</span>
+      </button>
     </div>
 
-    <div class="dash-grid">
+    <!-- Greeting -->
+    <div class="greeting">
+      <p class="greet-line">{{ greeting }}</p>
+      <h1 class="greet-name">{{ greetingName || 'there' }}</h1>
+    </div>
 
-      <div routerLink="/child" class="dash-card card-patients">
-        <div class="dash-card-icon">
-          <ion-icon name="people-outline"></ion-icon>
+    <!-- Up next hero -->
+    <div class="hero" *ngIf="upNext" (click)="openUpNext()">
+      <div class="hero-eyebrow"><ion-icon name="time-outline"></ion-icon> UP NEXT</div>
+      <div class="hero-body">
+        <div class="hero-avatar">{{ upNext.initials }}</div>
+        <div class="hero-text">
+          <div class="hero-title">{{ upNext.doseTitle }}</div>
+          <div class="hero-meta">{{ upNext.metaText }}</div>
         </div>
-        <span class="dash-card-label">My People</span>
-        <span class="dash-card-sub">View your family records</span>
-        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
       </div>
+      <button class="hero-btn" (click)="$event.stopPropagation(); goToChild(upNext.childId)">
+        <ion-icon name="calendar-outline"></ion-icon> Book visit
+      </button>
+    </div>
 
-      <div routerLink="/vaccines" class="dash-card card-vaccines">
-        <div class="dash-card-icon">
-          <ion-icon name="medkit-outline"></ion-icon>
+    <!-- Hero: all caught up -->
+    <div class="hero hero--calm" *ngIf="!upNext && !loadingUpNext">
+      <div class="hero-eyebrow"><ion-icon name="shield-checkmark-outline"></ion-icon> ALL CAUGHT UP</div>
+      <div class="hero-body">
+        <div class="hero-text">
+          <div class="hero-title">No doses due right now</div>
+          <div class="hero-meta">Every child is up to date. We'll remind you when the next one is coming.</div>
         </div>
-        <span class="dash-card-label">Vaccines</span>
-        <span class="dash-card-sub">Browse schedule</span>
-        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
       </div>
+    </div>
 
-      <div routerLink="/about" class="dash-card card-about">
-        <div class="dash-card-icon">
-          <ion-icon name="information-circle-outline"></ion-icon>
-        </div>
-        <span class="dash-card-label">About Us</span>
-        <span class="dash-card-sub">Our mission</span>
-        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+    <!-- Hero skeleton -->
+    <div class="hero hero--skeleton" *ngIf="loadingUpNext">
+      <ion-skeleton-text animated style="width:35%;height:12px;border-radius:6px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width:70%;height:22px;border-radius:8px;margin-top:14px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width:90%;height:14px;border-radius:6px;margin-top:10px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width:100%;height:46px;border-radius:12px;margin-top:16px;"></ion-skeleton-text>
+    </div>
+
+    <!-- Your children -->
+    <div class="section-head" *ngIf="children.length">
+      <span class="section-title">Your children</span>
+      <span class="section-link" routerLink="/child">See all</span>
+    </div>
+    <div class="kids-row" *ngIf="children.length">
+      <div class="kid-card" *ngFor="let k of children" (click)="goToChild(k.Id)">
+        <div class="kid-avatar" [class.girl]="k.girl" [class.boy]="!k.girl">{{ k.initials }}</div>
+        <div class="kid-name">{{ k.Name }}</div>
+        <div class="kid-age">{{ k.ageLabel }}</div>
+        <span class="kid-pill" [class.ok]="k.onTrack" [class.due]="!k.onTrack">{{ k.nextLabel || '—' }}</span>
       </div>
+    </div>
 
-      <div routerLink="/bookings" class="dash-card card-bookings">
-        <div class="dash-card-icon">
+    <!-- Quick actions -->
+    <div class="quick-row">
+      <div class="quick" routerLink="/child">
+        <div class="quick-icon"><ion-icon name="list-outline"></ion-icon></div>
+        <span class="quick-label">Schedule</span>
+      </div>
+      <div class="quick" routerLink="/bookings">
+        <div class="quick-icon">
           <ion-icon name="calendar-outline"></ion-icon>
+          <span class="quick-badge" *ngIf="bookingService.unreadCount > 0">{{ bookingService.unreadCount }}</span>
         </div>
-        <span class="dash-card-label">My Bookings</span>
-        <span class="dash-card-sub">View & track bookings</span>
-        <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" class="card-notif-badge">
-          {{bookingService.unreadCount}}
-        </ion-badge>
-        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+        <span class="quick-label">Bookings</span>
       </div>
-
-      <div class="dash-card card-logout" (click)="clearStorage()" role="button" tabindex="0" (keydown.enter)="clearStorage()" aria-label="Logout">
-        <div class="dash-card-icon">
-          <ion-icon name="log-out-outline"></ion-icon>
-        </div>
-        <span class="dash-card-label">Logout</span>
-        <span class="dash-card-sub">Sign out safely</span>
-        <ion-icon name="chevron-forward-outline" class="dash-card-arrow"></ion-icon>
+      <div class="quick" routerLink="/child">
+        <div class="quick-icon"><ion-icon name="pulse-outline"></ion-icon></div>
+        <span class="quick-label">Records</span>
       </div>
-
+      <div class="quick" routerLink="/vaccines">
+        <div class="quick-icon"><ion-icon name="school-outline"></ion-icon></div>
+        <span class="quick-label">Learn</span>
+      </div>
     </div>
+
   </div>
 </ion-content>

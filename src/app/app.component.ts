@@ -21,22 +21,22 @@ export class AppComponent implements OnInit, OnDestroy {
     {
       title: 'Dashboard',
       url: '/dashboard',
-      icon: 'mail'
+      icon: 'home'
     },
     {
-      title: 'My People',
+      title: 'Your children',
       url: '/child',
-      icon: 'paper-plane'
+      icon: 'people'
     },
     {
       title: 'Vaccines',
       url: '/vaccines',
-      icon: 'heart'
+      icon: 'school'
     },
     {
       title: 'About Us',
       url: '/about',
-      icon: 'information'
+      icon: 'information-circle'
     },
     {
       title: 'Change Password',
@@ -44,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'lock-closed'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   private notificationsSub: Subscription;
 
   constructor(

@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { VaccineInfoService } from 'src/app/services/vaccine-info.service';
 
 @Component({
-  selector: 'app-folder',
+  selector: 'app-vaccines',
   templateUrl: './vaccines.page.html',
   styleUrls: ['./vaccines.page.scss'],
 })
@@ -14,6 +14,10 @@ export class VaccinesPage implements OnInit {
   loading = false;
   vaccineInfos: any[] = [];
   selectedVaccineInfo: any = null;
+  detailOpen = false;
+  search = '';
+
+  private tints = ['tint-blue', 'tint-green', 'tint-amber'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,16 +45,28 @@ export class VaccinesPage implements OnInit {
     );
   }
 
+  get filteredVaccines(): any[] {
+    const q = (this.search || '').trim().toLowerCase();
+    if (!q) return this.vaccineInfos;
+    return this.vaccineInfos.filter(v => (v.Name || '').toLowerCase().includes(q));
+  }
+
+  tintFor(index: number): string {
+    return this.tints[index % this.tints.length];
+  }
+
   trackByName(index: number, vaccine: any): string {
     return vaccine?.Name ?? index.toString();
   }
 
   openDetail(vaccine: any) {
     this.selectedVaccineInfo = vaccine;
+    this.detailOpen = true;
   }
 
   closeDetail() {
-    this.selectedVaccineInfo = null;
+    this.detailOpen = false;
+    // keep selectedVaccineInfo bound during the slide-out
+    setTimeout(() => { if (!this.detailOpen) this.selectedVaccineInfo = null; }, 260);
   }
-
 }

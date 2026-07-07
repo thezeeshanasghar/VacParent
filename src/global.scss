@@ -9,34 +9,43 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+// ── Font (Nunito) ─────────────────────────────────────────────────────────────
+body,
+* {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 // ── Safe area ────────────────────────────────────────────────────────────────
 ion-content {
   --padding-bottom: env(safe-area-inset-bottom);
+  --background: var(--bg);
 }
 
 // ── Global toolbar ──────────────────────────────────────────────────────────
 ion-toolbar {
   --background: var(--surface);
-  --color: var(--text-primary);
+  --color: var(--ink);
   --border-width: 0;
   border-bottom: 1px solid var(--border);
 }
 
 ion-title {
-  color: var(--text-primary);
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  color: var(--ink);
+  font-weight: 900;
+  letter-spacing: -0.4px;
+  font-size: 20px;
 }
 
 ion-back-button {
-  --color: var(--primary);
+  --color: var(--ink);
 }
 
 // ── Global card ──────────────────────────────────────────────────────────────
 ion-card {
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-card);
   background: var(--surface);
+  border: 1px solid var(--border);
   margin: 12px 0;
 }
 
@@ -44,26 +53,35 @@ ion-card-header {
   padding-bottom: 6px;
 }
 
-// ── Global button ────────────────────────────────────────────────────────────
+// ── Global button — single flat brand blue (no more orange gradient) ─────────
 ion-button {
   --border-radius: var(--radius-btn);
   --box-shadow: none;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-weight: 800;
+  letter-spacing: 0;
   text-transform: none;
 }
 
 ion-button[color="primary"],
-ion-button:not([fill="outline"]):not([fill="clear"]):not([color]):not(.login-btn):not(.fp-btn) {
-  --background: linear-gradient(135deg, var(--vac-orange) 0%, var(--vac-orange2) 100%);
-  --background-activated: var(--vac-orange);
-  --box-shadow: 0 3px 12px rgba(255, 69, 0, 0.3);
+ion-button:not([fill="outline"]):not([fill="clear"]):not([color]) {
+  --background: var(--primary);
+  --background-activated: var(--primary-dark);
+  --background-focused: var(--primary-dark);
+  --background-hover: var(--primary-dark);
+  --box-shadow: var(--shadow-primary);
   --color: #ffffff;
+}
+
+ion-button[fill="outline"][color="primary"] {
+  --border-color: var(--primary-border);
+  --border-width: 1.5px;
+  --color: var(--primary);
+  --background: #ffffff;
 }
 
 // ── Global item ──────────────────────────────────────────────────────────────
 ion-item {
-  --border-radius: 10px;
+  --border-radius: 12px;
   --background: #ffffff;
   --border-color: var(--border);
   margin-bottom: 10px;
@@ -71,4 +89,61 @@ ion-item {
 
 ion-item.item-has-focus {
   --border-color: var(--primary);
+}
+
+// ── Reusable refresh primitives (shared across the redesigned pages) ─────────
+.vp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: 15px;
+  border-radius: var(--radius-btn);
+  padding: 13px 18px;
+  box-shadow: var(--shadow-primary);
+  cursor: pointer;
+
+  &:active { background: var(--primary-dark); }
+  ion-icon { font-size: 18px; }
+}
+
+.vp-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 15px;
+  border: 1.5px solid var(--primary-border);
+  border-radius: var(--radius-btn);
+  padding: 12px 18px;
+  cursor: pointer;
+
+  ion-icon { font-size: 18px; }
+}
+
+.vp-btn-block { width: 100%; }
+
+// Status pill helper
+.vp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+
+  &.done     { background: var(--status-done-bg); color: var(--status-done-ink); }
+  &.due      { background: var(--status-due-bg);  color: var(--status-due-ink);  }
+  &.overdue  { background: var(--status-danger-bg); color: var(--status-danger); }
+  &.upcoming { background: var(--status-upcoming-bg); color: var(--status-upcoming); }
 }
