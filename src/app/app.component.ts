@@ -74,8 +74,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loginservice.changeState(true);
         this.notificationsSub = this.bookingService.getParentNotifications(value).subscribe(
           function(res) {
-            if (res && res.IsSuccess && res.ResponseData) {
-              this.bookingService.unreadCount = res.ResponseData.UnreadCount || 0;
+            if (res && res.IsSuccess && Array.isArray(res.ResponseData)) {
+              this.bookingService.unreadCount = res.ResponseData.filter(function(n) { return !n.IsRead; }).length;
+            } else {
+              this.bookingService.unreadCount = 0;
             }
           }.bind(this),
           function() {}

@@ -1,0 +1,100 @@
+.state-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6B7280;
+
+  ion-icon { font-size: 44px; margin-bottom: 10px; color: #9CA3AF; }
+  p { margin: 0; font-size: 15px; }
+}
+
+.notif-list {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notif-card {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &--unread {
+    border-left: 4px solid #006CA8;
+    background: #F5FAFE;
+  }
+}
+
+.notif-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.notif-body {
+  font-size: 13.5px;
+  color: #4B5563;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* PA assignment card */
+.pa-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.pa-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #E5EEF5;
+  flex-shrink: 0;
+  border: 2px solid #E5EEF5;
+}
+
+.pa-main { flex: 1; min-width: 0; }
+
+.pa-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #006CA8;
+  margin-top: 2px;
+}
+
+.pa-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.pa-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  ion-icon { font-size: 18px; }
+
+  &--call {
+    background: #E8F3FB;
+    color: #006CA8;
+  }
+  &--wa {
+    background: #E7F8EE;
+    color: #1EB35A;
+  }
+}
