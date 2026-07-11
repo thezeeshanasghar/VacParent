@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'home'
     },
     {
-      title: 'Your children',
+      title: 'My Group',
       url: '/child',
       icon: 'people'
     },
@@ -69,6 +69,36 @@ export class AppComponent implements OnInit, OnDestroy {
     // if (path !== undefined) {
     //   this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     // }
+
+    // Auto-login from a WhatsApp reminder deep link (.../child/vaccine/:id?t=<token>).
+    // If a token is present we exchange it for the parent's session BEFORE the
+    // normal session check, so the vaccine page opens logged-in with no manual login.
+    const token = this.getQueryParam('t');
+    if (token) {
+      this.loginservice.linkLogin(token).subscribe(
+        function(res) {
+          if (res && res.IsSuccess && res.ResponseData) {
+            this.storage.set(environment.USER, res.ResponseData);
+            this.storage.set(environment.USER_Id, res.ResponseData.Id);
+            this.loginservice.changeState(true);
+          }
+          this.stripTokenFromUrl();
+          this.initSession();
+        }.bind(this),
+        function() {
+          // Bad/expired link: fall through to the normal (unauth) flow.
+          this.stripTokenFromUrl();
+          this.initSession();
+        }.bind(this)
+      );
+      return;
+    }
+
+    this.initSession();
+  }
+
+  // Reads the current session and loads parent notifications if logged in.
+  private initSession() {
     this.storage.get(environment.USER_Id).then(value => {
       if (value) {
         this.loginservice.changeState(true);
@@ -84,6 +114,27 @@ export class AppComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  private getQueryParam(name: string): string {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  // Remove the ?t=... token from the address bar without a reload, so it isn't
+  // shared or bookmarked once consumed. Keeps the path (/child/vaccine/:id) intact.
+  private stripTokenFromUrl() {
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('t')) {
+        url.searchParams.delete('t');
+        window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+      }
+    } catch (e) { /* no-op */ }
   }
 
   ngOnDestroy() {
