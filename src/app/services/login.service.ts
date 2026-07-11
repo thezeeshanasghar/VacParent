@@ -33,6 +33,16 @@ export class LoginService extends BaseService {
         catchError(this.handleError)
       );
   }
+  // Magic-link auto-login: exchange a signed token (from a WhatsApp reminder
+  // deep link) for the parent's session, so no manual login is needed.
+  linkLogin(token: string): Observable<any> {
+    const url = `${this.API_LOGIN}link-login?token=${encodeURIComponent(token)}`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getDoctorProfile(userId: number): Observable<any> {
     const url = `${environment.BASE_URL}doctor/user/${userId}`;
     return this.http.get(url, this.httpOptions).pipe(

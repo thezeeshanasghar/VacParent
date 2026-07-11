@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="load($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="loading" class="state-msg">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div *ngIf="!loading && notifications.length === 0" class="state-msg empty">
+    <ion-icon name="notifications-off-outline"></ion-icon>
+    <p>No notifications yet</p>
+  </div>
+
+  <div class="notif-list" *ngIf="!loading && notifications.length > 0">
+
+    <div *ngFor="let n of notifications"
+         class="notif-card"
+         [class.notif-card--unread]="!n.IsRead">
+
+      <!-- PA assignment card: avatar + coordinator + Call / WhatsApp -->
+      <ng-container *ngIf="isPaAssigned(n)">
+        <div class="pa-row">
+          <img [src]="paPhoto(n)" class="pa-avatar" alt="Coordinator photo" />
+          <div class="pa-main">
+            <div class="notif-title">{{ n.Title }}</div>
+            <div class="pa-name" *ngIf="n.PaName">{{ n.PaName }}</div>
+            <div class="notif-body">{{ n.Message }}</div>
+          </div>
+        </div>
+
+        <div class="pa-actions" *ngIf="hasPhone(n) || hasWhatsApp(n)">
+          <a class="pa-btn pa-btn--call" *ngIf="hasPhone(n)" [href]="callLink(n)">
+            <ion-icon name="call-outline"></ion-icon>
+            <span>Call</span>
+          </a>
+          <a class="pa-btn pa-btn--wa" *ngIf="hasWhatsApp(n)" [href]="whatsAppLink(n)" target="_blank" rel="noopener">
+            <ion-icon name="logo-whatsapp"></ion-icon>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </ng-container>
+
+      <!-- Generic notification (bookings, etc.) -->
+      <ng-container *ngIf="!isPaAssigned(n)">
+        <div class="notif-title">{{ n.Title }}</div>
+        <div class="notif-body">{{ n.Message }}</div>
+      </ng-container>
+
+    </div>
+
+  </div>
+
+</ion-content>

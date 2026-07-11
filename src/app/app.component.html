@@ -12,10 +12,16 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/notifications" lines="none">
+              <ion-icon color="primary" slot="start" name="notifications-outline"></ion-icon>
+              <ion-label>Notifications</ion-label>
+              <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" slot="end">{{bookingService.unreadCount}}</ion-badge>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
             <ion-item routerLink="/bookings" lines="none">
               <ion-icon color="primary" slot="start" name="calendar-outline"></ion-icon>
               <ion-label>My Bookings</ion-label>
-              <ion-badge *ngIf="bookingService.unreadCount > 0" color="danger" slot="end">{{bookingService.unreadCount}}</ion-badge>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
