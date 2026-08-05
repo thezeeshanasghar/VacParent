@@ -63,7 +63,7 @@
         </div>
         <div class="tl-card">
           <div class="tl-head">
-            <span class="tl-date">{{ group.date | date:'EEE, dd MMM' }}</span>
+            <span class="tl-date">{{ group.date | date:'EEE, dd MMM yyyy' }}</span>
             <span class="vp-pill" [ngClass]="group._groupStatus">
               {{ group._groupStatus === 'overdue' ? 'Overdue' :
                  group._groupStatus === 'due' ? 'Due soon' : 'Upcoming' }}
