@@ -364,9 +364,9 @@ export class ForgotPasswordPage implements OnInit {
             const ChildId = res.ResponseData.Id;
             this.toastService.create("Successfully sent");
             if (res.ResponseData.Type === "special") {
-                this.router.navigate([`/members/child/vaccine/${ChildId}`]);
+                this.router.navigate([`/child/vaccine/${ChildId}`]);
             } else {
-                this.router.navigate(["/members/child"]);
+                this.router.navigate(["/child"]);
             }
         } else {
             this.toastService.create(res.Message, "danger");
