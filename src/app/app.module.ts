@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { Storage } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage';
 import { TimeoutInterceptor } from './services/timeout.interceptor';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TimeoutInterceptor } from './services/timeout.interceptor';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -17,6 +17,7 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from "@angular/forms";
 //const { GoogleSpreadsheet } = require('google-spreadsheet');
 import { Platform } from '@ionic/angular';
+import { AuthSession } from 'src/app/services/auth-session';
 
 declare var cordova: any;
 
@@ -398,7 +399,7 @@ export class VaccinePage {
   }
 
   download(id: any) {
-    const fileUrl = `${this.API_VACCINE}child/${id}/Download-Schedule-PDF`;
+    const fileUrl = AuthSession.withToken(`${this.API_VACCINE}child/${id}/Download-Schedule-PDF`);
 
     if (typeof cordova === 'undefined') {
       const link = document.createElement('a');
@@ -694,10 +695,10 @@ export class VaccinePage {
     const url = `${this.API_VACCINE}child/${this.childId}/${sd}/invoice-file`;
 
     if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
-      window.open(url);
+      window.open(AuthSession.withToken(url));
     } else {
       var request: DownloadRequest = {
-        uri: url,
+        uri: AuthSession.withToken(url),
         title: 'Invoice',
         description: '',
         mimeType: '',

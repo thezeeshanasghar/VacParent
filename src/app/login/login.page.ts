@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Storage } from '@ionic/storage';
 //import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { environment } from 'src/environments/environment';
+import { AuthSession } from 'src/app/services/auth-session';
 
 @Component({
   selector: 'app-login',
@@ -313,6 +314,7 @@ export class LoginPage implements OnInit {
           if (res.IsSuccess) {
             this.nativeStorage.set(environment.USER, res.ResponseData);
             this.nativeStorage.set(environment.USER_Id, res.ResponseData.Id);
+            AuthSession.set(this.nativeStorage, res.ResponseData.Token);
             let state = true;
             this.loginservice.changeState(state);
             this.router.navigate(['/dashboard']);

@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
 import { BookingService } from 'src/app/services/booking.service';
+import { AuthSession } from 'src/app/services/auth-session';
 
 @Component({
   selector: 'app-root',
@@ -80,6 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
           if (res && res.IsSuccess && res.ResponseData) {
             this.storage.set(environment.USER, res.ResponseData);
             this.storage.set(environment.USER_Id, res.ResponseData.Id);
+            AuthSession.set(this.storage, res.ResponseData.Token);
             this.loginservice.changeState(true);
           }
           this.stripTokenFromUrl();
