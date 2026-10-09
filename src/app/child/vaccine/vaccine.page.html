@@ -21,25 +21,25 @@
 
     <!-- Progress summary -->
     <div class="summary-card" *ngIf="Child">
-      <div class="summary-head">
-        <span class="summary-title">Immunization progress</span>
+      <div class="summary-title">Immunization Progress</div>
+      <div class="summary-bar">
+        <div class="summary-track">
+          <div class="summary-fill" [style.width.%]="progressPct"></div>
+        </div>
         <span class="summary-pct">{{ progressPct }}%</span>
-      </div>
-      <div class="summary-track">
-        <div class="summary-fill" [style.width.%]="progressPct"></div>
       </div>
       <div class="summary-stats">
         <div class="stat completed">
           <div class="stat-num">{{ given }}</div>
           <div class="stat-label">Completed</div>
         </div>
-        <div class="stat due">
-          <div class="stat-num">{{ due }}</div>
-          <div class="stat-label">Due soon</div>
-        </div>
         <div class="stat upcoming">
           <div class="stat-num">{{ upcomingCount }}</div>
           <div class="stat-label">Upcoming</div>
+        </div>
+        <div class="stat missed">
+          <div class="stat-num">{{ missed }}</div>
+          <div class="stat-label">Missed</div>
         </div>
       </div>
     </div>
@@ -63,7 +63,16 @@
         </div>
         <div class="tl-card">
           <div class="tl-head">
-            <span class="tl-date">{{ group.date | date:'EEE, dd MMM yyyy' }}</span>
+            <div class="date-block">
+              <div class="date-tile" [ngClass]="group._groupStatus">
+                <span class="date-tile-dow">{{ group.date | date:'EEE' }}</span>
+                <span class="date-tile-day">{{ group.date | date:'dd' }}</span>
+              </div>
+              <div class="date-text">
+                <span class="date-weekday">{{ group.date | date:'EEEE' }}</span>
+                <span class="date-full">{{ group.date | date:'dd MMM yyyy' }}</span>
+              </div>
+            </div>
             <span class="vp-pill" [ngClass]="group._groupStatus">
               {{ group._groupStatus === 'overdue' ? 'Overdue' :
                  group._groupStatus === 'due' ? 'Due soon' : 'Upcoming' }}
@@ -227,7 +236,7 @@
     <div class="choice-icon home"><ion-icon name="home"></ion-icon></div>
     <div class="choice-text">
       <div class="choice-title">Home visit</div>
-      <div class="choice-sub">A nurse comes to you</div>
+      <div class="choice-sub">Vaccination Staff comes to you</div>
     </div>
     <ion-icon class="choice-check" [name]="bookingTypeChoice === 'home' ? 'checkmark-circle' : 'ellipse-outline'"></ion-icon>
   </div>

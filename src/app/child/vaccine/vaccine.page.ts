@@ -244,11 +244,11 @@ export class VaccinePage {
             this.completedGroups = this.dataGrouping.filter(g => g._allDone);
 
             // Summary metrics for the progress card.
-            // Completed = given; Due soon = due (within 7-day window);
-            // Upcoming = every other not-yet-given dose (folds in overdue).
+            // Completed = given; Upcoming = not yet given with a future date;
+            // Missed = not given and past its date.
             const total = this.vaccine.length;
             this.progressPct = total ? Math.round((this.given / total) * 100) : 0;
-            this.upcomingCount = Math.max(0, total - this.given - this.due);
+            this.upcomingCount = this.due;
 
             loading.dismiss();
           } else {
