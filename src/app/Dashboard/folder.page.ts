@@ -82,8 +82,9 @@ export class FolderPage implements OnInit, OnDestroy {
         if (this.notificationsSub) this.notificationsSub.unsubscribe();
         this.notificationsSub = this.bookingService.getParentNotifications(userId).subscribe(
           (res: any) => {
-            if (res && res.IsSuccess && res.ResponseData) {
-              this.bookingService.unreadCount = res.ResponseData.UnreadCount || 0;
+            // The API returns the notification list itself; unread = rows not yet read.
+            if (res && res.IsSuccess && Array.isArray(res.ResponseData)) {
+              this.bookingService.unreadCount = res.ResponseData.filter(function(n) { return !n.IsRead; }).length;
             }
           },
           () => {}
