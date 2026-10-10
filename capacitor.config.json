@@ -1,6 +1,6 @@
 {
-  "appId": "vaccine.pk.patient",
-  "appName": "vaccinepk",
+  "appId": "com.vaccinationcentre.app",
+  "appName": "Vaccination Centre",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

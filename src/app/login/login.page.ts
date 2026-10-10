@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 //import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { environment } from 'src/environments/environment';
 import { AuthSession } from 'src/app/services/auth-session';
+import { PushService } from 'src/app/services/push.service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ export class LoginPage implements OnInit {
     private toastService: ToastService,
     private nativeStorage: Storage,
     private loadingController: LoadingController,
+    private push: PushService,
   ) { }
 
   ngOnInit() {
@@ -317,6 +319,7 @@ export class LoginPage implements OnInit {
             AuthSession.set(this.nativeStorage, res.ResponseData.Token);
             let state = true;
             this.loginservice.changeState(state);
+            this.push.start();
             this.router.navigate(['/dashboard']);
           } else {
             this.toastService.create(res.Message, 'danger');

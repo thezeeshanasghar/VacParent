@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { AuthSession } from 'src/app/services/auth-session';
+import { PushService } from 'src/app/services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private statusBar: StatusBar,
     private storage: Storage,
     public loginservice: LoginService,
-    public bookingService: BookingService
+    public bookingService: BookingService,
+    private push: PushService
   ) {
     this.initializeApp();
   }
@@ -83,6 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.storage.set(environment.USER_Id, res.ResponseData.Id);
             AuthSession.set(this.storage, res.ResponseData.Token);
             this.loginservice.changeState(true);
+            this.push.start();
           }
           this.stripTokenFromUrl();
           this.initSession();
@@ -104,6 +107,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.storage.get(environment.USER_Id).then(value => {
       if (value) {
         this.loginservice.changeState(true);
+        this.push.start();
         this.notificationsSub = this.bookingService.getParentNotifications(value).subscribe(
           function(res) {
             if (res && res.IsSuccess && Array.isArray(res.ResponseData)) {
@@ -144,6 +148,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   clearStorage() {
+    // The unregister request is sent (with the login token) before the session is cleared; not awaited,
+    // because the menu item navigates to /login straight away and must find the session gone.
+    this.push.stop();
     this.storage.clear();
   }
 }
