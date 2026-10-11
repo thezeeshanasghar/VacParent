@@ -248,7 +248,12 @@ export class VaccinePage {
             // Missed = not given and past its date.
             const total = this.vaccine.length;
             this.progressPct = total ? Math.round((this.given / total) * 100) : 0;
-            this.upcomingCount = this.due;
+            // Upcoming stat counts only not-given doses due within the next 7 days.
+            const weekMs = 7 * 24 * 60 * 60 * 1000;
+            this.upcomingCount = this.vaccine.filter(d => {
+              const t = Date.parse(d.Date);
+              return !d.IsDone && this.today < t && (t - this.today) <= weekMs;
+            }).length;
 
             loading.dismiss();
           } else {
