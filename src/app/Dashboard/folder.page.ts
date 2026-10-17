@@ -136,7 +136,7 @@ export class FolderPage implements OnInit, OnDestroy {
 
   /** Fetch schedules to compute progress + the nearest pending dose across all children. */
   private buildUpNext(kids: any[]) {
-    const today = Date.now();
+    const today = moment().startOf('day').valueOf(); // calendar day: due today is not overdue
     let bestGroup: { childName: string; childId: any; date: number; vaccines: any[] } | null = null;
     let remaining = kids.length;
 

@@ -10,7 +10,6 @@ import * as moment from "moment";
 //import { BulkService } from "src/app/services/bulk.service";
 import { AlertController } from '@ionic/angular';
 //import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
-import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 //import { mobiscroll, MbscCalendarOptions } from '@mobiscroll/angular';
@@ -19,7 +18,6 @@ import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from "@ang
 import { Platform } from '@ionic/angular';
 import { AuthSession } from 'src/app/services/auth-session';
 
-declare var cordova: any;
 
 const now = new Date();
 @Component({
@@ -80,7 +78,6 @@ export class VaccinePage {
     //private bulkService: BulkService,
     private toastService: ToastService,
     public alertController: AlertController,
-    private downloader: Downloader,
     private cdref: ChangeDetectorRef,
     private datePicker: DatePicker,
     private formBuilder: FormBuilder,
@@ -160,6 +157,18 @@ export class VaccinePage {
             // res.ResponseData = res.ResponseData.filter(item=> (!item.IsSkip));
             //original code
             this.vaccine = res.ResponseData.filter(x => x.IsSkip != true);
+            if (!this.vaccine.length) {
+              loading.dismiss();
+              this.toastService.create('No vaccination schedule found for this child yet.', 'danger');
+              return;
+            }
+            // The page reloads after every reschedule and on every re-entry: start the tallies from zero
+            // and compare by calendar day, so a dose due today is "upcoming", not "missed".
+            this.given = 0;
+            this.due = 0;
+            this.missed = 0;
+            this.next = false;
+            this.today = moment().startOf('day').valueOf();
             this.Child = (this.vaccine[0].Child);
             this.dobFormatted = moment(this.Child.DOB, "DD-MM-YYYY").format("DD MMM YYYY");
             this.childInitials = (this.Child.Name || '')
@@ -197,7 +206,7 @@ export class VaccinePage {
                 doc.GivenDate = moment(doc.GivenDate, "DD-MM-YYYY").format("YYYY-MM-DD");
 
 
-              var date1 = Date.parse(doc.Date);
+              var date1 = moment(doc.Date, 'YYYY-MM-DD').valueOf();
               if (!this.next && this.today < date1) {
                 doc.Next = true;
                 this.next = true;
@@ -209,7 +218,7 @@ export class VaccinePage {
 
               if (doc.IsDone == true)
                 this.given++;
-              else if (doc.IsDone != true && this.today < date1)
+              else if (doc.IsDone != true && this.today <= date1)
                 this.due++;
               else
                 this.missed++;
@@ -217,7 +226,7 @@ export class VaccinePage {
               //  console.log(this.today); console.log(date1);
 
               // Precomputed display state (avoids re-evaluating on every change-detection cycle)
-              const isMissed = !doc.IsDone && !doc.Due2EPI && this.today >= date1;
+              const isMissed = !doc.IsDone && !doc.Due2EPI && this.today > date1;
               doc._isMissed = isMissed;
 
             });
@@ -229,7 +238,7 @@ export class VaccinePage {
               const allDone = items.every(d => d.IsDone);
               const anyMissed = items.some(d => d._isMissed);
               const dueSoonMs = 7 * 24 * 60 * 60 * 1000;
-              const isDueSoon = !anyMissed && (Date.parse(date) - this.today) <= dueSoonMs;
+              const isDueSoon = !anyMissed && (moment(date, 'YYYY-MM-DD').valueOf() - this.today) <= dueSoonMs;
               return {
                 date,
                 items,
@@ -251,8 +260,8 @@ export class VaccinePage {
             // Upcoming stat counts only not-given doses due within the next 7 days.
             const weekMs = 7 * 24 * 60 * 60 * 1000;
             this.upcomingCount = this.vaccine.filter(d => {
-              const t = Date.parse(d.Date);
-              return !d.IsDone && this.today < t && (t - this.today) <= weekMs;
+              const t = moment(d.Date, 'YYYY-MM-DD').valueOf();
+              return !d.IsDone && this.today <= t && (t - this.today) <= weekMs;
             }).length;
 
             loading.dismiss();
@@ -404,35 +413,17 @@ export class VaccinePage {
   }
 
   download(id: any) {
-    const fileUrl = AuthSession.withToken(`${this.API_VACCINE}child/${id}/Download-Schedule-PDF`);
+    this.saveFile(AuthSession.withToken(`${this.API_VACCINE}child/${id}/Download-Schedule-PDF`), 'ChildSchedule.pdf');
+  }
 
-    if (typeof cordova === 'undefined') {
-      const link = document.createElement('a');
-      link.href = fileUrl;
-      link.download = 'ChildSchedule.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      this.toastService.create('Download started in the browser.', 'success');
-      return;
+  // Phone app: the native VpkDownload bridge saves into Downloads. Old APKs without it open the browser instead.
+  private saveFile(url: string, filename: string) {
+    const bridge = (window as any).VpkDownload;
+    if (bridge && bridge.download) {
+      bridge.download(url, filename);
+    } else {
+      window.open(url, '_system');
     }
-
-    // Mobile environment
-    var request: DownloadRequest = {
-      uri: fileUrl,
-      title: 'Child Schedule',
-      description: '',
-      mimeType: '',
-      visibleInDownloadsUi: true,
-      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
-      destinationInExternalFilesDir: {
-        dirType: 'Downloads',
-        subPath: 'ChildSchedule.pdf'
-      }
-    };
-    this.downloader.download(request)
-      .then((location: string) => console.log('File downloaded at:' + location))
-      .catch((error: any) => console.error(error));
   }
 
   async updateDate($event, vacId: any) {
@@ -702,21 +693,7 @@ export class VaccinePage {
     if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
       window.open(AuthSession.withToken(url));
     } else {
-      var request: DownloadRequest = {
-        uri: AuthSession.withToken(url),
-        title: 'Invoice',
-        description: '',
-        mimeType: '',
-        visibleInDownloadsUi: true,
-        notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
-        destinationInExternalFilesDir: {
-          dirType: 'Downloads',
-          subPath: 'Invoice.pdf'
-        }
-      };
-      this.downloader.download(request)
-        .then((location: string) => console.log('File downloaded at:' + location))
-        .catch((error: any) => console.error(error));
+      this.saveFile(AuthSession.withToken(url), `Invoice-${sd}.pdf`);
     }
   }
 

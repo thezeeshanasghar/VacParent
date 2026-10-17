@@ -102,6 +102,9 @@ export class BookingsPage {
   }
 
   openLocation(url: string) {
-    if (url) window.open(url, '_blank');
+    if (!url) return;
+    const bridge = (window as any).VpkDownload;
+    if (bridge && bridge.openExternal && bridge.openExternal(url)) return; // phone app
+    window.open(url, '_blank');
   }
 }

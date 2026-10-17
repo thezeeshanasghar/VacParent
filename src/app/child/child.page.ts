@@ -81,7 +81,7 @@ export class ChildPage implements OnInit {
 
   /** Per-child schedule fetch → progress fraction + status line. */
   private loadProgress(c: any) {
-    const today = Date.now();
+    const today = moment().startOf('day').valueOf(); // calendar day: due today is not overdue
     this.scheduleservice.getVaccinationById(c.Id).subscribe(
       (res: any) => {
         if (res && res.IsSuccess && res.ResponseData) {
